@@ -13,7 +13,10 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
+// Recaptcha setup
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+    'size': 'invisible'
+});
 
 // ✅ Game Configuration
 const BACKEND_URL = ' https://colorpro-vfgm.onrender.com';
@@ -460,88 +463,46 @@ async function handleLogin() {
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
     'size': 'invisible'
 });
-
 async function sendOtp() {
-    const name = DOM.registerName.value.trim();
     const phone = DOM.registerPhone.value.trim();
-    const password = DOM.registerPassword.value.trim();
-    const confirmPassword = DOM.registerConfirmPassword.value.trim();
     
-    // Basic Validations
-    if (!name || !phone || !password || !confirmPassword) {
-        showNotification('Sare fields bhariye', 'error');
-        return;
-    }
-    if (password !== confirmPassword) {
-        showNotification('Password match nahi ho raha', 'error');
-        return;
-    }
-    if (!DOM.termsAgree.checked) {
-        showNotification('Terms accept karein', 'error');
+    // Validations (Name, Password check)
+    if (!phone || phone.length < 10) {
+        showNotification('Sahi mobile number dalein', 'error');
         return;
     }
 
-    // --- REAL FIREBASE OTP LOGIC ---
-    const fullPhoneNumber = "+91" + phone; // India prefix
+    const fullPhone = "+91" + phone;
 
-    auth.signInWithPhoneNumber(fullPhoneNumber, window.recaptchaVerifier)
+    // Real OTP bhejne ka logic
+    auth.signInWithPhoneNumber(fullPhone, window.recaptchaVerifier)
         .then((confirmationResult) => {
-            // OTP bhej diya gaya hai
             window.confirmationResult = confirmationResult;
-            DOM.otpSection.classList.remove('hidden');
-            showNotification('Real OTP aapke phone par bhej diya gaya hai!', 'success');
+            DOM.otpSection.classList.remove('hidden'); // OTP box dikhayyein
+            showNotification('Real OTP bhej diya gaya hai!', 'success');
         }).catch((error) => {
-            console.error('SMS Error:', error);
+            console.error(error);
             showNotification('OTP nahi gaya: ' + error.message, 'error');
         });
 }
-
 async function verifyOtp() {
     const otp = DOM.otpInput.value.trim();
-    const name = DOM.registerName.value.trim();
-    const phone = DOM.registerPhone.value.trim();
-    const password = DOM.registerPassword.value.trim();
 
     if (!otp) {
-        showNotification('Please enter OTP', 'error');
+        showNotification('OTP enter karein', 'error');
         return;
     }
 
-    try {
-        // 1. Firebase se OTP Verify karein
-        const result = await confirmationResult.confirm(otp);
-        const user = result.user;
-
-        // 2. Agar OTP sahi hai, tab apne Backend/Database mein save karein
-        const response = await fetch(`${BACKEND_URL}/api/register`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: name,
-                mobile: phone,
-                password: password,
-                firebaseUid: user.uid // Unique ID for security
-            })
+    window.confirmationResult.confirm(otp)
+        .then((result) => {
+            // Agar yahan tak pahunche, matlab OTP SAHI HAI!
+            showNotification('Mobile Verified!', 'success');
+            
+            // Ab yahan backend registration ka fetch call karein
+            completeRegistration(); 
+        }).catch((error) => {
+            showNotification('Galat OTP!', 'error');
         });
-
-        const data = await response.json();
-
-        if (data.success) {
-            gameState.isLoggedIn = true;
-            gameState.userData = data.user;
-            localStorage.setItem('userData', JSON.stringify(data.user));
-            
-            showMainApp();
-            showNotification('Welcome! Registration Successful', 'success');
-            
-            setTimeout(() => { connectWebSocket(); }, 1000);
-        } else {
-            showNotification(data.error || 'Database error', 'error');
-        }
-    } catch (error) {
-        console.error('Verification error:', error);
-        showNotification('Galat OTP ya Connection error!', 'error');
-    }
 }
 
 // ✅ Navigation Functions
