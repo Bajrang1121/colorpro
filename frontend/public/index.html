@@ -1,0 +1,3813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDG GAME - Premium Gaming Platform</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gold-primary': '#D4AF37',
+                        'gold-secondary': '#B8860B',
+                        'gold-light': '#FFD700',
+                        'bdg-dark': '#0a0a0a',
+                        'bdg-card': '#1a1a1a',
+                        'bdg-green': '#10b981',
+                        'bdg-red': '#ef4444',
+                        'bdg-blue': '#3b82f6',
+                        'bdg-purple': '#8b5cf6',
+                        'bdg-yellow': '#f59e0b',
+                        'bdg-crypto': '#f7931a',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'Poppins', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'bdg': '1rem',
+                        'bdg-lg': '1.5rem',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s infinite',
+                        'slide-in': 'slideIn 0.3s ease-out',
+                        'countdown': 'countdown 1s linear infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'aviator': 'aviator 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        countdown: {
+                            '0%': { width: '100%' },
+                            '100%': { width: '0%' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        aviator: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 10px;
+        }
+        
+        /* Gradient backgrounds */
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+        }
+        
+        .gold-gradient-light {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(184, 134, 11, 0.1) 100%);
+        }
+        
+        .green-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .red-gradient {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        .blue-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+        
+        .purple-gradient {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+        
+        .crypto-gradient {
+            background: linear-gradient(135deg, #f7931a 0%, #fbb040 100%);
+        }
+        
+        /* Card glass effect */
+        .bdg-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        /* Game number grid */
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        
+        /* Timer animation */
+        .timer-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #D4AF37, #FFD700);
+        }
+        
+        /* Color indicators */
+        .color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+        }
+        
+        .color-dot.green { background-color: #10b981; }
+        .color-dot.red { background-color: #ef4444; }
+        .color-dot.violet { background-color: #8b5cf6; }
+        
+        /* Betting buttons */
+        .bet-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .bet-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Loading animation */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, 
+                rgba(212, 175, 55, 0) 0%, 
+                rgba(212, 175, 55, 0.1) 50%, 
+                rgba(212, 175, 55, 0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* Page transitions */
+        .page {
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Progress bars */
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #D4AF37, #FFD700);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        /* Input styles */
+        .input-field {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: white;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+        
+        /* File upload styles */
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .file-upload input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            padding: 0;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+        
+        /* Crypto network styles */
+        .crypto-network {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .crypto-network:hover {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .crypto-network.selected {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Win/Loss Popup */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-content {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 300px;
+            width: 90%;
+            border: 2px solid #D4AF37;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .popup.active .popup-content {
+            transform: scale(1);
+        }
+        
+        .popup-win .popup-content {
+            border-color: #10b981;
+        }
+        
+        .popup-loss .popup-content {
+            border-color: #ef4444;
+        }
+        
+        /* Aviator specific styles */
+        .aviator-plane {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b00 100%);
+        }
+        
+        .aviator-plane-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .aviator-plane-icon {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            color: #D4AF37;
+            animation: aviator 2s ease-in-out infinite;
+        }
+        
+        .multiplier-display {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #D4AF37;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 2px solid #D4AF37;
+        }
+        
+        /* Slots specific styles */
+        .slot-machine {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d1b00 100%);
+            border-radius: 1rem;
+            padding: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .slot-reel {
+            width: 80px;
+            height: 80px;
+            background: #0a0a0a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            border: 2px solid #D4AF37;
+            color: #D4AF37;
+        }
+        
+        .slot-reel.spinning {
+            animation: spin 0.5s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotateX(0deg); }
+            100% { transform: rotateX(360deg); }
+        }
+        
+        /* Agent Banner */
+        .agent-banner {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(184, 134, 11, 0.1) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 1rem;
+        }
+        
+        /* Custom class to hide header on account page */
+        .header-hidden {
+            display: none !important;
+        }
+        
+        /* Login page styles */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 1.5rem;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        /* Custom bet input */
+        .custom-bet-input {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #D4AF37;
+            z-index: 1001;
+            display: none;
+        }
+        
+        .custom-bet-input.active {
+            display: block;
+        }
+        
+        /* Terms checkbox */
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .terms-checkbox input {
+            width: 18px;
+            height: 18px;
+        }
+        
+        /* Transaction items */
+        .transaction-item {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+        
+        .transaction-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Game history items */
+        .game-history-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+        
+        /* Game tabs */
+        .game-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            margin-bottom: 20px;
+        }
+        
+        .game-tab {
+            flex: 1;
+            padding: 15px 0;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .game-tab.active {
+            color: #D4AF37;
+            border-bottom-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        /* Game section */
+        .game-section {
+            display: none;
+        }
+        
+        .game-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-bdg-dark">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
+        <div class="relative mb-8">
+            <div class="w-32 h-32 bg-white/5 rounded-[2rem] flex items-center justify-center backdrop-blur-md border border-gold-primary/30 mb-4">
+                <span class="text-5xl font-bold text-gold-primary">BDG</span>
+            </div>
+            <div class="absolute -inset-4 bg-gradient-to-r from-gold-primary to-gold-secondary rounded-[3rem] blur-xl opacity-20"></div>
+        </div>
+        <h1 class="text-4xl font-black text-gold-primary italic tracking-tighter mb-2">BDG GAME</h1>
+        <p class="text-white/80 text-sm uppercase tracking-[0.3em] font-bold">PREMIUM GAMING PLATFORM</p>
+        <div class="mt-8 w-48 h-1 bg-white/10 rounded-full overflow-hidden">
+            <div class="h-full bg-gold-primary rounded-full shimmer"></div>
+        </div>
+    </div>
+
+    <!-- Login/Registration Page -->
+    <div id="login-page" class="login-container">
+        <div class="login-card">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-white/5 rounded-[1.5rem] flex items-center justify-center backdrop-blur-md border border-gold-primary/30 mx-auto mb-4">
+                    <span class="text-3xl font-bold text-gold-primary">BDG</span>
+                </div>
+                <h2 class="text-2xl font-bold text-gold-primary">BDG GAME</h2>
+                <p class="text-white/70 text-sm">Premium Gaming Platform</p>
+            </div>
+            
+            <!-- Login/Register Tabs -->
+            <div class="flex mb-6 border-b border-gold-primary/20">
+                <button id="login-tab" class="flex-1 py-3 font-bold text-gold-primary border-b-2 border-gold-primary">
+                    Login
+                </button>
+                <button id="register-tab" class="flex-1 py-3 font-bold text-white/70">
+                    Register
+                </button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm mb-2">Phone Number</label>
+                    <input type="tel" id="login-phone" class="input-field" placeholder="Enter your phone number" maxlength="10">
+                </div>
+                <div>
+                    <label class="block text-sm mb-2">Password</label>
+                    <input type="password" id="login-password" class="input-field" placeholder="Enter your password">
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember-me" class="mr-2">
+                        <label for="remember-me" class="text-sm">Remember me</label>
+                    </div>
+                    <button id="forgot-password" class="text-sm text-gold-primary">Forgot Password?</button>
+                </div>
+                <button id="login-btn" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                    Login
+                </button>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-sm mb-2">Full Name</label>
+                    <input type="text" id="register-name" class="input-field" placeholder="Enter your full name">
+                </div>
+                <div>
+                    <label class="block text-sm mb-2">Phone Number</label>
+                    <input type="tel" id="register-phone" class="input-field" placeholder="Enter your phone number" maxlength="10">
+                </div>
+                <div>
+                    <label class="block text-sm mb-2">Password</label>
+                    <input type="password" id="register-password" class="input-field" placeholder="Create password">
+                </div>
+                <div>
+                    <label class="block text-sm mb-2">Confirm Password</label>
+                    <input type="password" id="register-confirm-password" class="input-field" placeholder="Confirm password">
+                </div>
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="terms-agree">
+                    <label for="terms-agree" class="text-sm">
+                        I agree to the <a href="#" class="text-gold-primary">Terms & Conditions</a>
+                    </label>
+                </div>
+                <button id="send-otp-btn" class="w-full py-3 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10">
+                    Send OTP
+                </button>
+                
+                <!-- OTP Verification -->
+                <div id="otp-section" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-sm mb-2">Enter OTP</label>
+                        <input type="text" id="otp-input" class="input-field" placeholder="Enter 6-digit OTP" maxlength="6">
+                        <p class="text-xs text-white/50 mt-1">OTP sent to your phone (Mock OTP: 123456)</p>
+                    </div>
+                    <button id="verify-otp-btn" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                        Verify OTP & Register
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Forgot Password Form -->
+            <div id="forgot-form" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-sm mb-2">Phone Number</label>
+                    <input type="tel" id="forgot-phone" class="input-field" placeholder="Enter your phone number">
+                </div>
+                <button id="send-reset-otp-btn" class="w-full py-3 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10">
+                    Send Reset OTP
+                </button>
+                
+                <div id="reset-otp-section" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-sm mb-2">Enter OTP</label>
+                        <input type="text" id="reset-otp-input" class="input-field" placeholder="Enter 6-digit OTP" maxlength="6">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-2">New Password</label>
+                        <input type="password" id="new-password" class="input-field" placeholder="Enter new password">
+                    </div>
+                    <button id="reset-password-btn" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                        Reset Password
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-6">
+                <p class="text-sm text-white/70">Secure Login • 24/7 Support</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div id="deposit-modal" class="popup">
+        <div class="popup-content" style="max-width: 400px;">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gold-primary">Deposit Money</h3>
+                <button class="close-modal p-2 hover:bg-white/5 rounded-full">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Deposit Amount -->
+                <div>
+                    <label class="block text-sm mb-2">Deposit Amount (₹)</label>
+                    <input type="number" id="deposit-amount" class="input-field" placeholder="Enter amount" min="100">
+                    <p class="text-xs text-white/50 mt-1">Minimum deposit: ₹100</p>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div>
+                    <label class="block text-sm mb-2">Select Payment Method</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="payment-method-btn p-3 bg-bdg-card rounded-bdg border border-gold-primary/10 hover:border-gold-primary" data-method="upi">
+                            <i class="fas fa-mobile-alt text-xl mb-1"></i>
+                            <p class="text-sm">UPI</p>
+                        </button>
+                        <button class="payment-method-btn p-3 bg-bdg-card rounded-bdg border border-gold-primary/10 hover:border-gold-primary" data-method="crypto">
+                            <i class="fab fa-bitcoin text-xl mb-1"></i>
+                            <p class="text-sm">Crypto</p>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- UPI Details -->
+                <div id="upi-details" class="space-y-3">
+                    <div class="p-3 gold-gradient-light rounded-bdg">
+                        <p class="text-sm font-bold mb-1">UPI ID: bdggame@upi</p>
+                        <p class="text-xs">Send money to this UPI ID and upload screenshot</p>
+                    </div>
+                    <div class="file-upload p-3 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                        <input type="file" id="upi-screenshot" accept="image/*">
+                        <div class="flex items-center justify-center gap-2">
+                            <i class="fas fa-upload text-gold-primary"></i>
+                            <span>Upload Payment Screenshot</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Crypto Details -->
+                <div id="crypto-details" class="space-y-3 hidden">
+                    <div class="p-3 crypto-gradient rounded-bdg">
+                        <p class="text-sm font-bold mb-1">BTC Address: 1BdgGameXyzAbc123</p>
+                        <p class="text-xs">Send BTC to this address and upload transaction ID</p>
+                    </div>
+                    <div>
+                        <input type="text" class="input-field" placeholder="Transaction ID">
+                    </div>
+                </div>
+                
+                <button id="confirm-deposit" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                    Confirm Deposit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div id="withdraw-modal" class="popup">
+        <div class="popup-content" style="max-width: 400px;">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gold-primary">Withdraw Money</h3>
+                <button class="close-modal p-2 hover:bg-white/5 rounded-full">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Withdraw Amount -->
+                <div>
+                    <label class="block text-sm mb-2">Withdraw Amount (₹)</label>
+                    <input type="number" id="withdraw-amount" class="input-field" placeholder="Enter amount" min="500">
+                    <p class="text-xs text-white/50 mt-1">Minimum withdrawal: ₹500</p>
+                    <p class="text-xs mt-1">Available Balance: ₹<span id="available-balance">9,520.97</span></p>
+                </div>
+                
+                <!-- Withdraw Methods -->
+                <div>
+                    <label class="block text-sm mb-2">Select Withdraw Method</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="withdraw-method-btn p-3 bg-bdg-card rounded-bdg border border-gold-primary/10 hover:border-gold-primary" data-method="bank">
+                            <i class="fas fa-university text-xl mb-1"></i>
+                            <p class="text-sm">Bank Transfer</p>
+                        </button>
+                        <button class="withdraw-method-btn p-3 bg-bdg-card rounded-bdg border border-gold-primary/10 hover:border-gold-primary" data-method="upi">
+                            <i class="fas fa-mobile-alt text-xl mb-1"></i>
+                            <p class="text-sm">UPI</p>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Bank Details -->
+                <div id="bank-details" class="space-y-3">
+                    <div class="space-y-2">
+                        <input type="text" class="input-field" placeholder="Account Holder Name">
+                        <input type="text" class="input-field" placeholder="Account Number">
+                        <input type="text" class="input-field" placeholder="IFSC Code">
+                        <input type="text" class="input-field" placeholder="Bank Name">
+                    </div>
+                </div>
+                
+                <!-- UPI Withdraw Details -->
+                <div id="upi-withdraw-details" class="space-y-3 hidden">
+                    <div>
+                        <input type="text" class="input-field" placeholder="UPI ID">
+                    </div>
+                </div>
+                
+                <button id="confirm-withdraw" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                    Request Withdrawal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agent Application Modal -->
+    <div id="agent-modal" class="popup">
+        <div class="popup-content" style="max-width: 450px;">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gold-primary">Apply as Agent</h3>
+                <button class="close-modal p-2 hover:bg-white/5 rounded-full">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 gold-gradient rounded-full flex items-center justify-center mx-auto mb-2">
+                        <i class="fas fa-user-tie text-2xl"></i>
+                    </div>
+                    <h4 class="font-bold">Become a BDG Game Agent</h4>
+                    <p class="text-sm opacity-70">Earn commission on player deposits</p>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="text" id="agent-first-name" class="input-field" placeholder="First Name">
+                        <input type="text" id="agent-last-name" class="input-field" placeholder="Last Name">
+                    </div>
+                    
+                    <input type="tel" id="agent-phone" class="input-field" placeholder="Phone Number" maxlength="10">
+                    
+                    <input type="email" id="agent-email" class="input-field" placeholder="Email Address">
+                    
+                    <input type="text" id="agent-address" class="input-field" placeholder="Full Address">
+                    
+                    <div>
+                        <label class="block text-sm mb-2">ID Proof (Aadhar/PAN/Driving License)</label>
+                        <div class="file-upload p-3 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                            <input type="file" id="id-proof" accept="image/*,application/pdf">
+                            <div class="flex items-center justify-center gap-2">
+                                <i class="fas fa-id-card text-gold-primary"></i>
+                                <span>Upload ID Proof</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm mb-2">Address Proof</label>
+                        <div class="file-upload p-3 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                            <input type="file" id="address-proof" accept="image/*,application/pdf">
+                            <div class="flex items-center justify-center gap-2">
+                                <i class="fas fa-home text-gold-primary"></i>
+                                <span>Upload Address Proof</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm mb-2">Experience in Gaming Industry</label>
+                        <select class="input-field">
+                            <option value="">Select Experience</option>
+                            <option value="none">No Experience</option>
+                            <option value="1-2">1-2 Years</option>
+                            <option value="2-5">2-5 Years</option>
+                            <option value="5+">5+ Years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="agent-terms">
+                        <label for="agent-terms" class="text-sm">
+                            I agree to BDG Game Agent Terms & Conditions
+                        </label>
+                    </div>
+                    
+                    <button id="submit-agent-application" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                        Submit Application
+                    </button>
+                    
+                    <p class="text-xs text-center opacity-70 mt-3">
+                        Our team will contact you within 24 hours
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Win Popup -->
+    <div id="win-popup" class="popup popup-win">
+        <div class="popup-content">
+            <div class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-green-500">
+                <i class="fas fa-trophy text-4xl text-green-500"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-green-500 mb-2">YOU WIN!</h3>
+            <p class="text-xl font-bold mb-2">₹<span id="win-amount">0</span></p>
+            <p class="text-sm text-white/70 mb-6">Congratulations on your win!</p>
+            <button class="w-full py-3 green-gradient rounded-bdg font-bold hover:opacity-90 close-popup">
+                Continue Playing
+            </button>
+        </div>
+    </div>
+
+    <!-- Loss Popup -->
+    <div id="loss-popup" class="popup popup-loss">
+        <div class="popup-content">
+            <div class="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-red-500">
+                <i class="fas fa-times text-4xl text-red-500"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-red-500 mb-2">BETTER LUCK NEXT TIME!</h3>
+            <p class="text-xl font-bold mb-2">₹<span id="loss-amount">0</span></p>
+            <p class="text-sm text-white/70 mb-6">Don't give up, try again!</p>
+            <button class="w-full py-3 red-gradient rounded-bdg font-bold hover:opacity-90 close-popup">
+                Try Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom Bet Amount Input -->
+    <div id="custom-bet-input" class="custom-bet-input">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold text-gold-primary">Custom Bet Amount</h3>
+            <button class="close-custom-bet p-2 hover:bg-white/5 rounded-full">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <input type="number" id="custom-bet-amount" class="input-field mb-4" placeholder="Enter amount" min="10">
+        <button id="set-custom-bet" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+            Set Bet Amount
+        </button>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="hidden max-w-md mx-auto min-h-screen bg-bdg-dark pb-20">
+        <!-- Header with Balance -->
+        <div id="main-header" class="sticky top-0 z-40 bg-bdg-card px-4 py-3 border-b border-gold-primary/20">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl font-bold text-gold-primary">BDG GAME</h1>
+                    <p class="text-xs opacity-80" id="page-title">Premium Gaming Platform</p>
+                </div>
+                <div class="text-right">
+                    <div class="flex items-center gap-2">
+                        <div class="px-3 py-1 bg-black/30 rounded-full border border-gold-primary/30">
+                            <span class="font-bold text-gold-primary">₹<span id="balance">9,520.97</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Deposit/Withdraw Buttons -->
+            <div class="flex gap-2 mt-3">
+                <button class="deposit-btn flex-1 py-2 gold-gradient rounded-bdg font-bold hover:opacity-90 text-sm">
+                    <i class="fas fa-plus mr-1"></i> Deposit
+                </button>
+                <button class="withdraw-btn flex-1 py-2 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10 text-sm">
+                    <i class="fas fa-rupee-sign mr-1"></i> Withdraw
+                </button>
+            </div>
+        </div>
+
+        <!-- Agent Banner -->
+        <div id="agent-banner" class="px-4 py-3 agent-banner mx-4 mt-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold text-gold-primary">BDG GAME IS LOOKING FOR AGENTS</h3>
+                    <p class="text-sm text-white/80">EASY DAILY INCOME ₹9999+</p>
+                </div>
+                <button id="apply-agent-btn" class="px-4 py-2 gold-gradient rounded-full font-bold hover:opacity-90 text-sm">
+                    Apply Now
+                </button>
+            </div>
+        </div>
+
+        <!-- Page 1: Home Page -->
+        <div id="home-page" class="page active p-4 space-y-6">
+            <!-- Categories Navigation - All Games -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <h2 class="font-bold text-lg mb-3 text-gold-primary">Games</h2>
+                <div class="grid grid-cols-3 gap-3">
+                    <!-- WinGo Games -->
+                    <div class="game-category bet-btn bg-bdg-card rounded-bdg p-4 text-center hover:bg-gold-primary/10 transition-colors border border-gold-primary/10" data-game="wingo">
+                        <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-clock text-xl"></i>
+                        </div>
+                        <p class="text-sm font-medium">WinGo Games</p>
+                        <p class="text-xs opacity-70 mt-1">30s, 1m, 3m, 5m</p>
+                    </div>
+                    
+                    <!-- Aviator -->
+                    <div class="game-category bet-btn bg-bdg-card rounded-bdg p-4 text-center hover:bg-gold-primary/10 transition-colors border border-gold-primary/10" data-game="aviator">
+                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-plane text-xl"></i>
+                        </div>
+                        <p class="text-sm font-medium">Aviator</p>
+                        <p class="text-xs opacity-70 mt-1">Crash Game</p>
+                    </div>
+                    
+                    <!-- Slots -->
+                    <div class="game-category bet-btn bg-bdg-card rounded-bdg p-4 text-center hover:bg-gold-primary/10 transition-colors border border-gold-primary/10" data-game="slots">
+                        <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-gamepad text-xl"></i>
+                        </div>
+                        <p class="text-sm font-medium">Slots</p>
+                        <p class="text-xs opacity-70 mt-1">Spin & Win</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Game Data -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <h2 class="font-bold text-lg mb-3 text-gold-primary">Live Games</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold">WinGo 30s</p>
+                                <p class="text-xs opacity-70">Next game in: <span id="wingo-30-timer">25s</span></p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm">Last Result</p>
+                            <p class="text-lg font-bold text-green-500">8</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-plane"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold">Aviator</p>
+                                <p class="text-xs opacity-70">Current: <span id="aviator-current">1.85x</span></p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm">Last Round</p>
+                            <p class="text-lg font-bold text-red-500">2.45x</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold">Slots</p>
+                                <p class="text-xs opacity-70">Active Players: 124</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm">Last Win</p>
+                            <p class="text-lg font-bold text-green-500">₹5,000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Game History -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-lg text-gold-primary">Recent Game History</h2>
+                    <button class="px-3 py-1 bg-bdg-card rounded-full text-sm hover:bg-gold-primary/10" id="view-all-history">View All</button>
+                </div>
+                
+                <div class="space-y-2" id="recent-game-history">
+                    <!-- Game history will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Payment Notice -->
+            <div class="bdg-glass rounded-bdg-lg p-4 text-center text-sm opacity-80 border border-gold-primary/10">
+                <i class="fas fa-shield-alt text-gold-primary mb-2"></i>
+                <p>Secure Payments • 24/7 Support • Instant Withdrawals</p>
+            </div>
+        </div>
+
+        <!-- Page 2: Games Page (All Games in One Tab) -->
+        <div id="games-page" class="page p-4">
+            <div class="flex items-center justify-between mb-4">
+                <button class="back-btn p-2 rounded-full hover:bg-white/5">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl font-bold text-gold-primary">Games</h2>
+                <div class="w-10"></div>
+            </div>
+
+            <!-- Game Tabs -->
+            <div class="bdg-glass rounded-bdg-lg p-4 mb-6">
+                <div class="game-tabs">
+                    <div class="game-tab active" data-game="wingo">WinGo</div>
+                    <div class="game-tab" data-game="aviator">Aviator</div>
+                    <div class="game-tab" data-game="slots">Slots</div>
+                </div>
+                
+                <!-- Game Container -->
+                <div id="game-container">
+                    <!-- WinGo Game (Default) -->
+                    <div id="wingo-section" class="game-section active space-y-6">
+                        <!-- Time Frame Selection -->
+                        <div class="mb-6">
+                            <h3 class="font-bold text-lg mb-4 text-gold-primary">Select Time Frame</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="timeframe-btn py-4 gold-gradient rounded-bdg font-bold hover:opacity-90" data-timeframe="30">
+                                    <i class="fas fa-bolt mr-2"></i>30 Seconds
+                                </button>
+                                <button class="timeframe-btn py-4 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10" data-timeframe="60">
+                                    <i class="fas fa-hourglass-half mr-2"></i>1 Minute
+                                </button>
+                                <button class="timeframe-btn py-4 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10" data-timeframe="180">
+                                    <i class="fas fa-hourglass mr-2"></i>3 Minutes
+                                </button>
+                                <button class="timeframe-btn py-4 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10" data-timeframe="300">
+                                    <i class="fas fa-hourglass-end mr-2"></i>5 Minutes
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Selected Game Timer and Info -->
+                        <div class="bdg-glass rounded-bdg-lg p-4">
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <h3 class="font-bold text-lg" id="wingo-period">Period: 20260201100051304</h3>
+                                    <p class="text-sm opacity-70" id="wingo-time">30 Second Game</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm">Time remaining</p>
+                                    <p class="text-3xl font-bold text-gold-primary" id="wingo-timer">00:30</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Timer Bar -->
+                            <div class="h-2 bg-gray-800 rounded-full mb-6 overflow-hidden">
+                                <div class="timer-bar h-full" id="wingo-timer-bar" style="width: 100%"></div>
+                            </div>
+                            
+                            <!-- Current Bet Amount -->
+                            <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg mb-6 border border-gold-primary/10">
+                                <div>
+                                    <p class="text-sm opacity-70">Current Bet</p>
+                                    <p class="text-2xl font-bold">₹<span id="wingo-current-bet">0</span></p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm opacity-70">Potential Win</p>
+                                    <p class="text-2xl font-bold text-green-500">₹<span id="wingo-potential-win">0</span></p>
+                                </div>
+                            </div>
+                            
+                            <!-- Bet Amount Selector -->
+                            <div class="mb-6">
+                                <p class="text-sm opacity-70 mb-2">Bet Amount</p>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <button class="wingo-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="10">₹10</button>
+                                    <button class="wingo-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="50">₹50</button>
+                                    <button class="wingo-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="100">₹100</button>
+                                    <button class="wingo-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="500">₹500</button>
+                                    <button class="wingo-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="1000">₹1K</button>
+                                    <button class="wingo-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="5000">₹5K</button>
+                                    <button class="col-span-2 py-3 gold-gradient rounded-bdg font-bold wingo-custom-btn">
+                                        Custom Amount
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Color Betting Options -->
+                            <div class="grid grid-cols-3 gap-3 mb-6">
+                                <button class="wingo-color-bet bet-btn bg-bdg-green rounded-bdg p-4 text-center hover:opacity-90" data-color="green">
+                                    <p class="font-bold text-lg">Green</p>
+                                    <p class="text-sm">1.98x</p>
+                                </button>
+                                <button class="wingo-color-bet bet-btn bg-purple-600 rounded-bdg p-4 text-center hover:opacity-90" data-color="violet">
+                                    <p class="font-bold text-lg">Violet</p>
+                                    <p class="text-sm">1.98x</p>
+                                </button>
+                                <button class="wingo-color-bet bet-btn bg-bdg-red rounded-bdg p-4 text-center hover:opacity-90" data-color="red">
+                                    <p class="font-bold text-lg">Red</p>
+                                    <p class="text-sm">1.98x</p>
+                                </button>
+                            </div>
+                            
+                            <!-- Number Grid -->
+                            <div class="number-grid mb-6">
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="0">0</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="1">1</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="2">2</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="3">3</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="4">4</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="5">5</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="6">6</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="7">7</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="8">8</button>
+                                <button class="wingo-number-bet bet-btn bg-bdg-card rounded-bdg p-3 text-center hover:bg-gold-primary/20" data-number="9">9</button>
+                            </div>
+                            
+                            <!-- Big/Small Buttons -->
+                            <div class="grid grid-cols-2 gap-3 mb-6">
+                                <button class="wingo-size-bet bet-btn bg-blue-600 rounded-bdg p-3 text-center hover:bg-blue-700" data-size="big">
+                                    <p class="font-bold">Big (5-9)</p>
+                                    <p class="text-sm">1.98x</p>
+                                </button>
+                                <button class="wingo-size-bet bet-btn bg-blue-600 rounded-bdg p-3 text-center hover:bg-blue-700" data-size="small">
+                                    <p class="font-bold">Small (0-4)</p>
+                                    <p class="text-sm">1.98x</p>
+                                </button>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <button class="py-4 bg-bdg-card rounded-bdg font-bold hover:bg-gold-primary/10 border border-gold-primary/10" id="wingo-clear-bet">
+                                    Clear Bet
+                                </button>
+                                <button class="py-4 gold-gradient rounded-bdg font-bold hover:opacity-90" id="wingo-place-bet">
+                                    Place Bet
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recent Results -->
+                        <div class="bdg-glass rounded-bdg-lg p-4">
+                            <h3 class="font-bold text-lg mb-4 text-gold-primary">Recent Results</h3>
+                            <div class="flex gap-2 overflow-x-auto pb-2" id="wingo-results-container">
+                                <!-- Results will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Aviator Game -->
+                    <div id="aviator-section" class="game-section">
+                        <div class="bdg-glass rounded-bdg-lg p-4 mb-6">
+                            <div class="aviator-plane mb-6">
+                                <div class="aviator-plane-track">
+                                    <div class="aviator-plane-icon">
+                                        <i class="fas fa-plane"></i>
+                                    </div>
+                                    <div class="multiplier-display" id="aviator-multiplier">1.00x</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Current Bet Amount -->
+                            <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg mb-6 border border-gold-primary/10">
+                                <div>
+                                    <p class="text-sm opacity-70">Current Bet</p>
+                                    <p class="text-2xl font-bold">₹<span id="aviator-bet">0</span></p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm opacity-70">Cash Out</p>
+                                    <p class="text-2xl font-bold text-green-500">₹<span id="aviator-cashout">0</span></p>
+                                </div>
+                            </div>
+                            
+                            <!-- Bet Amount Selector -->
+                            <div class="mb-6">
+                                <p class="text-sm opacity-70 mb-2">Bet Amount</p>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <button class="aviator-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="10">₹10</button>
+                                    <button class="aviator-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="50">₹50</button>
+                                    <button class="aviator-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="100">₹100</button>
+                                    <button class="aviator-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="500">₹500</button>
+                                    <button class="aviator-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="1000">₹1K</button>
+                                    <button class="aviator-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="5000">₹5K</button>
+                                    <button class="col-span-2 py-3 gold-gradient rounded-bdg font-bold aviator-custom-btn">
+                                        Custom Amount
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Auto Cashout -->
+                            <div class="mb-6">
+                                <p class="text-sm opacity-70 mb-2">Auto Cashout</p>
+                                <div class="flex gap-2">
+                                    <input type="number" class="input-field flex-1" id="auto-cashout" placeholder="e.g., 2.00" min="1.1" step="0.1">
+                                    <span class="flex items-center px-3 bg-bdg-card rounded-bdg">x</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="grid grid-cols-2 gap-3 mb-6">
+                                <button class="py-4 bg-bdg-card rounded-bdg font-bold hover:bg-gold-primary/10 border border-gold-primary/10" id="aviator-clear">
+                                    Clear
+                                </button>
+                                <button class="py-4 gold-gradient rounded-bdg font-bold hover:opacity-90" id="aviator-place-bet">
+                                    Place Bet
+                                </button>
+                            </div>
+                            
+                            <!-- Cashout Button -->
+                            <button class="w-full py-4 green-gradient rounded-bdg font-bold hover:opacity-90 mb-6 hidden" id="aviator-cashout-btn">
+                                Cash Out
+                            </button>
+                            
+                            <!-- Game Stats -->
+                            <div class="grid grid-cols-3 gap-2 text-center">
+                                <div class="p-3 bg-bdg-card rounded-bdg">
+                                    <p class="text-sm opacity-70">Last Round</p>
+                                    <p class="text-lg font-bold text-gold-primary">2.45x</p>
+                                </div>
+                                <div class="p-3 bg-bdg-card rounded-bdg">
+                                    <p class="text-sm opacity-70">Players</p>
+                                    <p class="text-lg font-bold">248</p>
+                                </div>
+                                <div class="p-3 bg-bdg-card rounded-bdg">
+                                    <p class="text-sm opacity-70">Total Bet</p>
+                                    <p class="text-lg font-bold">₹45,280</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Games -->
+                        <div class="bdg-glass rounded-bdg-lg p-4">
+                            <h3 class="font-bold text-lg mb-4 text-gold-primary">Recent Games</h3>
+                            <div class="space-y-3" id="aviator-history-container">
+                                <!-- Aviator history will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slots Game -->
+                    <div id="slots-section" class="game-section">
+                        <div class="slot-machine mb-6">
+                            <!-- Slot Reels -->
+                            <div class="flex justify-center gap-4 mb-8">
+                                <div class="slot-reel" id="reel1">
+                                    <i class="fas fa-diamond"></i>
+                                </div>
+                                <div class="slot-reel" id="reel2">
+                                    <i class="fas fa-gem"></i>
+                                </div>
+                                <div class="slot-reel" id="reel3">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Current Bet Amount -->
+                            <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg mb-6 border border-gold-primary/10">
+                                <div>
+                                    <p class="text-sm opacity-70">Current Bet</p>
+                                    <p class="text-2xl font-bold">₹<span id="slots-bet">0</span></p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm opacity-70">Potential Win</p>
+                                    <p class="text-2xl font-bold text-green-500">₹<span id="slots-win">0</span></p>
+                                </div>
+                            </div>
+                            
+                            <!-- Bet Amount Selector -->
+                            <div class="mb-6">
+                                <p class="text-sm opacity-70 mb-2">Bet Amount</p>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <button class="slots-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="10">₹10</button>
+                                    <button class="slots-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="50">₹50</button>
+                                    <button class="slots-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="100">₹100</button>
+                                    <button class="slots-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="500">₹500</button>
+                                    <button class="slots-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="1000">₹1K</button>
+                                    <button class="slots-amount-btn py-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/20" data-amount="5000">₹5K</button>
+                                    <button class="col-span-2 py-3 gold-gradient rounded-bdg font-bold slots-custom-btn">
+                                        Custom Amount
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Spin Button -->
+                            <button class="w-full py-4 gold-gradient rounded-bdg font-bold hover:opacity-90 mb-6" id="spin-btn">
+                                <i class="fas fa-redo mr-2"></i> Spin
+                            </button>
+                            
+                            <!-- Paytable -->
+                            <div class="bg-bdg-card rounded-bdg p-4">
+                                <h4 class="font-bold mb-3 text-gold-primary">Paytable</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-sm">
+                                        <span>3 Diamonds</span>
+                                        <span class="text-green-500 font-bold">50x</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span>3 Gems</span>
+                                        <span class="text-green-500 font-bold">25x</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span>3 Crowns</span>
+                                        <span class="text-green-500 font-bold">15x</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span>Any 3 Matching</span>
+                                        <span class="text-green-500 font-bold">10x</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Wins -->
+                        <div class="bdg-glass rounded-bdg-lg p-4">
+                            <h3 class="font-bold text-lg mb-4 text-gold-primary">Recent Wins</h3>
+                            <div class="space-y-3" id="slots-history-container">
+                                <!-- Slots history will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Game Period History -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <h3 class="font-bold text-lg mb-4 text-gold-primary">Game History</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-left border-b border-gold-primary/20">
+                                <th class="pb-2">Game</th>
+                                <th class="pb-2">Period</th>
+                                <th class="pb-2">Result</th>
+                                <th class="pb-2">Amount</th>
+                                <th class="pb-2">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="game-period-history">
+                            <!-- Game period history will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: Activity Page -->
+        <div id="activity-page" class="page p-4 space-y-6">
+            <div class="flex items-center gap-3 mb-6">
+                <button class="back-btn p-2 rounded-full hover:bg-white/5">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl font-bold text-gold-primary">Daily Activities</h2>
+            </div>
+
+            <!-- Daily Bonus -->
+            <div class="green-gradient rounded-bdg-lg p-5 text-center">
+                <div class="flex items-center justify-center gap-3 mb-4">
+                    <i class="fas fa-gift text-3xl"></i>
+                    <div class="text-left">
+                        <h3 class="text-xl font-bold">Daily Sign-in Bonus</h3>
+                        <p class="text-sm opacity-90">Claim your daily reward</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-7 gap-2 mb-4">
+                    <div class="bg-white/20 rounded-lg p-3">
+                        <p class="text-xs">Day 1</p>
+                        <p class="font-bold">₹10</p>
+                        <div class="mt-1"><i class="fas fa-check text-green-300"></i></div>
+                    </div>
+                    <div class="bg-white/20 rounded-lg p-3">
+                        <p class="text-xs">Day 2</p>
+                        <p class="font-bold">₹20</p>
+                        <div class="mt-1"><i class="fas fa-check text-green-300"></i></div>
+                    </div>
+                    <div class="bg-white/20 rounded-lg p-3">
+                        <p class="text-xs">Day 3</p>
+                        <p class="font-bold">₹30</p>
+                        <div class="mt-1"><i class="fas fa-check text-green-300"></i></div>
+                    </div>
+                    <div class="bg-white/20 rounded-lg p-3">
+                        <p class="text-xs">Day 4</p>
+                        <p class="font-bold">₹40</p>
+                        <div class="mt-1"><i class="fas fa-check text-green-300"></i></div>
+                    </div>
+                    <div class="bg-white/20 rounded-lg p-3">
+                        <p class="text-xs">Day 5</p>
+                        <p class="font-bold">₹50</p>
+                        <div class="mt-1"><i class="fas fa-check text-green-300"></i></div>
+                    </div>
+                    <div class="bg-yellow-400/30 rounded-lg p-3 border-2 border-yellow-400">
+                        <p class="text-xs">Day 6</p>
+                        <p class="font-bold">₹100</p>
+                        <p class="text-xs mt-1">Today</p>
+                    </div>
+                    <div class="bg-white/10 rounded-lg p-3">
+                        <p class="text-xs">Day 7</p>
+                        <p class="font-bold">₹200</p>
+                        <p class="text-xs mt-1">Tomorrow</p>
+                    </div>
+                </div>
+                <button class="claim-btn w-full py-3 bg-white text-green-700 rounded-full font-bold hover:bg-gray-100">
+                    <i class="fas fa-gift mr-2"></i>Claim Day 6 Bonus - ₹100
+                </button>
+            </div>
+
+            <!-- Daily Tasks -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <h3 class="font-bold text-lg mb-4 text-gold-primary">Daily Tasks</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Play 3 Games</h4>
+                                <p class="text-sm opacity-70">Reward: ₹50</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="progress-bar w-24">
+                                <div class="progress-fill" style="width: 66%"></div>
+                            </div>
+                            <p class="text-xs mt-1">2/3 completed</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 blue-gradient rounded-full flex items-center justify-center">
+                                <i class="fas fa-share-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Invite 1 Friend</h4>
+                                <p class="text-sm opacity-70">Reward: ₹100</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button class="px-4 py-2 blue-gradient rounded-full text-sm font-bold">
+                                Invite Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 purple-gradient rounded-full flex items-center justify-center">
+                                <i class="fas fa-rupee-sign"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Deposit ₹500</h4>
+                                <p class="text-sm opacity-70">Reward: ₹50</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button class="px-4 py-2 gold-gradient rounded-full text-sm font-bold">
+                                Deposit
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 green-gradient rounded-full flex items-center justify-center">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Win 5 Games</h4>
+                                <p class="text-sm opacity-70">Reward: ₹100</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="progress-bar w-24">
+                                <div class="progress-fill" style="width: 40%"></div>
+                            </div>
+                            <p class="text-xs mt-1">2/5 completed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Challenge -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <h3 class="font-bold text-lg mb-4 text-gold-primary">Weekly Challenge</h3>
+                <div class="p-4 gold-gradient rounded-bdg-lg text-center mb-4">
+                    <h4 class="text-xl font-bold mb-2">₹10,000 Prize Pool</h4>
+                    <p class="text-sm opacity-90">Top 10 players this week</p>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center font-bold">1</span>
+                            <div>
+                                <h4 class="font-bold">Player001</h4>
+                                <p class="text-sm opacity-70">₹2,500 prize</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold">₹45,280</p>
+                            <p class="text-xs opacity-70">Total winnings</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center font-bold">2</span>
+                            <div>
+                                <h4 class="font-bold">Player042</h4>
+                                <p class="text-sm opacity-70">₹1,500 prize</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold">₹32,150</p>
+                            <p class="text-xs opacity-70">Total winnings</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
+                        <div class="flex items-center gap-3">
+                            <span class="w-8 h-8 bg-amber-700 rounded-full flex items-center justify-center font-bold">3</span>
+                            <div>
+                                <h4 class="font-bold">Player089</h4>
+                                <p class="text-sm opacity-70">₹1,000 prize</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold">₹28,750</p>
+                            <p class="text-xs opacity-70">Total winnings</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4 p-3 bg-bdg-card rounded-bdg">
+                    <div class="flex items-center justify-between mb-2">
+                        <span>Your Rank</span>
+                        <span class="font-bold">#47</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <p class="text-xs text-center mt-2">₹1,250 to reach top 10</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4: Promotion Page -->
+        <div id="promotion-page" class="page p-4 space-y-6">
+            <div class="flex items-center gap-3 mb-6">
+                <button class="back-btn p-2 rounded-full hover:bg-white/5">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl font-bold text-gold-primary">Promotions</h2>
+            </div>
+
+            <!-- Welcome Bonus -->
+            <div class="gold-gradient rounded-bdg-lg p-5 text-center">
+                <i class="fas fa-gift text-5xl mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Get ₹500 Welcome Bonus</h3>
+                <p class="text-sm opacity-90 mb-4">For new members only</p>
+                <button class="w-full py-3 bg-white text-gold-primary rounded-full font-bold hover:bg-gray-100" id="claim-welcome-bonus">
+                    Claim Welcome Bonus
+                </button>
+            </div>
+
+            <!-- Referral System -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <h3 class="font-bold text-lg mb-4 text-gold-primary">Refer & Earn</h3>
+                <div class="p-4 green-gradient rounded-bdg-lg mb-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm">Total Earnings</p>
+                            <p class="text-2xl font-bold">₹2,540</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm">Friends Invited</p>
+                            <p class="text-2xl font-bold">8</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Referral Code -->
+                <div class="mb-6">
+                    <p class="text-sm opacity-70 mb-2">Your Referral Code</p>
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 p-3 bg-bdg-card rounded-bdg text-center border border-gold-primary/10">
+                            <p class="text-xl font-bold tracking-widest">NNGJ20PN</p>
+                        </div>
+                        <button class="p-3 gold-gradient rounded-bdg" id="copy-referral">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Referral Link -->
+                <div class="mb-6">
+                    <p class="text-sm opacity-70 mb-2">Your Referral Link</p>
+                    <div class="flex items-center gap-2">
+                        <div class="flex-1 p-3 bg-bdg-card rounded-bdg text-sm overflow-x-auto border border-gold-primary/10">
+                            <p class="whitespace-nowrap">https://bdggame.com/ref/NNGJ20PN</p>
+                        </div>
+                        <button class="p-3 gold-gradient rounded-bdg" id="share-referral">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Referral Steps -->
+                <div class="space-y-4 mb-6">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 gold-gradient rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                        <div>
+                            <h4 class="font-bold">Share Your Link</h4>
+                            <p class="text-sm opacity-70">Send your referral link to friends</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 gold-gradient rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                        <div>
+                            <h4 class="font-bold">Friend Registers</h4>
+                            <p class="text-sm opacity-70">They sign up using your link</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 gold-gradient rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                        <div>
+                            <h4 class="font-bold">Friend Deposits</h4>
+                            <p class="text-sm opacity-70">They make first deposit of ₹500+</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 gold-gradient rounded-full flex items-center justify-center font-bold flex-shrink-0">4</div>
+                        <div>
+                            <h4 class="font-bold">You Earn ₹100</h4>
+                            <p class="text-sm opacity-70">Get ₹100 for each successful referral</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Referral Stats -->
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="p-3 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                        <p class="text-2xl font-bold text-green-500">8</p>
+                        <p class="text-xs opacity-70">Friends</p>
+                    </div>
+                    <div class="p-3 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                        <p class="text-2xl font-bold text-green-500">₹2,540</p>
+                        <p class="text-xs opacity-70">Earned</p>
+                    </div>
+                    <div class="p-3 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                        <p class="text-2xl font-bold text-green-500">₹500</p>
+                        <p class="text-xs opacity-70">Pending</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Promotions -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <h3 class="font-bold text-lg mb-4 text-gold-primary">Other Promotions</h3>
+                <div class="space-y-4">
+                    <div class="p-4 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-12 h-12 purple-gradient rounded-full flex items-center justify-center">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Daily Reload Bonus</h4>
+                                <p class="text-sm opacity-70">Get 10% bonus on deposit</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-2 py-2 purple-gradient rounded-full text-sm font-bold" id="claim-reload-bonus">
+                            Claim Now
+                        </button>
+                    </div>
+                    
+                    <div class="p-4 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-12 h-12 blue-gradient rounded-full flex items-center justify-center">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Weekly Cashback</h4>
+                                <p class="text-sm opacity-70">Up to 15% cashback</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-2 py-2 blue-gradient rounded-full text-sm font-bold" id="learn-cashback">
+                            Learn More
+                        </button>
+                    </div>
+                    
+                    <div class="p-4 bg-bdg-card rounded-bdg border border-gold-primary/10">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-12 h-12 green-gradient rounded-full flex items-center justify-center">
+                                <i class="fas fa-birthday-cake"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Birthday Bonus</h4>
+                                <p class="text-sm opacity-70">Special bonus on your birthday</p>
+                            </div>
+                        </div>
+                        <button class="w-full mt-2 py-2 green-gradient rounded-full text-sm font-bold" id="check-birthday-bonus">
+                            Check Eligibility
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: Account Page -->
+        <div id="account-page" class="page p-4 space-y-6">
+            <div class="flex items-center gap-3 mb-6">
+                <button class="back-btn p-2 rounded-full hover:bg-white/5">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 class="text-2xl font-bold text-gold-primary">My Account</h2>
+            </div>
+
+            <!-- User Profile -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-16 h-16 gold-gradient rounded-full flex items-center justify-center text-2xl font-bold">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold">MemberNNGJ20PN</h3>
+                        <p class="text-sm opacity-70">VIP Level: Silver</p>
+                        <div class="progress-bar w-full mt-1">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <p class="text-xs mt-1">₹5,250 to next level</p>
+                    </div>
+                </div>
+                
+                <!-- Balance Info -->
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <div class="p-3 bg-bdg-card rounded-bdg text-center border border-gold-primary/10">
+                        <p class="text-sm opacity-70">Main Balance</p>
+                        <p class="text-xl font-bold text-gold-primary">₹<span id="main-balance">9,520.97</span></p>
+                    </div>
+                    <div class="p-3 bg-bdg-card rounded-bdg text-center border border-gold-primary/10">
+                        <p class="text-sm opacity-70">Bonus Balance</p>
+                        <p class="text-xl font-bold text-green-500">₹250</p>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <button class="deposit-btn py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                        <i class="fas fa-plus-circle mr-2"></i>Deposit
+                    </button>
+                    <button class="withdraw-btn py-3 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10">
+                        <i class="fas fa-rupee-sign mr-2"></i>Withdraw
+                    </button>
+                </div>
+            </div>
+
+            <!-- Transaction History Modal -->
+            <div id="transaction-modal" class="hidden fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
+                <div class="bg-bdg-card rounded-bdg-lg w-full max-w-md p-5 max-h-[90vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-gold-primary" id="transaction-modal-title">Transaction History</h3>
+                        <button class="close-transaction-modal p-2 hover:bg-white/5 rounded-full">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-3" id="transaction-list">
+                        <!-- Transactions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Menu -->
+            <div class="bdg-glass rounded-bdg-lg p-4">
+                <h3 class="font-bold text-lg mb-4 text-gold-primary">Account Settings</h3>
+                <div class="space-y-2">
+                    <button class="account-menu-item flex items-center justify-between p-3 hover:bg-white/5 rounded-bdg" data-type="transaction">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                <i class="fas fa-history"></i>
+                            </div>
+                            <span>Transaction History</span>
+                        </div>
+                        <i class="fas fa-chevron-right opacity-50"></i>
+                    </button>
+                    
+                    <button class="account-menu-item flex items-center justify-between p-3 hover:bg-white/5 rounded-bdg" data-type="deposit">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <span>Deposit History</span>
+                        </div>
+                        <i class="fas fa-chevron-right opacity-50"></i>
+                    </button>
+                    
+                    <button class="account-menu-item flex items-center justify-between p-3 hover:bg-white/5 rounded-bdg" data-type="withdrawal">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                <i class="fas fa-rupee-sign"></i>
+                            </div>
+                            <span>Withdrawal History</span>
+                        </div>
+                        <i class="fas fa-chevron-right opacity-50"></i>
+                    </button>
+                    
+                    <button class="account-menu-item flex items-center justify-between p-3 hover:bg-white/5 rounded-bdg" data-type="game">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                <i class="fas fa-gamepad"></i>
+                            </div>
+                            <span>Game History</span>
+                        </div>
+                        <i class="fas fa-chevron-right opacity-50"></i>
+                    </button>
+                    
+                    <button class="account-menu-item flex items-center justify-between p-3 hover:bg-white/5 rounded-bdg" data-type="security">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <span>Security Settings</span>
+                        </div>
+                        <i class="fas fa-chevron-right opacity-50"></i>
+                    </button>
+                    
+                    <button class="account-menu-item flex items-center justify-between p-3 hover:bg-white/5 rounded-bdg" data-type="support">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <span>Customer Support</span>
+                        </div>
+                        <i class="fas fa-chevron-right opacity-50"></i>
+                    </button>
+                    
+                    <button class="account-menu-item flex items-center justify-between p-3 hover:bg-white/5 rounded-bdg" data-type="about">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <span>About BDG GAME</span>
+                        </div>
+                        <i class="fas fa-chevron-right opacity-50"></i>
+                    </button>
+                    
+                    <button class="account-menu-item flex items-center justify-between p-3 hover:bg-white/5 rounded-bdg" id="logout-btn">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                            <span>Logout</span>
+                        </div>
+                        <i class="fas fa-chevron-right opacity-50"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Support Info -->
+            <div class="bdg-glass rounded-bdg-lg p-4 text-center border border-gold-primary/10">
+                <h3 class="font-bold text-lg mb-4 text-gold-primary">Need Help?</h3>
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <a href="#" class="p-3 bg-bdg-card rounded-full hover:bg-gold-primary/20 border border-gold-primary/10">
+                        <i class="fas fa-whatsapp text-2xl text-green-500"></i>
+                    </a>
+                    <a href="#" class="p-3 bg-bdg-card rounded-full hover:bg-gold-primary/20 border border-gold-primary/10">
+                        <i class="fas fa-phone-alt text-2xl"></i>
+                    </a>
+                    <a href="#" class="p-3 bg-bdg-card rounded-full hover:bg-gold-primary/20 border border-gold-primary/10">
+                        <i class="fas fa-envelope text-2xl"></i>
+                    </a>
+                </div>
+                <p class="text-sm opacity-70">24/7 Customer Support</p>
+                <p class="text-sm opacity-70">Email: support@bdggame.com</p>
+                <p class="text-sm opacity-70">Phone: +91-XXXXXXXXXX</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 bg-bdg-card border-t border-gold-primary/10 px-4 py-3 max-w-md mx-auto">
+        <div class="grid grid-cols-5 gap-1">
+            <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10" data-page="home">
+                <i class="fas fa-home mb-1"></i>
+                <span class="text-xs">Home</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10" data-page="games">
+                <i class="fas fa-gamepad mb-1"></i>
+                <span class="text-xs">Games</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10" data-page="activity">
+                <i class="fas fa-calendar-alt mb-1"></i>
+                <span class="text-xs">Activity</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10" data-page="promotion">
+                <i class="fas fa-gift mb-1"></i>
+                <span class="text-xs">Promotion</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10" data-page="account">
+                <i class="fas fa-user mb-1"></i>
+                <span class="text-xs">Account</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Game State
+        let gameState = {
+            balance: 9520.97,
+            wingoBet: 0,
+            aviatorBet: 0,
+            slotsBet: 0,
+            wingoSelectedColor: null,
+            wingoSelectedNumber: null,
+            wingoSelectedSize: null,
+            currentGame: 'wingo',
+            wingoTimer: 30,
+            timerInterval: null,
+            aviatorMultiplier: 1.00,
+            aviatorInterval: null,
+            selectedPaymentMethod: 'upi',
+            selectedWithdrawMethod: 'bank',
+            wingoTimeFrame: 30,
+            wingoTimeFrameName: '30 Seconds',
+            isLoggedIn: false,
+            userData: null,
+            gameHistory: [],
+            transactionHistory: [],
+            wingoHistory: [],
+            aviatorHistory: [],
+            slotsHistory: [],
+            bonusClaimed: false,
+            dailyBonusClaimed: false
+        };
+
+        // Mock OTP
+        const MOCK_OTP = '123456';
+
+        // Initial Game History Data
+        const initialGameHistory = [
+            { id: 1, game: 'WinGo 30s', result: 'Win', amount: 198, number: 8, color: 'red', size: 'big', time: '2 mins ago' },
+            { id: 2, game: 'Aviator', result: 'Loss', amount: 500, multiplier: '1.45x', time: '5 mins ago' },
+            { id: 3, game: 'Slots', result: 'Win', amount: 2500, combination: '3 Diamonds', time: '10 mins ago' },
+            { id: 4, game: 'WinGo 1m', result: 'Win', amount: 99, number: 3, color: 'green', size: 'small', time: '15 mins ago' },
+            { id: 5, game: 'Aviator', result: 'Win', amount: 1225, multiplier: '2.45x', time: '20 mins ago' }
+        ];
+
+        // Transaction History Data
+        const mockTransactionHistory = [
+            { id: 1, type: 'deposit', amount: 5000, method: 'UPI', status: 'Completed', time: '2 hours ago' },
+            { id: 2, type: 'withdrawal', amount: 2000, method: 'Bank Transfer', status: 'Processing', time: '5 hours ago' },
+            { id: 3, type: 'game_bet', amount: 500, game: 'WinGo 30s', result: 'Win', time: '1 day ago' },
+            { id: 4, type: 'deposit', amount: 3000, method: 'Crypto', status: 'Completed', time: '2 days ago' },
+            { id: 5, type: 'bonus', amount: 100, reason: 'Daily Bonus', time: '3 days ago' }
+        ];
+
+        // Hide loading screen and show login page
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                document.getElementById('login-page').classList.remove('hidden');
+                
+                // Initialize login system
+                initializeLoginSystem();
+            }, 1500);
+        });
+
+        // Login System
+        function initializeLoginSystem() {
+            // Login/Register tabs
+            document.getElementById('login-tab').addEventListener('click', function() {
+                showLoginForm();
+            });
+            
+            document.getElementById('register-tab').addEventListener('click', function() {
+                showRegisterForm();
+            });
+            
+            // Forgot password
+            document.getElementById('forgot-password').addEventListener('click', function() {
+                showForgotForm();
+            });
+            
+            // Login button
+            document.getElementById('login-btn').addEventListener('click', function() {
+                const phone = document.getElementById('login-phone').value;
+                const password = document.getElementById('login-password').value;
+                
+                if (!phone || !password) {
+                    alert('Please enter phone number and password');
+                    return;
+                }
+                
+                // Mock login - in real app, this would be API call
+                gameState.isLoggedIn = true;
+                gameState.userData = {
+                    phone: phone,
+                    name: 'MemberNNGJ20PN'
+                };
+                
+                // Show main app
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('app').classList.remove('hidden');
+                
+                // Initialize game
+                initializeGame();
+                
+                // Update home page data
+                updateHomePageData();
+                
+                // Start home timers
+                startHomeTimers();
+            });
+            
+            // Send OTP for registration
+            document.getElementById('send-otp-btn').addEventListener('click', function() {
+                const name = document.getElementById('register-name').value;
+                const phone = document.getElementById('register-phone').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+                const termsAgreed = document.getElementById('terms-agree').checked;
+                
+                if (!name || !phone || !password || !confirmPassword) {
+                    alert('Please fill all fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (!termsAgreed) {
+                    alert('Please agree to Terms & Conditions');
+                    return;
+                }
+                
+                // Show OTP section
+                document.getElementById('otp-section').classList.remove('hidden');
+                alert('OTP sent to your phone (Mock OTP: 123456)');
+            });
+            
+            // Verify OTP and register
+            document.getElementById('verify-otp-btn').addEventListener('click', function() {
+                const otp = document.getElementById('otp-input').value;
+                
+                if (otp !== MOCK_OTP) {
+                    alert('Invalid OTP. Please enter 123456');
+                    return;
+                }
+                
+                // Registration successful
+                alert('Registration successful! Please login.');
+                showLoginForm();
+            });
+            
+            // Send reset OTP
+            document.getElementById('send-reset-otp-btn').addEventListener('click', function() {
+                const phone = document.getElementById('forgot-phone').value;
+                
+                if (!phone) {
+                    alert('Please enter your phone number');
+                    return;
+                }
+                
+                // Show reset OTP section
+                document.getElementById('reset-otp-section').classList.remove('hidden');
+                alert('Reset OTP sent to your phone (Mock OTP: 123456)');
+            });
+            
+            // Reset password
+            document.getElementById('reset-password-btn').addEventListener('click', function() {
+                const otp = document.getElementById('reset-otp-input').value;
+                const newPassword = document.getElementById('new-password').value;
+                
+                if (otp !== MOCK_OTP) {
+                    alert('Invalid OTP. Please enter 123456');
+                    return;
+                }
+                
+                if (!newPassword) {
+                    alert('Please enter new password');
+                    return;
+                }
+                
+                // Password reset successful
+                alert('Password reset successful! Please login.');
+                showLoginForm();
+            });
+        }
+        
+        function showLoginForm() {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('forgot-form').classList.add('hidden');
+            document.getElementById('login-tab').classList.add('text-gold-primary', 'border-b-2', 'border-gold-primary');
+            document.getElementById('login-tab').classList.remove('text-white/70');
+            document.getElementById('register-tab').classList.add('text-white/70');
+            document.getElementById('register-tab').classList.remove('text-gold-primary', 'border-b-2', 'border-gold-primary');
+        }
+        
+        function showRegisterForm() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.remove('hidden');
+            document.getElementById('forgot-form').classList.add('hidden');
+            document.getElementById('register-tab').classList.add('text-gold-primary', 'border-b-2', 'border-gold-primary');
+            document.getElementById('register-tab').classList.remove('text-white/70');
+            document.getElementById('login-tab').classList.add('text-white/70');
+            document.getElementById('login-tab').classList.remove('text-gold-primary', 'border-b-2', 'border-gold-primary');
+        }
+        
+        function showForgotForm() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('forgot-form').classList.remove('hidden');
+            document.getElementById('login-tab').classList.add('text-gold-primary', 'border-b-2', 'border-gold-primary');
+            document.getElementById('login-tab').classList.remove('text-white/70');
+            document.getElementById('register-tab').classList.add('text-white/70');
+            document.getElementById('register-tab').classList.remove('text-gold-primary', 'border-b-2', 'border-gold-primary');
+        }
+
+        // Navigation System
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const page = this.dataset.page;
+                navigateToPage(page);
+                
+                // Update active nav button
+                document.querySelectorAll('.nav-btn').forEach(b => {
+                    b.classList.remove('gold-gradient', 'text-white');
+                    b.classList.add('hover:bg-gold-primary/10');
+                });
+                this.classList.add('gold-gradient', 'text-white');
+                this.classList.remove('hover:bg-gold-primary/10');
+            });
+        });
+
+        // Game category buttons on home page
+        document.querySelectorAll('.game-category').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const game = this.dataset.game;
+                gameState.currentGame = game;
+                
+                // Navigate to games page
+                navigateToPage('games');
+                
+                // Activate the game tab
+                switchGameTab(game);
+                
+                // Update nav button
+                document.querySelectorAll('.nav-btn').forEach(b => {
+                    b.classList.remove('gold-gradient', 'text-white');
+                    b.classList.add('hover:bg-gold-primary/10');
+                });
+                document.querySelector('.nav-btn[data-page="games"]').classList.add('gold-gradient', 'text-white');
+                document.querySelector('.nav-btn[data-page="games"]').classList.remove('hover:bg-gold-primary/10');
+            });
+        });
+
+        // Back buttons
+        document.querySelectorAll('.back-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                navigateToPage('home');
+                document.querySelector('.nav-btn[data-page="home"]').click();
+            });
+        });
+
+        // Game tabs in games page
+        document.querySelectorAll('.game-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const game = this.dataset.game;
+                switchGameTab(game);
+            });
+        });
+
+        // Page navigation function
+        function navigateToPage(page) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(`${page}-page`).classList.add('active');
+            
+            // Update page title
+            const titles = {
+                home: 'Premium Gaming Platform',
+                games: 'BDG Games',
+                activity: 'Daily Activities',
+                promotion: 'Promotions & Referrals',
+                account: 'My Account'
+            };
+            document.getElementById('page-title').textContent = titles[page];
+            
+            // Hide header on account page
+            const header = document.getElementById('main-header');
+            const agentBanner = document.getElementById('agent-banner');
+            
+            if (page === 'account') {
+                header.classList.add('header-hidden');
+                agentBanner.classList.add('header-hidden');
+            } else {
+                header.classList.remove('header-hidden');
+                agentBanner.classList.remove('header-hidden');
+            }
+            
+            // Stop any running games
+            stopAllGames();
+            
+            // Initialize specific page if needed
+            if (page === 'games') {
+                initializeGamesPage();
+            } else if (page === 'home') {
+                updateHomePageData();
+            }
+        }
+
+        // Switch game tab in games page
+        function switchGameTab(game) {
+            // Update game state
+            gameState.currentGame = game;
+            
+            // Update UI
+            document.querySelectorAll('.game-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.game-tab[data-game="${game}"]`).classList.add('active');
+            
+            document.querySelectorAll('.game-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`${game}-section`).classList.add('active');
+            
+            // Initialize the selected game
+            if (game === 'wingo') {
+                initializeWingoGame();
+            } else if (game === 'aviator') {
+                initializeAviatorGame();
+            } else if (game === 'slots') {
+                initializeSlotsGame();
+            }
+        }
+
+        // Initialize Games Page
+        function initializeGamesPage() {
+            // Initialize all games
+            initializeWingoGame();
+            initializeAviatorGame();
+            initializeSlotsGame();
+            
+            // Update game period history
+            updateGamePeriodHistory();
+        }
+
+        // Update home page with real-time data
+        function updateHomePageData() {
+            // Update game history
+            updateRecentGameHistory();
+        }
+        
+        function startHomeTimers() {
+            // Simulate timers for home page
+            let wingoTimer = 25;
+            setInterval(() => {
+                wingoTimer--;
+                if (wingoTimer < 0) wingoTimer = 30;
+                document.getElementById('wingo-30-timer').textContent = wingoTimer + 's';
+            }, 1000);
+            
+            // Update aviator current multiplier
+            let aviatorCurrent = 1.00;
+            setInterval(() => {
+                aviatorCurrent += 0.05;
+                if (aviatorCurrent > 3.00) aviatorCurrent = 1.00;
+                document.getElementById('aviator-current').textContent = aviatorCurrent.toFixed(2) + 'x';
+            }, 2000);
+        }
+        
+        function updateRecentGameHistory() {
+            const container = document.getElementById('recent-game-history');
+            container.innerHTML = '';
+            
+            const recentHistory = [...initialGameHistory].reverse().slice(0, 3);
+            
+            recentHistory.forEach(game => {
+                const item = document.createElement('div');
+                item.className = 'game-history-item';
+                
+                let icon = 'fa-gamepad';
+                let color = 'text-gold-primary';
+                if (game.game.includes('WinGo')) icon = 'fa-clock';
+                if (game.game.includes('Aviator')) icon = 'fa-plane';
+                if (game.game.includes('Slots')) icon = 'fa-gamepad';
+                
+                let resultClass = game.result === 'Win' ? 'text-green-500' : 'text-red-500';
+                
+                item.innerHTML = `
+                    <div class="w-8 h-8 gold-gradient rounded-full flex items-center justify-center">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between">
+                            <span class="font-bold">${game.game}</span>
+                            <span class="${resultClass}">${game.result}</span>
+                        </div>
+                        <div class="flex justify-between text-xs opacity-70">
+                            <span>Amount: ₹${game.amount}</span>
+                            <span>${game.time}</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+
+        // Initialize all games
+        function initializeGame() {
+            // Initialize deposit/withdraw buttons
+            initializeDepositWithdraw();
+            
+            // Initialize agent application
+            initializeAgentApplication();
+            
+            // Initialize promotion buttons
+            initializePromotionButtons();
+            
+            // Initialize account menu
+            initializeAccountMenu();
+            
+            // Set default game to wingo
+            gameState.currentGame = 'wingo';
+        }
+
+        // Initialize WinGo Game
+        function initializeWingoGame() {
+            // Set default time frame to 30 seconds
+            selectWingoTimeFrame(30, '30 Seconds');
+            
+            // Add event listeners to time frame buttons
+            document.querySelectorAll('.timeframe-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const timeframe = parseInt(this.dataset.timeframe);
+                    const timeframeName = this.textContent.trim();
+                    selectWingoTimeFrame(timeframe, timeframeName);
+                });
+            });
+            
+            // Add event listeners to game betting buttons
+            initializeWingoBetting();
+            
+            // Initialize custom bet button
+            document.querySelector('.wingo-custom-btn').addEventListener('click', function() {
+                showCustomBetInput('wingo');
+            });
+            
+            // Update results display
+            updateWingoResults();
+        }
+
+        function selectWingoTimeFrame(timeframe, timeframeName) {
+            gameState.wingoTimeFrame = timeframe;
+            gameState.wingoTimeFrameName = timeframeName;
+            
+            // Update UI
+            document.querySelectorAll('.timeframe-btn').forEach(btn => {
+                btn.classList.remove('gold-gradient');
+                btn.classList.add('bg-bdg-card', 'border', 'border-gold-primary/30');
+            });
+            
+            // Highlight selected time frame
+            document.querySelector(`.timeframe-btn[data-timeframe="${timeframe}"]`).classList.add('gold-gradient');
+            document.querySelector(`.timeframe-btn[data-timeframe="${timeframe}"]`).classList.remove('bg-bdg-card', 'border', 'border-gold-primary/30');
+            
+            // Update game section
+            document.getElementById('wingo-time').textContent = timeframeName + ' Game';
+            document.getElementById('wingo-timer').textContent = formatTime(timeframe);
+            document.getElementById('wingo-timer-bar').style.width = '100%';
+            
+            // Reset game timer
+            if (gameState.timerInterval) clearInterval(gameState.timerInterval);
+            
+            gameState.wingoTimer = timeframe;
+            updateWingoTimerDisplay();
+            
+            // Start timer
+            gameState.timerInterval = setInterval(() => {
+                gameState.wingoTimer--;
+                
+                if (gameState.wingoTimer <= 0) {
+                    gameState.wingoTimer = timeframe;
+                    simulateWingoGameResult();
+                }
+                
+                updateWingoTimerDisplay();
+            }, 1000);
+        }
+
+        function updateWingoResults() {
+            const container = document.getElementById('wingo-results-container');
+            container.innerHTML = '';
+            
+            const results = [
+                { period: '51304', number: 9, color: 'red', size: 'big' },
+                { period: '51303', number: 5, color: 'red', size: 'big' },
+                { period: '51302', number: 8, color: 'red', size: 'big' },
+                { period: '51301', number: 1, color: 'green', size: 'small' },
+                { period: '51300', number: 8, color: 'red', size: 'big' },
+                { period: '51299', number: 3, color: 'green', size: 'small' }
+            ];
+            
+            results.forEach(result => {
+                const bgColor = result.color === 'green' ? 'bg-bdg-green' : 'bg-bdg-red';
+                const div = document.createElement('div');
+                div.className = 'flex-shrink-0 w-16 h-16 ' + bgColor + ' rounded-bdg flex flex-col items-center justify-center';
+                div.innerHTML = `
+                    <p class="text-xs">#${result.period}</p>
+                    <p class="text-xl font-bold">${result.number}</p>
+                    <p class="text-xs">${result.size}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function initializeWingoBetting() {
+            // Bet amount buttons
+            document.querySelectorAll('.wingo-amount-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    gameState.wingoBet = parseInt(this.dataset.amount);
+                    document.querySelectorAll('.wingo-amount-btn').forEach(b => {
+                        b.classList.remove('gold-gradient');
+                        b.classList.add('bg-bdg-card');
+                    });
+                    this.classList.add('gold-gradient');
+                    this.classList.remove('bg-bdg-card');
+                    
+                    updateWingoBetDisplay();
+                });
+            });
+
+            // Color betting options
+            document.querySelectorAll('.wingo-color-bet').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    gameState.wingoSelectedColor = this.dataset.color;
+                    document.querySelectorAll('.wingo-color-bet').forEach(b => {
+                        b.classList.remove('opacity-100');
+                        b.classList.add('opacity-90');
+                    });
+                    this.classList.add('opacity-100');
+                    this.classList.remove('opacity-90');
+                });
+            });
+
+            // Number betting options
+            document.querySelectorAll('.wingo-number-bet').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    gameState.wingoSelectedNumber = parseInt(this.dataset.number);
+                    document.querySelectorAll('.wingo-number-bet').forEach(b => {
+                        b.classList.remove('gold-gradient');
+                        b.classList.add('bg-bdg-card');
+                    });
+                    this.classList.add('gold-gradient');
+                    this.classList.remove('bg-bdg-card');
+                });
+            });
+
+            // Size betting options
+            document.querySelectorAll('.wingo-size-bet').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    gameState.wingoSelectedSize = this.dataset.size;
+                    document.querySelectorAll('.wingo-size-bet').forEach(b => {
+                        b.classList.remove('bg-blue-700');
+                        b.classList.add('bg-blue-600');
+                    });
+                    this.classList.add('bg-blue-700');
+                    this.classList.remove('bg-blue-600');
+                });
+            });
+
+            // Clear bet button
+            document.getElementById('wingo-clear-bet')?.addEventListener('click', resetWingoBet);
+
+            // Place bet button
+            document.getElementById('wingo-place-bet')?.addEventListener('click', function() {
+                if (gameState.wingoBet <= 0) {
+                    alert('Please select a bet amount!');
+                    return;
+                }
+                
+                if (!gameState.wingoSelectedColor && !gameState.wingoSelectedNumber && !gameState.wingoSelectedSize) {
+                    alert('Please select a betting option!');
+                    return;
+                }
+                
+                if (gameState.wingoBet > gameState.balance) {
+                    showPopup('loss', 'Insufficient balance!');
+                    return;
+                }
+                
+                // Deduct bet from balance
+                gameState.balance -= gameState.wingoBet;
+                updateBalance();
+                
+                // Add to game history
+                const betRecord = {
+                    id: Date.now(),
+                    type: 'wingo',
+                    bet: gameState.wingoBet,
+                    color: gameState.wingoSelectedColor,
+                    number: gameState.wingoSelectedNumber,
+                    size: gameState.wingoSelectedSize,
+                    time: new Date().toLocaleTimeString(),
+                    timeframe: gameState.wingoTimeFrameName,
+                    period: '#' + Math.floor(100000 + Math.random() * 900000)
+                };
+                
+                gameState.wingoHistory.push(betRecord);
+                gameState.gameHistory.push(betRecord);
+                
+                // Update game period history
+                updateGamePeriodHistory();
+                
+                // Update home history
+                updateRecentGameHistory();
+                
+                alert(`Bet placed: ₹${gameState.wingoBet} on ${gameState.wingoTimeFrameName} game`);
+            });
+        }
+
+        function resetWingoBet() {
+            gameState.wingoBet = 0;
+            gameState.wingoSelectedColor = null;
+            gameState.wingoSelectedNumber = null;
+            gameState.wingoSelectedSize = null;
+            
+            document.querySelectorAll('.wingo-amount-btn, .wingo-number-bet').forEach(btn => {
+                btn.classList.remove('gold-gradient');
+                btn.classList.add('bg-bdg-card');
+            });
+            
+            document.querySelectorAll('.wingo-color-bet').forEach(btn => {
+                btn.classList.remove('opacity-100');
+                btn.classList.add('opacity-90');
+            });
+            
+            document.querySelectorAll('.wingo-size-bet').forEach(btn => {
+                btn.classList.remove('bg-blue-700');
+                btn.classList.add('bg-blue-600');
+            });
+            
+            updateWingoBetDisplay();
+        }
+
+        function updateWingoBetDisplay() {
+            const currentBetElement = document.getElementById('wingo-current-bet');
+            const potentialWinElement = document.getElementById('wingo-potential-win');
+            
+            if (currentBetElement) {
+                currentBetElement.textContent = gameState.wingoBet;
+            }
+            
+            if (potentialWinElement && gameState.wingoBet > 0) {
+                const multiplier = 1.98;
+                const potentialWin = gameState.wingoBet * multiplier;
+                potentialWinElement.textContent = potentialWin.toFixed(2);
+            }
+        }
+
+        function updateWingoTimerDisplay() {
+            const timerElement = document.getElementById('wingo-timer');
+            const timerBar = document.getElementById('wingo-timer-bar');
+            
+            if (timerElement && timerBar) {
+                timerElement.textContent = formatTime(gameState.wingoTimer);
+                
+                const percentage = (gameState.wingoTimer / gameState.wingoTimeFrame) * 100;
+                timerBar.style.width = `${percentage}%`;
+            }
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function simulateWingoGameResult() {
+            const resultNumber = Math.floor(Math.random() * 10);
+            const resultColor = resultNumber === 0 ? 'green' : 
+                              resultNumber >= 1 && resultNumber <= 4 ? 'red' : 'violet';
+            const resultSize = resultNumber >= 5 ? 'big' : 'small';
+            
+            // Check if user won
+            let won = false;
+            if ((gameState.wingoSelectedColor && gameState.wingoSelectedColor === resultColor) || 
+                (gameState.wingoSelectedNumber !== null && gameState.wingoSelectedNumber === resultNumber) || 
+                (gameState.wingoSelectedSize && gameState.wingoSelectedSize === resultSize)) {
+                won = true;
+                const winAmount = gameState.wingoBet * 1.98;
+                gameState.balance += winAmount;
+                
+                // Add win to history
+                const winRecord = {
+                    id: Date.now(),
+                    type: 'wingo',
+                    result: 'Win',
+                    amount: winAmount,
+                    bet: gameState.wingoBet,
+                    number: resultNumber,
+                    color: resultColor,
+                    size: resultSize,
+                    time: new Date().toLocaleTimeString(),
+                    period: '#' + Math.floor(100000 + Math.random() * 900000)
+                };
+                
+                gameState.wingoHistory.push(winRecord);
+                gameState.gameHistory.push(winRecord);
+                
+                showPopup('win', winAmount, `Number: ${resultNumber}, ${resultColor}, ${resultSize}`);
+            } else if (gameState.wingoBet > 0) {
+                // Add loss to history
+                const lossRecord = {
+                    id: Date.now(),
+                    type: 'wingo',
+                    result: 'Loss',
+                    amount: gameState.wingoBet,
+                    bet: gameState.wingoBet,
+                    number: resultNumber,
+                    color: resultColor,
+                    size: resultSize,
+                    time: new Date().toLocaleTimeString(),
+                    period: '#' + Math.floor(100000 + Math.random() * 900000)
+                };
+                
+                gameState.wingoHistory.push(lossRecord);
+                gameState.gameHistory.push(lossRecord);
+                
+                showPopup('loss', gameState.wingoBet, `Result: Number ${resultNumber}, ${resultColor}, ${resultSize}`);
+            }
+            
+            updateBalance();
+            resetWingoBet();
+            
+            // Update game period history
+            updateGamePeriodHistory();
+            
+            // Update home history
+            updateRecentGameHistory();
+        }
+
+        // Initialize Aviator Game
+        function initializeAviatorGame() {
+            // Reset aviator
+            gameState.aviatorMultiplier = 1.00;
+            document.getElementById('aviator-multiplier').textContent = '1.00x';
+            
+            // Hide cashout button
+            document.getElementById('aviator-cashout-btn').classList.add('hidden');
+            
+            // Initialize custom bet button
+            document.querySelector('.aviator-custom-btn').addEventListener('click', function() {
+                showCustomBetInput('aviator');
+            });
+            
+            // Initialize betting buttons
+            document.querySelectorAll('.aviator-amount-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    gameState.aviatorBet = parseInt(this.dataset.amount);
+                    document.querySelectorAll('.aviator-amount-btn').forEach(b => {
+                        b.classList.remove('gold-gradient');
+                        b.classList.add('bg-bdg-card');
+                    });
+                    this.classList.add('gold-gradient');
+                    this.classList.remove('bg-bdg-card');
+                    
+                    updateAviatorDisplay();
+                });
+            });
+            
+            // Update aviator history
+            updateAviatorHistory();
+            
+            // Initialize game buttons
+            initializeAviatorButtons();
+        }
+        
+        function updateAviatorHistory() {
+            const container = document.getElementById('aviator-history-container');
+            container.innerHTML = '';
+            
+            const history = gameState.aviatorHistory.length > 0 ? 
+                gameState.aviatorHistory.slice(-3).reverse() : 
+                [
+                    { id: '1284', multiplier: '2.45x', time: '2 minutes ago' },
+                    { id: '1283', multiplier: '1.87x', time: '4 minutes ago' },
+                    { id: '1282', multiplier: '10.24x', time: '6 minutes ago' }
+                ];
+            
+            history.forEach(game => {
+                const resultColor = parseFloat(game.multiplier) > 2 ? 'text-green-500' : 'text-red-500';
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-3 bg-bdg-card rounded-bdg';
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-plane text-gold-primary"></i>
+                        <div>
+                            <p class="font-bold">Game #${game.id || '001'}</p>
+                            <p class="text-xs opacity-70">${game.time}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold ${resultColor}">${game.multiplier}</p>
+                        <p class="text-xs opacity-70">Crashed at</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function initializeAviatorButtons() {
+            document.getElementById('aviator-place-bet')?.addEventListener('click', function() {
+                if (gameState.aviatorBet <= 0) {
+                    alert('Please select a bet amount!');
+                    return;
+                }
+                
+                if (gameState.aviatorBet > gameState.balance) {
+                    showPopup('loss', 'Insufficient balance!');
+                    return;
+                }
+                
+                // Deduct bet
+                gameState.balance -= gameState.aviatorBet;
+                updateBalance();
+                
+                // Add to game history
+                const betRecord = {
+                    id: Date.now(),
+                    type: 'aviator',
+                    bet: gameState.aviatorBet,
+                    time: new Date().toLocaleTimeString(),
+                    status: 'Placed',
+                    period: '#' + Math.floor(100000 + Math.random() * 900000)
+                };
+                
+                gameState.aviatorHistory.push(betRecord);
+                gameState.gameHistory.push(betRecord);
+                
+                // Start aviator game
+                startAviatorGame();
+                
+                // Update game period history
+                updateGamePeriodHistory();
+            });
+
+            document.getElementById('aviator-cashout-btn')?.addEventListener('click', function() {
+                if (!gameState.aviatorInterval) return;
+                
+                clearInterval(gameState.aviatorInterval);
+                gameState.aviatorInterval = null;
+                
+                const winAmount = gameState.aviatorBet * gameState.aviatorMultiplier;
+                gameState.balance += winAmount;
+                
+                // Add win to history
+                const winRecord = {
+                    id: Date.now(),
+                    type: 'aviator',
+                    result: 'Win',
+                    amount: winAmount,
+                    bet: gameState.aviatorBet,
+                    multiplier: gameState.aviatorMultiplier.toFixed(2) + 'x',
+                    time: new Date().toLocaleTimeString(),
+                    period: '#' + Math.floor(100000 + Math.random() * 900000)
+                };
+                
+                gameState.aviatorHistory.push(winRecord);
+                gameState.gameHistory.push(winRecord);
+                
+                showPopup('win', winAmount, `Cashed out at ${gameState.aviatorMultiplier.toFixed(2)}x`);
+                
+                document.getElementById('aviator-cashout-btn').classList.add('hidden');
+                gameState.aviatorBet = 0;
+                updateAviatorDisplay();
+                updateBalance();
+                
+                // Update history
+                updateAviatorHistory();
+                updateGamePeriodHistory();
+                updateRecentGameHistory();
+            });
+        }
+
+        function startAviatorGame() {
+            gameState.aviatorMultiplier = 1.00;
+            document.getElementById('aviator-cashout-btn').classList.remove('hidden');
+            
+            // Simulate multiplier increase
+            if (gameState.aviatorInterval) clearInterval(gameState.aviatorInterval);
+            
+            gameState.aviatorInterval = setInterval(() => {
+                // Randomly increase multiplier
+                const increase = 0.05 + Math.random() * 0.2;
+                gameState.aviatorMultiplier += increase;
+                
+                // Random crash between 1.2x and 10x
+                const crashPoint = 1.2 + Math.random() * 8.8;
+                
+                if (gameState.aviatorMultiplier >= crashPoint) {
+                    // Game crashed
+                    clearInterval(gameState.aviatorInterval);
+                    gameState.aviatorInterval = null;
+                    document.getElementById('aviator-cashout-btn').classList.add('hidden');
+                    
+                    // If user didn't cash out, they lose
+                    if (gameState.aviatorBet > 0) {
+                        // Add loss to history
+                        const lossRecord = {
+                            id: Date.now(),
+                            type: 'aviator',
+                            result: 'Loss',
+                            amount: gameState.aviatorBet,
+                            bet: gameState.aviatorBet,
+                            multiplier: gameState.aviatorMultiplier.toFixed(2) + 'x',
+                            time: new Date().toLocaleTimeString(),
+                            period: '#' + Math.floor(100000 + Math.random() * 900000)
+                        };
+                        
+                        gameState.aviatorHistory.push(lossRecord);
+                        gameState.gameHistory.push(lossRecord);
+                        
+                        showPopup('loss', gameState.aviatorBet, `Crashed at ${gameState.aviatorMultiplier.toFixed(2)}x`);
+                        gameState.aviatorBet = 0;
+                        updateAviatorDisplay();
+                        
+                        // Update history
+                        updateAviatorHistory();
+                        updateGamePeriodHistory();
+                        updateRecentGameHistory();
+                    }
+                }
+                
+                updateAviatorDisplay();
+            }, 200);
+        }
+
+        function updateAviatorDisplay() {
+            document.getElementById('aviator-bet').textContent = gameState.aviatorBet;
+            document.getElementById('aviator-multiplier').textContent = gameState.aviatorMultiplier.toFixed(2) + 'x';
+            document.getElementById('aviator-cashout').textContent = (gameState.aviatorBet * gameState.aviatorMultiplier).toFixed(2);
+        }
+
+        // Initialize Slots Game
+        function initializeSlotsGame() {
+            // Reset slots
+            gameState.slotsBet = 0;
+            updateSlotsDisplay();
+            
+            // Initialize custom bet button
+            document.querySelector('.slots-custom-btn').addEventListener('click', function() {
+                showCustomBetInput('slots');
+            });
+            
+            // Initialize betting buttons
+            document.querySelectorAll('.slots-amount-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    gameState.slotsBet = parseInt(this.dataset.amount);
+                    document.querySelectorAll('.slots-amount-btn').forEach(b => {
+                        b.classList.remove('gold-gradient');
+                        b.classList.add('bg-bdg-card');
+                    });
+                    this.classList.add('gold-gradient');
+                    this.classList.remove('bg-bdg-card');
+                    
+                    updateSlotsDisplay();
+                });
+            });
+            
+            // Update slots history
+            updateSlotsHistory();
+            
+            // Initialize spin button
+            document.getElementById('spin-btn')?.addEventListener('click', function() {
+                if (gameState.slotsBet <= 0) {
+                    alert('Please select a bet amount!');
+                    return;
+                }
+                
+                if (gameState.slotsBet > gameState.balance) {
+                    showPopup('loss', 'Insufficient balance!');
+                    return;
+                }
+                
+                // Deduct bet
+                gameState.balance -= gameState.slotsBet;
+                updateBalance();
+                
+                // Add to game history
+                const betRecord = {
+                    id: Date.now(),
+                    type: 'slots',
+                    bet: gameState.slotsBet,
+                    time: new Date().toLocaleTimeString(),
+                    status: 'Spinning',
+                    period: '#' + Math.floor(100000 + Math.random() * 900000)
+                };
+                
+                gameState.slotsHistory.push(betRecord);
+                gameState.gameHistory.push(betRecord);
+                
+                // Start slots spin
+                spinSlots();
+                
+                // Update game period history
+                updateGamePeriodHistory();
+            });
+        }
+        
+        function updateSlotsHistory() {
+            const container = document.getElementById('slots-history-container');
+            container.innerHTML = '';
+            
+            const history = gameState.slotsHistory.length > 0 ? 
+                gameState.slotsHistory.slice(-3).reverse() : 
+                [
+                    { player: 'Player001', combination: '3 Diamonds', amount: '₹5,000', multiplier: '50x' },
+                    { player: 'Player042', combination: '3 Gems', amount: '₹2,500', multiplier: '25x' },
+                    { player: 'Player089', combination: '3 Crowns', amount: '₹1,500', multiplier: '15x' }
+                ];
+            
+            history.forEach(win => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-3 bg-bdg-card rounded-bdg';
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-diamond text-green-500"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold">${win.player || 'You'}</p>
+                            <p class="text-xs opacity-70">${win.combination || 'Spin'}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-green-500">${win.amount || '₹0'}</p>
+                        <p class="text-xs opacity-70">${win.multiplier || '0x'}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function spinSlots() {
+            const reels = ['diamond', 'gem', 'crown', 'seven', 'bar'];
+            const multipliers = {
+                'diamond': 50,
+                'gem': 25,
+                'crown': 15,
+                'seven': 10,
+                'bar': 5
+            };
+            
+            // Show spinning animation
+            const reelElements = [document.getElementById('reel1'), 
+                                 document.getElementById('reel2'), 
+                                 document.getElementById('reel3')];
+            
+            reelElements.forEach(reel => {
+                reel.classList.add('spinning');
+                reel.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            });
+            
+            // Stop spinning after 2 seconds
+            setTimeout(() => {
+                reelElements.forEach(reel => {
+                    reel.classList.remove('spinning');
+                });
+                
+                // Generate random results
+                const results = [];
+                for (let i = 0; i < 3; i++) {
+                    const randomReel = reels[Math.floor(Math.random() * reels.length)];
+                    results.push(randomReel);
+                }
+                
+                // Display results
+                const icons = {
+                    'diamond': 'fa-diamond',
+                    'gem': 'fa-gem',
+                    'crown': 'fa-crown',
+                    'seven': 'fa-dice',
+                    'bar': 'fa-chart-bar'
+                };
+                
+                const colors = {
+                    'diamond': 'text-blue-400',
+                    'gem': 'text-purple-400',
+                    'crown': 'text-yellow-400',
+                    'seven': 'text-red-400',
+                    'bar': 'text-green-400'
+                };
+                
+                for (let i = 0; i < 3; i++) {
+                    reelElements[i].innerHTML = `<i class="fas ${icons[results[i]]} ${colors[results[i]]}"></i>`;
+                }
+                
+                // Check win
+                const allSame = results[0] === results[1] && results[1] === results[2];
+                
+                if (allSame) {
+                    const multiplier = multipliers[results[0]];
+                    const winAmount = gameState.slotsBet * multiplier;
+                    gameState.balance += winAmount;
+                    
+                    // Add win to history
+                    const winRecord = {
+                        id: Date.now(),
+                        type: 'slots',
+                        result: 'Win',
+                        amount: winAmount,
+                        bet: gameState.slotsBet,
+                        combination: `3 ${results[0]}s`,
+                        multiplier: `${multiplier}x`,
+                        time: new Date().toLocaleTimeString(),
+                        period: '#' + Math.floor(100000 + Math.random() * 900000)
+                    };
+                    
+                    gameState.slotsHistory.push(winRecord);
+                    gameState.gameHistory.push(winRecord);
+                    
+                    showPopup('win', winAmount, `3 ${results[0]}s - ${multiplier}x`);
+                } else {
+                    // Add loss to history
+                    const lossRecord = {
+                        id: Date.now(),
+                        type: 'slots',
+                        result: 'Loss',
+                        amount: gameState.slotsBet,
+                        bet: gameState.slotsBet,
+                        combination: `${results[0]}, ${results[1]}, ${results[2]}`,
+                        time: new Date().toLocaleTimeString(),
+                        period: '#' + Math.floor(100000 + Math.random() * 900000)
+                    };
+                    
+                    gameState.slotsHistory.push(lossRecord);
+                    gameState.gameHistory.push(lossRecord);
+                    
+                    showPopup('loss', gameState.slotsBet, 'Better luck next time!');
+                }
+                
+                gameState.slotsBet = 0;
+                updateSlotsDisplay();
+                updateBalance();
+                
+                // Update history
+                updateSlotsHistory();
+                updateGamePeriodHistory();
+                updateRecentGameHistory();
+            }, 2000);
+        }
+
+        function updateSlotsDisplay() {
+            document.getElementById('slots-bet').textContent = gameState.slotsBet;
+            document.getElementById('slots-win').textContent = (gameState.slotsBet * 50).toFixed(2); // Max win
+        }
+
+        // Custom Bet Amount Functionality
+        function showCustomBetInput(gameType) {
+            document.getElementById('custom-bet-input').classList.add('active');
+            document.getElementById('custom-bet-amount').focus();
+            
+            // Store which game this is for
+            document.getElementById('custom-bet-input').dataset.game = gameType;
+        }
+        
+        document.getElementById('set-custom-bet').addEventListener('click', function() {
+            const amount = parseInt(document.getElementById('custom-bet-amount').value);
+            const gameType = document.getElementById('custom-bet-input').dataset.game;
+            
+            if (!amount || amount < 10) {
+                alert('Please enter a valid amount (minimum ₹10)');
+                return;
+            }
+            
+            if (gameType === 'wingo') {
+                gameState.wingoBet = amount;
+                updateWingoBetDisplay();
+                
+                // Highlight custom amount
+                document.querySelectorAll('.wingo-amount-btn').forEach(b => {
+                    b.classList.remove('gold-gradient');
+                    b.classList.add('bg-bdg-card');
+                });
+            } else if (gameType === 'aviator') {
+                gameState.aviatorBet = amount;
+                updateAviatorDisplay();
+                
+                document.querySelectorAll('.aviator-amount-btn').forEach(b => {
+                    b.classList.remove('gold-gradient');
+                    b.classList.add('bg-bdg-card');
+                });
+            } else if (gameType === 'slots') {
+                gameState.slotsBet = amount;
+                updateSlotsDisplay();
+                
+                document.querySelectorAll('.slots-amount-btn').forEach(b => {
+                    b.classList.remove('gold-gradient');
+                    b.classList.add('bg-bdg-card');
+                });
+            }
+            
+            document.getElementById('custom-bet-input').classList.remove('active');
+            document.getElementById('custom-bet-amount').value = '';
+        });
+        
+        document.querySelector('.close-custom-bet').addEventListener('click', function() {
+            document.getElementById('custom-bet-input').classList.remove('active');
+        });
+
+        // Update Game Period History
+        function updateGamePeriodHistory() {
+            const container = document.getElementById('game-period-history');
+            container.innerHTML = '';
+            
+            // Get recent history from all games
+            const allHistory = [...gameState.wingoHistory, ...gameState.aviatorHistory, ...gameState.slotsHistory];
+            
+            // Sort by time (most recent first) and take last 5
+            const recentHistory = allHistory
+                .sort((a, b) => b.id - a.id)
+                .slice(0, 5);
+            
+            recentHistory.forEach(record => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gold-primary/10';
+                
+                let gameName = '';
+                let result = '';
+                let resultClass = '';
+                
+                if (record.type === 'wingo') {
+                    gameName = 'WinGo';
+                    if (record.result === 'Win') {
+                        result = `+₹${record.amount || record.bet}`;
+                        resultClass = 'text-green-500';
+                    } else if (record.result === 'Loss') {
+                        result = `-₹${record.amount || record.bet}`;
+                        resultClass = 'text-red-500';
+                    } else {
+                        result = `₹${record.bet}`;
+                        resultClass = 'text-yellow-500';
+                    }
+                } else if (record.type === 'aviator') {
+                    gameName = 'Aviator';
+                    if (record.result === 'Win') {
+                        result = `+₹${record.amount || record.bet}`;
+                        resultClass = 'text-green-500';
+                    } else if (record.result === 'Loss') {
+                        result = `-₹${record.amount || record.bet}`;
+                        resultClass = 'text-red-500';
+                    } else {
+                        result = `₹${record.bet}`;
+                        resultClass = 'text-yellow-500';
+                    }
+                } else if (record.type === 'slots') {
+                    gameName = 'Slots';
+                    if (record.result === 'Win') {
+                        result = `+₹${record.amount || record.bet}`;
+                        resultClass = 'text-green-500';
+                    } else if (record.result === 'Loss') {
+                        result = `-₹${record.amount || record.bet}`;
+                        resultClass = 'text-red-500';
+                    } else {
+                        result = `₹${record.bet}`;
+                        resultClass = 'text-yellow-500';
+                    }
+                }
+                
+                row.innerHTML = `
+                    <td class="py-2">${gameName}</td>
+                    <td class="py-2">${record.period || 'N/A'}</td>
+                    <td class="py-2 ${resultClass} font-bold">${result}</td>
+                    <td class="py-2">₹${record.amount || record.bet || '0'}</td>
+                    <td class="py-2">${record.time || 'Just now'}</td>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        // Initialize Deposit and Withdraw
+        function initializeDepositWithdraw() {
+            // Deposit buttons
+            document.querySelectorAll('.deposit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.getElementById('deposit-modal').classList.add('active');
+                    showPaymentSection('upi');
+                });
+            });
+            
+            // Withdraw buttons
+            document.querySelectorAll('.withdraw-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.getElementById('withdraw-modal').classList.add('active');
+                    showWithdrawSection('bank');
+                    updateWithdrawCalculations();
+                });
+            });
+            
+            // Payment method selection
+            document.querySelectorAll('.payment-method-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const method = this.dataset.method;
+                    showPaymentSection(method);
+                });
+            });
+            
+            // Withdraw method selection
+            document.querySelectorAll('.withdraw-method-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const method = this.dataset.method;
+                    showWithdrawSection(method);
+                });
+            });
+            
+            // Close modals
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.getElementById('deposit-modal').classList.remove('active');
+                    document.getElementById('withdraw-modal').classList.remove('active');
+                    document.getElementById('agent-modal').classList.remove('active');
+                });
+            });
+            
+            // Confirm deposit
+            document.getElementById('confirm-deposit')?.addEventListener('click', function() {
+                const amount = parseInt(document.getElementById('deposit-amount').value);
+                
+                if (!amount || amount < 100) {
+                    alert('Minimum deposit amount is ₹100');
+                    return;
+                }
+                
+                // Add to balance
+                gameState.balance += amount;
+                updateBalance();
+                
+                // Add to transaction history
+                const depositRecord = {
+                    id: Date.now(),
+                    type: 'deposit',
+                    amount: amount,
+                    method: gameState.selectedPaymentMethod,
+                    status: 'Completed',
+                    time: new Date().toLocaleString()
+                };
+                
+                gameState.transactionHistory.push(depositRecord);
+                
+                alert(`Deposit of ₹${amount} successful!`);
+                
+                document.getElementById('deposit-modal').classList.remove('active');
+                document.getElementById('deposit-amount').value = '';
+            });
+            
+            // Confirm withdraw
+            document.getElementById('confirm-withdraw')?.addEventListener('click', function() {
+                const amount = parseInt(document.getElementById('withdraw-amount').value);
+                
+                if (!amount || amount < 500) {
+                    alert('Minimum withdrawal amount is ₹500');
+                    return;
+                }
+                
+                if (amount > gameState.balance) {
+                    alert('Insufficient balance');
+                    return;
+                }
+                
+                // Deduct from balance
+                gameState.balance -= amount;
+                updateBalance();
+                
+                // Add to transaction history
+                const withdrawRecord = {
+                    id: Date.now(),
+                    type: 'withdrawal',
+                    amount: amount,
+                    method: gameState.selectedWithdrawMethod,
+                    status: 'Processing',
+                    time: new Date().toLocaleString()
+                };
+                
+                gameState.transactionHistory.push(withdrawRecord);
+                
+                alert(`Withdrawal request of ₹${amount} submitted. Processing time: 2-24 hours.`);
+                
+                document.getElementById('withdraw-modal').classList.remove('active');
+                document.getElementById('withdraw-amount').value = '';
+            });
+        }
+        
+        function showPaymentSection(method) {
+            gameState.selectedPaymentMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.payment-method-btn').forEach(btn => {
+                btn.classList.remove('border-gold-primary');
+                btn.classList.add('border-gold-primary/10');
+            });
+            
+            document.querySelector(`.payment-method-btn[data-method="${method}"]`).classList.add('border-gold-primary');
+            document.querySelector(`.payment-method-btn[data-method="${method}"]`).classList.remove('border-gold-primary/10');
+            
+            // Show/hide sections
+            if (method === 'upi') {
+                document.getElementById('upi-details').classList.remove('hidden');
+                document.getElementById('crypto-details').classList.add('hidden');
+            } else {
+                document.getElementById('upi-details').classList.add('hidden');
+                document.getElementById('crypto-details').classList.remove('hidden');
+            }
+        }
+        
+        function showWithdrawSection(method) {
+            gameState.selectedWithdrawMethod = method;
+            
+            // Update UI
+            document.querySelectorAll('.withdraw-method-btn').forEach(btn => {
+                btn.classList.remove('border-gold-primary');
+                btn.classList.add('border-gold-primary/10');
+            });
+            
+            document.querySelector(`.withdraw-method-btn[data-method="${method}"]`).classList.add('border-gold-primary');
+            document.querySelector(`.withdraw-method-btn[data-method="${method}"]`).classList.remove('border-gold-primary/10');
+            
+            // Show/hide sections
+            if (method === 'bank') {
+                document.getElementById('bank-details').classList.remove('hidden');
+                document.getElementById('upi-withdraw-details').classList.add('hidden');
+            } else {
+                document.getElementById('bank-details').classList.add('hidden');
+                document.getElementById('upi-withdraw-details').classList.remove('hidden');
+            }
+        }
+        
+        function updateWithdrawCalculations() {
+            document.getElementById('available-balance').textContent = gameState.balance.toLocaleString('en-IN', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        // Initialize Agent Application
+        function initializeAgentApplication() {
+            document.getElementById('apply-agent-btn').addEventListener('click', function() {
+                document.getElementById('agent-modal').classList.add('active');
+            });
+            
+            document.getElementById('submit-agent-application')?.addEventListener('click', function() {
+                const firstName = document.getElementById('agent-first-name').value;
+                const lastName = document.getElementById('agent-last-name').value;
+                const phone = document.getElementById('agent-phone').value;
+                const email = document.getElementById('agent-email').value;
+                const address = document.getElementById('agent-address').value;
+                const termsAgreed = document.getElementById('agent-terms').checked;
+                
+                if (!firstName || !lastName || !phone || !email || !address) {
+                    alert('Please fill all required fields');
+                    return;
+                }
+                
+                if (!termsAgreed) {
+                    alert('Please agree to the terms and conditions');
+                    return;
+                }
+                
+                if (phone.length !== 10) {
+                    alert('Please enter valid 10-digit phone number');
+                    return;
+                }
+                
+                alert('Agent application submitted successfully! Our team will contact you within 24 hours.');
+                
+                // Reset form
+                document.getElementById('agent-first-name').value = '';
+                document.getElementById('agent-last-name').value = '';
+                document.getElementById('agent-phone').value = '';
+                document.getElementById('agent-email').value = '';
+                document.getElementById('agent-address').value = '';
+                document.getElementById('agent-terms').checked = false;
+                
+                document.getElementById('agent-modal').classList.remove('active');
+            });
+        }
+
+        // Initialize Promotion Buttons
+        function initializePromotionButtons() {
+            // Claim welcome bonus
+            document.getElementById('claim-welcome-bonus')?.addEventListener('click', function() {
+                if (gameState.bonusClaimed) {
+                    alert('Welcome bonus already claimed!');
+                    return;
+                }
+                
+                gameState.balance += 500;
+                updateBalance();
+                gameState.bonusClaimed = true;
+                
+                // Add to transaction history
+                const bonusRecord = {
+                    id: Date.now(),
+                    type: 'bonus',
+                    amount: 500,
+                    reason: 'Welcome Bonus',
+                    status: 'Completed',
+                    time: new Date().toLocaleString()
+                };
+                
+                gameState.transactionHistory.push(bonusRecord);
+                
+                alert('Welcome bonus of ₹500 claimed successfully!');
+            });
+            
+            // Claim daily bonus
+            document.querySelector('.claim-btn')?.addEventListener('click', function() {
+                if (gameState.dailyBonusClaimed) {
+                    alert('Daily bonus already claimed today!');
+                    return;
+                }
+                
+                gameState.balance += 100;
+                updateBalance();
+                gameState.dailyBonusClaimed = true;
+                
+                // Add to transaction history
+                const bonusRecord = {
+                    id: Date.now(),
+                    type: 'bonus',
+                    amount: 100,
+                    reason: 'Daily Bonus - Day 6',
+                    status: 'Completed',
+                    time: new Date().toLocaleString()
+                };
+                
+                gameState.transactionHistory.push(bonusRecord);
+                
+                alert('Daily bonus of ₹100 claimed successfully!');
+            });
+            
+            // Copy referral code
+            document.getElementById('copy-referral')?.addEventListener('click', function() {
+                const referralCode = 'NNGJ20PN';
+                navigator.clipboard.writeText(referralCode);
+                alert('Referral code copied to clipboard: ' + referralCode);
+            });
+            
+            // Share referral link
+            document.getElementById('share-referral')?.addEventListener('click', function() {
+                const referralLink = 'https://bdggame.com/ref/NNGJ20PN';
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Join BDG Game',
+                        text: 'Join BDG Game using my referral link and get bonus!',
+                        url: referralLink
+                    });
+                } else {
+                    navigator.clipboard.writeText(referralLink);
+                    alert('Referral link copied to clipboard!');
+                }
+            });
+            
+            // Other promotion buttons
+            document.getElementById('claim-reload-bonus')?.addEventListener('click', function() {
+                alert('10% Daily Reload Bonus: Deposit any amount to get 10% extra bonus!');
+            });
+            
+            document.getElementById('learn-cashback')?.addEventListener('click', function() {
+                alert('Weekly Cashback: Get up to 15% cashback on your weekly losses. Contact support for details.');
+            });
+            
+            document.getElementById('check-birthday-bonus')?.addEventListener('click', function() {
+                alert('Birthday Bonus: Special bonus on your birthday! Update your birth date in account settings.');
+            });
+        }
+
+        // Balance management
+        function updateBalance() {
+            const balanceElements = document.querySelectorAll('#balance, #main-balance');
+            balanceElements.forEach(el => {
+                el.textContent = gameState.balance.toLocaleString('en-IN', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+            });
+        }
+
+        // Stop all games
+        function stopAllGames() {
+            if (gameState.timerInterval) {
+                clearInterval(gameState.timerInterval);
+                gameState.timerInterval = null;
+            }
+            
+            if (gameState.aviatorInterval) {
+                clearInterval(gameState.aviatorInterval);
+                gameState.aviatorInterval = null;
+            }
+        }
+
+        // Account Page Transaction History
+        function initializeAccountMenu() {
+            document.querySelectorAll('.account-menu-item[data-type]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const type = this.dataset.type;
+                    if (type === 'transaction' || type === 'deposit' || type === 'withdrawal' || type === 'game') {
+                        showTransactionModal(type);
+                    } else if (type === 'security') {
+                        showSecuritySettings();
+                    } else if (type === 'support') {
+                        showSupportInfo();
+                    } else if (type === 'about') {
+                        showAboutInfo();
+                    }
+                });
+            });
+        }
+        
+        function showTransactionModal(type) {
+            const modal = document.getElementById('transaction-modal');
+            const title = document.getElementById('transaction-modal-title');
+            const list = document.getElementById('transaction-list');
+            
+            // Set title based on type
+            const titles = {
+                'transaction': 'Transaction History',
+                'deposit': 'Deposit History',
+                'withdrawal': 'Withdrawal History',
+                'game': 'Game History'
+            };
+            
+            title.textContent = titles[type] || 'Transaction History';
+            list.innerHTML = '';
+            
+            let transactions = [];
+            
+            if (type === 'game') {
+                // Show game history
+                transactions = gameState.gameHistory.length > 0 ? 
+                    gameState.gameHistory.slice(-10).reverse() : 
+                    initialGameHistory;
+            } else {
+                // Show transaction history
+                transactions = gameState.transactionHistory.length > 0 ? 
+                    gameState.transactionHistory : 
+                    mockTransactionHistory;
+                
+                // Filter by type if needed
+                if (type === 'deposit') {
+                    transactions = transactions.filter(t => t.type === 'deposit');
+                } else if (type === 'withdrawal') {
+                    transactions = transactions.filter(t => t.type === 'withdrawal');
+                }
+            }
+            
+            if (transactions.length === 0) {
+                list.innerHTML = '<p class="text-center py-4 text-gray-400">No transactions found</p>';
+            } else {
+                transactions.forEach(transaction => {
+                    const item = document.createElement('div');
+                    item.className = 'transaction-item';
+                    
+                    let icon = 'fa-wallet';
+                    let color = 'text-gold-primary';
+                    let title = transaction.type ? transaction.type.toUpperCase() : 'Transaction';
+                    
+                    if (type === 'game') {
+                        // Game history item
+                        if (transaction.type === 'wingo') {
+                            icon = 'fa-clock';
+                            title = 'WinGo Game';
+                        } else if (transaction.type === 'aviator') {
+                            icon = 'fa-plane';
+                            title = 'Aviator Game';
+                        } else if (transaction.type === 'slots') {
+                            icon = 'fa-gamepad';
+                            title = 'Slots Game';
+                        }
+                        
+                        const resultClass = transaction.result === 'Win' ? 'text-green-500' : 'text-red-500';
+                        const amount = transaction.result === 'Win' ? `+₹${transaction.amount}` : `-₹${transaction.amount || transaction.bet}`;
+                        
+                        item.innerHTML = `
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                        <i class="fas ${icon}"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold">${title}</p>
+                                        <p class="text-xs opacity-70">${transaction.time}</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold ${resultClass}">${amount}</p>
+                                    <p class="text-xs opacity-70">${transaction.result || 'Placed'}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Transaction history item
+                        if (transaction.type === 'deposit') {
+                            icon = 'fa-arrow-down';
+                            color = 'text-green-500';
+                        } else if (transaction.type === 'withdrawal') {
+                            icon = 'fa-arrow-up';
+                            color = 'text-red-500';
+                        } else if (transaction.type === 'bonus') {
+                            icon = 'fa-gift';
+                            color = 'text-yellow-500';
+                        }
+                        
+                        item.innerHTML = `
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-bdg-card rounded-full flex items-center justify-center">
+                                        <i class="fas ${icon} ${color}"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold">${title}</p>
+                                        <p class="text-xs opacity-70">${transaction.method || transaction.reason || ''}</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-bold ${transaction.type === 'deposit' || transaction.type === 'bonus' ? 'text-green-500' : 'text-red-500'}">
+                                        ${transaction.type === 'deposit' || transaction.type === 'bonus' ? '+' : '-'}₹${transaction.amount}
+                                    </p>
+                                    <p class="text-xs opacity-70">${transaction.time}</p>
+                                    <span class="text-xs ${transaction.status === 'Completed' ? 'text-green-500' : 
+                                        transaction.status === 'Processing' ? 'text-yellow-500' : 'text-gray-500'}">
+                                        ${transaction.status || ''}
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    list.appendChild(item);
+                });
+            }
+            
+            modal.classList.remove('hidden');
+        }
+        
+        function showSecuritySettings() {
+            const modal = document.getElementById('transaction-modal');
+            const title = document.getElementById('transaction-modal-title');
+            const list = document.getElementById('transaction-list');
+            
+            title.textContent = 'Security Settings';
+            list.innerHTML = `
+                <div class="space-y-4">
+                    <div class="p-4 bg-bdg-card rounded-bdg">
+                        <h4 class="font-bold mb-2">Change Password</h4>
+                        <input type="password" class="input-field mb-2" placeholder="Current Password">
+                        <input type="password" class="input-field mb-2" placeholder="New Password">
+                        <input type="password" class="input-field mb-3" placeholder="Confirm New Password">
+                        <button class="w-full py-2 gold-gradient rounded-bdg font-bold">Update Password</button>
+                    </div>
+                    <div class="p-4 bg-bdg-card rounded-bdg">
+                        <h4 class="font-bold mb-2">Two-Factor Authentication</h4>
+                        <p class="text-sm opacity-70 mb-3">Add extra security to your account</p>
+                        <button class="w-full py-2 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold">Enable 2FA</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+        
+        function showSupportInfo() {
+            const modal = document.getElementById('transaction-modal');
+            const title = document.getElementById('transaction-modal-title');
+            const list = document.getElementById('transaction-list');
+            
+            title.textContent = 'Customer Support';
+            list.innerHTML = `
+                <div class="space-y-4">
+                    <div class="p-4 bg-bdg-card rounded-bdg text-center">
+                        <i class="fas fa-headset text-4xl text-gold-primary mb-3"></i>
+                        <h4 class="font-bold mb-2">24/7 Customer Support</h4>
+                        <p class="text-sm opacity-70 mb-3">We're here to help you anytime</p>
+                        <div class="space-y-2">
+                            <a href="#" class="block p-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/10">
+                                <i class="fas fa-whatsapp mr-2 text-green-500"></i> WhatsApp Support
+                            </a>
+                            <a href="#" class="block p-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/10">
+                                <i class="fas fa-phone-alt mr-2"></i> Call: +91-XXXXXXXXXX
+                            </a>
+                            <a href="#" class="block p-3 bg-bdg-card rounded-bdg hover:bg-gold-primary/10">
+                                <i class="fas fa-envelope mr-2"></i> Email: support@bdggame.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+        
+        function showAboutInfo() {
+            const modal = document.getElementById('transaction-modal');
+            const title = document.getElementById('transaction-modal-title');
+            const list = document.getElementById('transaction-list');
+            
+            title.textContent = 'About BDG GAME';
+            list.innerHTML = `
+                <div class="space-y-4">
+                    <div class="p-4 bg-bdg-card rounded-bdg text-center">
+                        <div class="w-20 h-20 bg-white/5 rounded-[1.5rem] flex items-center justify-center backdrop-blur-md border border-gold-primary/30 mx-auto mb-4">
+                            <span class="text-3xl font-bold text-gold-primary">BDG</span>
+                        </div>
+                        <h4 class="font-bold mb-2">BDG GAME</h4>
+                        <p class="text-sm opacity-70 mb-3">Version 1.0.0</p>
+                        <p class="text-sm opacity-70 mb-4">Premium Gaming Platform offering secure and fair gaming experience with instant withdrawals and 24/7 support.</p>
+                        <div class="text-xs opacity-50">
+                            <p>© 2024 BDG GAME. All rights reserved.</p>
+                            <p class="mt-2">Licensed and Regulated</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+        
+        // Close transaction modal
+        document.querySelector('.close-transaction-modal').addEventListener('click', function() {
+            document.getElementById('transaction-modal').classList.add('hidden');
+        });
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to logout?')) {
+                // Reset game state
+                gameState.isLoggedIn = false;
+                gameState.userData = null;
+                
+                // Hide app and show login page
+                document.getElementById('app').classList.add('hidden');
+                document.getElementById('login-page').classList.remove('hidden');
+                
+                // Reset login form
+                document.getElementById('login-phone').value = '';
+                document.getElementById('login-password').value = '';
+                showLoginForm();
+                
+                // Stop all games
+                stopAllGames();
+            }
+        });
+
+        // Popup system
+        function showPopup(type, amount, message) {
+            if (type === 'win') {
+                document.getElementById('win-amount').textContent = typeof amount === 'number' ? amount.toFixed(2) : amount;
+                document.getElementById('win-popup').classList.add('active');
+            } else if (type === 'loss') {
+                document.getElementById('loss-amount').textContent = typeof amount === 'number' ? amount.toFixed(2) : amount;
+                document.getElementById('loss-popup').classList.add('active');
+            }
+        }
+
+        // Close popups
+        document.querySelectorAll('.close-popup').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('win-popup').classList.remove('active');
+                document.getElementById('loss-popup').classList.remove('active');
+            });
+        });
+
+        // Initialize first nav button as active
+        document.querySelector('.nav-btn[data-page="home"]').classList.add('gold-gradient', 'text-white');
+        document.querySelector('.nav-btn[data-page="home"]').classList.remove('hover:bg-gold-primary/10');
+    </script>
+</body>
+</html>
