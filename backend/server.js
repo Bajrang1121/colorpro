@@ -137,7 +137,15 @@ app.get('/health', (req, res) => {
     timestamp: new Date().toISOString() 
   });
 });
+// Test karne ke liye ki backend live hai
+app.get('/', (req, res) => {
+    res.send("Backend is Live and Running! ✅");
+});
 
+// Aapka login/register route niche hoga...
+app.post('/api/register', (req, res) => {
+    // register logic
+});
 // 2. Send OTP for Registration
 app.post('/api/auth/send-otp-register', async (req, res) => {
   try {
@@ -696,11 +704,9 @@ app.post('/api/auth/check-phone', async (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`🔗 Backend URL: https://colorpro-vfgm.onrender.com`);
-  console.log(`📱 Authentication API ready`);
+const PORT = process.env.PORT || 10000; // Render aksar 10000 use karta hai
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
 });
 
 export { app };
