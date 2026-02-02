@@ -1,6 +1,24 @@
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+const firebaseConfig = {
+  apiKey: "AIzaSyCdXXFRUZo0y_jEa4gYyHdMiYxxvNd18Cg",
+  authDomain: "bdg-game-4f0eb.firebaseapp.com",
+  projectId: "bdg-game-4f0eb",
+  storageBucket: "bdg-game-4f0eb.firebasestorage.app",
+  messagingSenderId: "56509330896",
+  appId: "1:56509330896:web:11441164c5755a27a4f5d5",
+  measurementId: "G-6PLHRFXKJH"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+
 // ✅ Game Configuration
 const BACKEND_URL = ' https://colorpro-vfgm.onrender.com';
 const WS_URL = ' https://colorpro-vfgm.onrender.com';
+
 
 // ✅ Game State Management
 let gameState = {
@@ -435,103 +453,94 @@ async function handleLogin() {
     }
 }
 
+// 1. Firebase Initialize (Apna Config yahan zaroor dalein)
+// Pehle wale response mein bataya tha waisa setup rakhein
+
+// Invisible Recaptcha Setup
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+    'size': 'invisible'
+});
+
 async function sendOtp() {
     const name = DOM.registerName.value.trim();
     const phone = DOM.registerPhone.value.trim();
     const password = DOM.registerPassword.value.trim();
     const confirmPassword = DOM.registerConfirmPassword.value.trim();
     
+    // Basic Validations
     if (!name || !phone || !password || !confirmPassword) {
-        showNotification('Please fill all fields', 'error');
+        showNotification('Sare fields bhariye', 'error');
         return;
     }
-    
     if (password !== confirmPassword) {
-        showNotification('Passwords do not match', 'error');
+        showNotification('Password match nahi ho raha', 'error');
         return;
     }
-    
     if (!DOM.termsAgree.checked) {
-        showNotification('Please agree to Terms & Conditions', 'error');
+        showNotification('Terms accept karein', 'error');
         return;
     }
-    
-    try {
-        const response = await fetch(`${BACKEND_URL}/api/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                mobile: phone,
-                password: password
-            })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
+
+    // --- REAL FIREBASE OTP LOGIC ---
+    const fullPhoneNumber = "+91" + phone; // India prefix
+
+    auth.signInWithPhoneNumber(fullPhoneNumber, window.recaptchaVerifier)
+        .then((confirmationResult) => {
+            // OTP bhej diya gaya hai
+            window.confirmationResult = confirmationResult;
             DOM.otpSection.classList.remove('hidden');
-            showNotification('Registration successful! OTP: 123456', 'success');
-        } else {
-            showNotification(data.error || 'Registration failed', 'error');
-        }
-    } catch (error) {
-        console.error('Registration error:', error);
-        DOM.otpSection.classList.remove('hidden');
-        showNotification('Demo registration - OTP: 123456', 'info');
-    }
+            showNotification('Real OTP aapke phone par bhej diya gaya hai!', 'success');
+        }).catch((error) => {
+            console.error('SMS Error:', error);
+            showNotification('OTP nahi gaya: ' + error.message, 'error');
+        });
 }
 
 async function verifyOtp() {
     const otp = DOM.otpInput.value.trim();
-    
-    if (otp !== '123456') {
-        showNotification('Invalid OTP. Please enter 123456 for demo', 'error');
-        return;
-    }
-    
     const name = DOM.registerName.value.trim();
     const phone = DOM.registerPhone.value.trim();
     const password = DOM.registerPassword.value.trim();
-    
+
+    if (!otp) {
+        showNotification('Please enter OTP', 'error');
+        return;
+    }
+
     try {
+        // 1. Firebase se OTP Verify karein
+        const result = await confirmationResult.confirm(otp);
+        const user = result.user;
+
+        // 2. Agar OTP sahi hai, tab apne Backend/Database mein save karein
         const response = await fetch(`${BACKEND_URL}/api/register`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 name: name,
                 mobile: phone,
-                password: password
+                password: password,
+                firebaseUid: user.uid // Unique ID for security
             })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.success) {
             gameState.isLoggedIn = true;
-            gameState.authToken = data.token;
             gameState.userData = data.user;
-            
-            localStorage.setItem('authToken', data.token);
             localStorage.setItem('userData', JSON.stringify(data.user));
             
             showMainApp();
-            showNotification('Registration successful!', 'success');
-            playSound('swoosh');
+            showNotification('Welcome! Registration Successful', 'success');
             
-            setTimeout(() => {
-                connectWebSocket();
-            }, 1000);
+            setTimeout(() => { connectWebSocket(); }, 1000);
         } else {
-            showNotification(data.error || 'Registration failed', 'error');
+            showNotification(data.error || 'Database error', 'error');
         }
     } catch (error) {
-        console.error('Registration error:', error);
-        showNotification('Registration failed. Try different mobile number.', 'error');
+        console.error('Verification error:', error);
+        showNotification('Galat OTP ya Connection error!', 'error');
     }
 }
 
