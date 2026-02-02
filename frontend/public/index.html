@@ -1,73 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Firebase SDKs -->
-   <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app-compat.js"></script>
-   <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-auth-compat.js"></script>
-   
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-   <title>BDG GAME - Premium Gaming Platform</title>
-   <!-- Tailwind CSS CDN -->
+   <title>BDG GAME - Login</title>
    <script src="https://cdn.tailwindcss.com"></script>
-   <!-- Font Awesome Icons -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-   <!-- Tailwind Custom Configuration -->
-   <script>
-       tailwind.config = {
-           theme: {
-               extend: {
-                   colors: {
-                       'gold-primary': '#D4AF37',
-                       'gold-secondary': '#B8860B',
-                       'gold-light': '#FFD700',
-                       'bdg-dark': '#0a0a0a',
-                       'bdg-card': '#1a1a1a',
-                       'bdg-green': '#10b981',
-                       'bdg-red': '#ef4444',
-                       'bdg-blue': '#3b82f6',
-                       'bdg-purple': '#8b5cf6',
-                       'bdg-yellow': '#f59e0b',
-                       'bdg-crypto': '#f7931a',
-                   },
-                   fontFamily: {
-                       'sans': ['Inter', 'Poppins', 'Segoe UI', 'Roboto', 'sans-serif'],
-                   },
-                   borderRadius: {
-                       'bdg': '1rem',
-                       'bdg-lg': '1.5rem',
-                   },
-                   animation: {
-                       'pulse-slow': 'pulse 3s infinite',
-                       'slide-in': 'slideIn 0.3s ease-out',
-                       'countdown': 'countdown 1s linear infinite',
-                       'bounce-slow': 'bounce 2s infinite',
-                       'float': 'float 6s ease-in-out infinite',
-                       'aviator': 'aviator 2s ease-in-out infinite',
-                   },
-                   keyframes: {
-                       slideIn: {
-                           '0%': { transform: 'translateY(20px)', opacity: '0' },
-                           '100%': { transform: 'translateY(0)', opacity: '1' },
-                       },
-                       countdown: {
-                           '0%': { width: '100%' },
-                           '100%': { width: '0%' },
-                       },
-                       float: {
-                           '0%, 100%': { transform: 'translateY(0)' },
-                           '50%': { transform: 'translateY(-20px)' },
-                       },
-                       aviator: {
-                           '0%, 100%': { transform: 'scale(1)' },
-                           '50%': { transform: 'scale(1.1)' },
-                       }
-                   }
-               }
-           }
-       }
-   </script>
-   <!-- Custom Styles -->
+   
    <style>
        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
        
@@ -79,144 +18,25 @@
            touch-action: pan-y;
        }
        
-       /* Prevent zoom on mobile */
-       html {
-           -webkit-text-size-adjust: 100%;
-           -moz-text-size-adjust: 100%;
-           -ms-text-size-adjust: 100%;
-           text-size-adjust: 100%;
+       .login-container {
+           min-height: 100vh;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           padding: 20px;
+           background: #0a0a0a;
        }
        
-       input, select, textarea {
-           font-size: 16px !important; /* Prevents zoom on iOS */
-       }
-       
-       /* Custom scrollbar */
-       ::-webkit-scrollbar {
-           width: 6px;
-       }
-       ::-webkit-scrollbar-track {
-           background: #1a1a1a;
-           border-radius: 10px;
-       }
-       ::-webkit-scrollbar-thumb {
-           background: #D4AF37;
-           border-radius: 10px;
-       }
-       
-       /* Gradient backgrounds */
-       .gold-gradient {
-           background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-       }
-       
-       .gold-gradient-light {
-           background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(184, 134, 11, 0.1) 100%);
-       }
-       
-       .green-gradient {
-           background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-       }
-       
-       .red-gradient {
-           background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-       }
-       
-       .blue-gradient {
-           background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-       }
-       
-       .purple-gradient {
-           background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-       }
-       
-       .crypto-gradient {
-           background: linear-gradient(135deg, #f7931a 0%, #fbb040 100%);
-       }
-       
-       /* Card glass effect */
-       .bdg-glass {
+       .login-card {
            background: rgba(255, 255, 255, 0.05);
            backdrop-filter: blur(10px);
-           border: 1px solid rgba(212, 175, 55, 0.1);
+           border: 1px solid rgba(212, 175, 55, 0.2);
+           border-radius: 1.5rem;
+           padding: 30px;
+           width: 100%;
+           max-width: 400px;
        }
        
-       /* Game number grid */
-       .number-grid {
-           display: grid;
-           grid-template-columns: repeat(5, 1fr);
-           gap: 10px;
-       }
-       
-       /* Timer animation */
-       .timer-bar {
-           height: 4px;
-           background: linear-gradient(90deg, #D4AF37, #FFD700);
-       }
-       
-       /* Color indicators */
-       .color-dot {
-           width: 12px;
-           height: 12px;
-           border-radius: 50%;
-           display: inline-block;
-           margin: 0 2px;
-       }
-       
-       .color-dot.green { background-color: #10b981; }
-       .color-dot.red { background-color: #ef4444; }
-       .color-dot.violet { background-color: #8b5cf6; }
-       
-       /* Betting buttons */
-       .bet-btn {
-           transition: all 0.2s ease;
-       }
-       
-       .bet-btn:hover {
-           transform: translateY(-3px);
-           box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
-       }
-       
-       /* Loading animation */
-       @keyframes shimmer {
-           0% { background-position: -200% center; }
-           100% { background-position: 200% center; }
-       }
-       
-       .shimmer {
-           background: linear-gradient(90deg, 
-               rgba(212, 175, 55, 0) 0%, 
-               rgba(212, 175, 55, 0.1) 50%, 
-               rgba(212, 175, 55, 0) 100%);
-           background-size: 200% 100%;
-           animation: shimmer 2s infinite;
-       }
-       
-       /* Page transitions */
-       .page {
-           display: none;
-           animation: slideIn 0.3s ease-out;
-       }
-       
-       .page.active {
-           display: block;
-       }
-       
-       /* Progress bars */
-       .progress-bar {
-           height: 8px;
-           background: rgba(255, 255, 255, 0.1);
-           border-radius: 4px;
-           overflow: hidden;
-       }
-       
-       .progress-fill {
-           height: 100%;
-           background: linear-gradient(90deg, #D4AF37, #FFD700);
-           border-radius: 4px;
-           transition: width 0.3s ease;
-       }
-       
-       /* Input styles */
        .input-field {
            background: rgba(255, 255, 255, 0.05);
            border: 1px solid rgba(255, 255, 255, 0.1);
@@ -233,295 +53,10 @@
            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
        }
        
-       /* File upload styles */
-       .file-upload {
-           position: relative;
-           overflow: hidden;
-           cursor: pointer;
+       .gold-gradient {
+           background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
        }
        
-       .file-upload input {
-           position: absolute;
-           top: 0;
-           right: 0;
-           margin: 0;
-           padding: 0;
-           font-size: 20px;
-           cursor: pointer;
-           opacity: 0;
-           filter: alpha(opacity=0);
-       }
-       
-       /* Crypto network styles */
-       .crypto-network {
-           border: 1px solid rgba(255, 255, 255, 0.1);
-           border-radius: 8px;
-           padding: 10px;
-           cursor: pointer;
-           transition: all 0.3s ease;
-       }
-       
-       .crypto-network:hover {
-           border-color: #D4AF37;
-           background: rgba(212, 175, 55, 0.1);
-       }
-       
-       .crypto-network.selected {
-           border-color: #D4AF37;
-           background: rgba(212, 175, 55, 0.2);
-       }
-       
-       /* Win/Loss Popup */
-       .popup {
-           position: fixed;
-           top: 0;
-           left: 0;
-           right: 0;
-           bottom: 0;
-           background: rgba(0, 0, 0, 0.8);
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           z-index: 1000;
-           opacity: 0;
-           visibility: hidden;
-           transition: all 0.3s ease;
-       }
-       
-       .popup.active {
-           opacity: 1;
-           visibility: visible;
-       }
-       
-       .popup-content {
-           background: #1a1a1a;
-           border-radius: 20px;
-           padding: 40px 30px;
-           text-align: center;
-           max-width: 300px;
-           width: 90%;
-           border: 2px solid #D4AF37;
-           transform: scale(0.9);
-           transition: transform 0.3s ease;
-       }
-       
-       .popup.active .popup-content {
-           transform: scale(1);
-       }
-       
-       .popup-win .popup-content {
-           border-color: #10b981;
-       }
-       
-       .popup-loss .popup-content {
-           border-color: #ef4444;
-       }
-       
-       /* Aviator specific styles */
-       .aviator-plane {
-           position: relative;
-           width: 100%;
-           height: 200px;
-           overflow: hidden;
-           border-radius: 1rem;
-           background: linear-gradient(135deg, #1a1a1a 0%, #2d1b00 100%);
-       }
-       
-       .aviator-plane-track {
-           position: absolute;
-           top: 0;
-           left: 0;
-           width: 100%;
-           height: 100%;
-       }
-       
-       .aviator-plane-icon {
-           position: absolute;
-           left: 0;
-           top: 50%;
-           transform: translateY(-50%);
-           font-size: 40px;
-           color: #D4AF37;
-           animation: aviator 2s ease-in-out infinite;
-       }
-       
-       .multiplier-display {
-           position: absolute;
-           top: 50%;
-           left: 0;
-           transform: translateY(-50%);
-           font-size: 24px;
-           font-weight: bold;
-           color: #D4AF37;
-           background: rgba(0, 0, 0, 0.7);
-           padding: 10px 20px;
-           border-radius: 10px;
-           border: 2px solid #D4AF37;
-       }
-       
-       /* Slots specific styles */
-       .slot-machine {
-           background: linear-gradient(135deg, #1a1a1a 0%, #2d1b00 100%);
-           border-radius: 1rem;
-           padding: 20px;
-           border: 2px solid rgba(212, 175, 55, 0.3);
-       }
-       
-       .slot-reel {
-           width: 80px;
-           height: 80px;
-           background: #0a0a0a;
-           border-radius: 10px;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           font-size: 40px;
-           border: 2px solid #D4AF37;
-           color: #D4AF37;
-       }
-       
-       .slot-reel.spinning {
-           animation: spin 0.5s linear infinite;
-       }
-       
-       @keyframes spin {
-           0% { transform: rotateX(0deg); }
-           100% { transform: rotateX(360deg); }
-       }
-       
-       /* Agent Banner */
-       .agent-banner {
-           background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(184, 134, 11, 0.1) 100%);
-           border: 1px solid rgba(212, 175, 55, 0.3);
-           border-radius: 1rem;
-       }
-       
-       /* Custom class to hide header on account page */
-       .header-hidden {
-           display: none !important;
-       }
-       
-       /* Login page styles */
-       .login-container {
-           min-height: 100vh;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           padding: 20px;
-           position: fixed;
-           top: 0;
-           left: 0;
-           right: 0;
-           bottom: 0;
-           background: #0a0a0a;
-           z-index: 10000;
-       }
-       
-       .login-card {
-           background: rgba(255, 255, 255, 0.05);
-           backdrop-filter: blur(10px);
-           border: 1px solid rgba(212, 175, 55, 0.2);
-           border-radius: 1.5rem;
-           padding: 30px;
-           width: 100%;
-           max-width: 400px;
-       }
-       
-       /* Custom bet input */
-       .custom-bet-input {
-           position: fixed;
-           top: 50%;
-           left: 50%;
-           transform: translate(-50%, -50%);
-           background: #1a1a1a;
-           padding: 20px;
-           border-radius: 15px;
-           border: 2px solid #D4AF37;
-           z-index: 1001;
-           display: none;
-       }
-       
-       .custom-bet-input.active {
-           display: block;
-       }
-       
-       /* Terms checkbox */
-       .terms-checkbox {
-           display: flex;
-           align-items: center;
-           gap: 10px;
-           margin: 15px 0;
-       }
-       
-       .terms-checkbox input {
-           width: 18px;
-           height: 18px;
-       }
-       
-       /* Transaction items */
-       .transaction-item {
-           padding: 12px;
-           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-           transition: background 0.3s ease;
-       }
-       
-       .transaction-item:hover {
-           background: rgba(255, 255, 255, 0.05);
-       }
-       
-       /* Game history items */
-       .game-history-item {
-           display: flex;
-           align-items: center;
-           gap: 10px;
-           padding: 10px;
-           background: rgba(255, 255, 255, 0.05);
-           border-radius: 10px;
-           margin-bottom: 8px;
-       }
-       
-       /* Game tabs */
-       .game-tabs {
-           display: flex;
-           border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-           margin-bottom: 20px;
-       }
-       
-       .game-tab {
-           flex: 1;
-           padding: 15px 0;
-           text-align: center;
-           font-weight: 600;
-           cursor: pointer;
-           border-bottom: 3px solid transparent;
-           transition: all 0.3s ease;
-       }
-       
-       .game-tab.active {
-           color: #D4AF37;
-           border-bottom-color: #D4AF37;
-           background: rgba(212, 175, 55, 0.1);
-       }
-       
-       /* Game section */
-       .game-section {
-           display: none;
-       }
-       
-       .game-section.active {
-           display: block;
-       }
-       
-       /* Hide elements when not logged in */
-       .logged-in-only {
-           display: none !important;
-       }
-       
-       .logged-in-only.active {
-           display: block !important;
-       }
-       
-       /* Error message */
        .error-message {
            color: #ef4444;
            font-size: 14px;
@@ -529,11 +64,6 @@
            display: none;
        }
        
-       .error-message.show {
-           display: block;
-       }
-       
-       /* Success message */
        .success-message {
            color: #10b981;
            font-size: 14px;
@@ -541,29 +71,40 @@
            display: none;
        }
        
-       .success-message.show {
-           display: block;
+       .message {
+           padding: 12px;
+           border-radius: 8px;
+           margin-bottom: 15px;
+           display: none;
+       }
+       
+       .message.error {
+           background: rgba(239, 68, 68, 0.2);
+           border: 1px solid #ef4444;
+           color: #ef4444;
+       }
+       
+       .message.success {
+           background: rgba(16, 185, 129, 0.2);
+           border: 1px solid #10b981;
+           color: #10b981;
        }
    </style>
 </head>
-<body class="bg-bdg-dark">
+<body>
    <!-- Loading Screen -->
    <div id="loading-screen" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
        <div class="relative mb-8">
            <div class="w-32 h-32 bg-white/5 rounded-[2rem] flex items-center justify-center backdrop-blur-md border border-gold-primary/30 mb-4">
                <span class="text-5xl font-bold text-gold-primary">BDG</span>
            </div>
-           <div class="absolute -inset-4 bg-gradient-to-r from-gold-primary to-gold-secondary rounded-[3rem] blur-xl opacity-20"></div>
        </div>
        <h1 class="text-4xl font-black text-gold-primary italic tracking-tighter mb-2">BDG GAME</h1>
        <p class="text-white/80 text-sm uppercase tracking-[0.3em] font-bold">PREMIUM GAMING PLATFORM</p>
-       <div class="mt-8 w-48 h-1 bg-white/10 rounded-full overflow-hidden">
-           <div class="h-full bg-gold-primary rounded-full shimmer"></div>
-       </div>
    </div>
 
    <!-- Login/Registration Page -->
-   <div id="login-page" class="login-container">
+   <div id="login-page" class="login-container" style="display: none;">
        <div class="login-card">
            <div class="text-center mb-8">
                <div class="w-20 h-20 bg-white/5 rounded-[1.5rem] flex items-center justify-center backdrop-blur-md border border-gold-primary/30 mx-auto mb-4">
@@ -572,6 +113,9 @@
                <h2 class="text-2xl font-bold text-gold-primary">BDG GAME</h2>
                <p class="text-white/70 text-sm">Premium Gaming Platform</p>
            </div>
+           
+           <!-- Message Display -->
+           <div id="message" class="message"></div>
            
            <!-- Login/Register Tabs -->
            <div class="flex mb-6 border-b border-gold-primary/20">
@@ -587,11 +131,35 @@
            <div id="login-form" class="space-y-4">
                <div>
                    <label class="block text-sm mb-2">Phone Number</label>
-                   <input type="tel" id="login-phone" class="input-field" placeholder="Enter your phone number" maxlength="10">
+                   <input type="tel" id="login-phone" class="input-field" placeholder="Enter 10-digit phone number" maxlength="10">
                    <div id="login-phone-error" class="error-message"></div>
                </div>
+               
+               <!-- Password Login -->
+               <div id="password-login-section">
+                   <div>
+                       <label class="block text-sm mb-2">Password</label>
+                       <input type="password" id="login-password" class="input-field" placeholder="Enter password">
+                       <div id="login-password-error" class="error-message"></div>
+                   </div>
+                   <button id="forgot-password-btn" class="text-sm text-gold-primary mt-2 mb-4">
+                       Forgot Password?
+                   </button>
+                   <button id="login-password-btn" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                       Login with Password
+                   </button>
+               </div>
+               
+               <!-- Divider -->
+               <div class="flex items-center my-4">
+                   <div class="flex-1 border-t border-gray-600"></div>
+                   <div class="px-4 text-gray-400 text-sm">OR</div>
+                   <div class="flex-1 border-t border-gray-600"></div>
+               </div>
+               
+               <!-- OTP Login -->
                <button id="send-login-otp-btn" class="w-full py-3 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10">
-                   Send OTP
+                   Send OTP for Login
                </button>
                
                <!-- OTP Verification for Login -->
@@ -616,18 +184,29 @@
                </div>
                <div>
                    <label class="block text-sm mb-2">Phone Number</label>
-                   <input type="tel" id="register-phone" class="input-field" placeholder="Enter your phone number" maxlength="10">
+                   <input type="tel" id="register-phone" class="input-field" placeholder="Enter 10-digit phone number" maxlength="10">
                    <div id="register-phone-error" class="error-message"></div>
                </div>
-               <div class="terms-checkbox">
-                   <input type="checkbox" id="terms-agree">
+               <div>
+                   <label class="block text-sm mb-2">Password</label>
+                   <input type="password" id="register-password" class="input-field" placeholder="Create password (min 6 characters)">
+                   <div id="register-password-error" class="error-message"></div>
+               </div>
+               <div>
+                   <label class="block text-sm mb-2">Confirm Password</label>
+                   <input type="password" id="register-confirm-password" class="input-field" placeholder="Confirm password">
+                   <div id="register-confirm-error" class="error-message"></div>
+               </div>
+               <div class="flex items-center gap-2 mb-4">
+                   <input type="checkbox" id="terms-agree" class="w-5 h-5">
                    <label for="terms-agree" class="text-sm">
                        I agree to the <a href="#" class="text-gold-primary">Terms & Conditions</a>
                    </label>
-                   <div id="terms-error" class="error-message"></div>
                </div>
+               <div id="terms-error" class="error-message"></div>
+               
                <button id="send-register-otp-btn" class="w-full py-3 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10">
-                   Send OTP
+                   Send OTP for Registration
                </button>
                
                <!-- OTP Verification for Registration -->
@@ -643,531 +222,159 @@
                </div>
            </div>
            
+           <!-- Forgot Password Form -->
+           <div id="forgot-form" class="space-y-4 hidden">
+               <div>
+                   <label class="block text-sm mb-2">Phone Number</label>
+                   <input type="tel" id="forgot-phone" class="input-field" placeholder="Enter 10-digit phone number" maxlength="10">
+                   <div id="forgot-phone-error" class="error-message"></div>
+               </div>
+               <button id="send-reset-otp-btn" class="w-full py-3 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10">
+                   Send Reset OTP
+               </button>
+               
+               <div id="reset-otp-section" class="space-y-4 hidden">
+                   <div>
+                       <label class="block text-sm mb-2">Enter OTP</label>
+                       <input type="text" id="reset-otp-input" class="input-field" placeholder="Enter 6-digit OTP" maxlength="6">
+                       <div id="reset-otp-error" class="error-message"></div>
+                   </div>
+                   <div>
+                       <label class="block text-sm mb-2">New Password</label>
+                       <input type="password" id="new-password" class="input-field" placeholder="Enter new password (min 6 characters)">
+                       <div id="new-password-error" class="error-message"></div>
+                   </div>
+                   <div>
+                       <label class="block text-sm mb-2">Confirm Password</label>
+                       <input type="password" id="confirm-new-password" class="input-field" placeholder="Confirm new password">
+                       <div id="confirm-password-error" class="error-message"></div>
+                   </div>
+                   <button id="reset-password-btn" class="w-full py-3 gold-gradient rounded-bdg font-bold hover:opacity-90">
+                       Reset Password
+                   </button>
+               </div>
+           </div>
+           
            <div class="text-center mt-6">
                <p class="text-sm text-white/70">Secure Login • 24/7 Support</p>
            </div>
        </div>
    </div>
 
-   <!-- Main App Container (Hidden until login) -->
-   <div id="app" class="logged-in-only max-w-md mx-auto min-h-screen bg-bdg-dark pb-20">
-       <!-- Header with Balance -->
-       <div id="main-header" class="sticky top-0 z-40 bg-bdg-card px-4 py-3 border-b border-gold-primary/20">
-           <div class="flex justify-between items-center">
-               <div>
-                   <h1 class="text-xl font-bold text-gold-primary">BDG GAME</h1>
-                   <p class="text-xs opacity-80" id="page-title">Premium Gaming Platform</p>
-               </div>
-               <div class="text-right">
-                   <div class="flex items-center gap-2">
-                       <div class="px-3 py-1 bg-black/30 rounded-full border border-gold-primary/30">
-                           <span class="font-bold text-gold-primary">₹<span id="balance">0</span></span>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           
-           <!-- Deposit/Withdraw Buttons -->
-           <div class="flex gap-2 mt-3">
-               <button class="deposit-btn flex-1 py-2 gold-gradient rounded-bdg font-bold hover:opacity-90 text-sm">
-                   <i class="fas fa-plus mr-1"></i> Deposit
-               </button>
-               <button class="withdraw-btn flex-1 py-2 bg-bdg-card border border-gold-primary/30 rounded-bdg font-bold hover:bg-gold-primary/10 text-sm">
-                   <i class="fas fa-rupee-sign mr-1"></i> Withdraw
-               </button>
-           </div>
-       </div>
-
-       <!-- Agent Banner -->
-       <div id="agent-banner" class="px-4 py-3 agent-banner mx-4 mt-4">
-           <div class="flex items-center justify-between">
-               <div>
-                   <h3 class="font-bold text-gold-primary">BDG GAME IS LOOKING FOR AGENTS</h3>
-                   <p class="text-sm text-white/80">EASY DAILY INCOME ₹9999+</p>
-               </div>
-               <button id="apply-agent-btn" class="px-4 py-2 gold-gradient rounded-full font-bold hover:opacity-90 text-sm">
-                   Apply Now
-               </button>
-           </div>
-       </div>
-
-       <!-- Page 1: Home Page -->
-       <div id="home-page" class="page active p-4 space-y-6">
-           <!-- Categories Navigation - All Games -->
-           <div class="bdg-glass rounded-bdg-lg p-4">
-               <h2 class="font-bold text-lg mb-3 text-gold-primary">Games</h2>
-               <div class="grid grid-cols-3 gap-3">
-                   <!-- WinGo Games -->
-                   <div class="game-category bet-btn bg-bdg-card rounded-bdg p-4 text-center hover:bg-gold-primary/10 transition-colors border border-gold-primary/10" data-game="wingo">
-                       <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center mx-auto mb-2">
-                           <i class="fas fa-clock text-xl"></i>
-                       </div>
-                       <p class="text-sm font-medium">WinGo Games</p>
-                       <p class="text-xs opacity-70">30s, 1m, 3m, 5m</p>
-                   </div>
-                   
-                   <!-- Aviator -->
-                   <div class="game-category bet-btn bg-bdg-card rounded-bdg p-4 text-center hover:bg-gold-primary/10 transition-colors border border-gold-primary/10" data-game="aviator">
-                       <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-2">
-                           <i class="fas fa-plane text-xl"></i>
-                       </div>
-                       <p class="text-sm font-medium">Aviator</p>
-                       <p class="text-xs opacity-70">Crash Game</p>
-                   </div>
-                   
-                   <!-- Slots -->
-                   <div class="game-category bet-btn bg-bdg-card rounded-bdg p-4 text-center hover:bg-gold-primary/10 transition-colors border border-gold-primary/10" data-game="slots">
-                       <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-2">
-                           <i class="fas fa-gamepad text-xl"></i>
-                       </div>
-                       <p class="text-sm font-medium">Slots</p>
-                       <p class="text-xs opacity-70">Spin & Win</p>
-                   </div>
-               </div>
-           </div>
-
-           <!-- Real-time Game Data -->
-           <div class="bdg-glass rounded-bdg-lg p-4">
-               <h2 class="font-bold text-lg mb-3 text-gold-primary">Live Games</h2>
-               <div class="space-y-3">
-                   <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
-                       <div class="flex items-center gap-3">
-                           <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center">
-                               <i class="fas fa-clock"></i>
-                           </div>
-                           <div>
-                               <p class="font-bold">WinGo 30s</p>
-                               <p class="text-xs opacity-70">Next game in: <span id="wingo-30-timer">30s</span></p>
-                           </div>
-                       </div>
-                       <div class="text-right">
-                           <p class="text-sm">Last Result</p>
-                           <p class="text-lg font-bold text-green-500">-</p>
-                       </div>
-                   </div>
-                   
-                   <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
-                       <div class="flex items-center gap-3">
-                           <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                               <i class="fas fa-plane"></i>
-                           </div>
-                           <div>
-                               <p class="font-bold">Aviator</p>
-                               <p class="text-xs opacity-70">Current: <span id="aviator-current">1.00x</span></p>
-                           </div>
-                       </div>
-                       <div class="text-right">
-                           <p class="text-sm">Last Round</p>
-                           <p class="text-lg font-bold text-red-500">-</p>
-                       </div>
-                   </div>
-                   
-                   <div class="flex items-center justify-between p-3 bg-bdg-card rounded-bdg">
-                       <div class="flex items-center gap-3">
-                           <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
-                               <i class="fas fa-gamepad"></i>
-                           </div>
-                           <div>
-                               <p class="font-bold">Slots</p>
-                               <p class="text-xs opacity-70">Active Players: <span id="slots-players">0</span></p>
-                           </div>
-                       </div>
-                       <div class="text-right">
-                           <p class="text-sm">Last Win</p>
-                           <p class="text-lg font-bold text-green-500">₹0</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-
-           <!-- Recent Game History -->
-           <div class="bdg-glass rounded-bdg-lg p-4">
-               <div class="flex justify-between items-center mb-4">
-                   <h2 class="font-bold text-lg text-gold-primary">Recent Game History</h2>
-                   <button class="px-3 py-1 bg-bdg-card rounded-full text-sm hover:bg-gold-primary/10" id="view-all-history">View All</button>
-               </div>
-               
-               <div class="space-y-2" id="recent-game-history">
-                   <!-- Game history will be populated by JavaScript -->
-                   <div class="text-center py-8 text-gray-400">
-                       <i class="fas fa-gamepad text-3xl mb-3"></i>
-                       <p>No game history yet</p>
-                   </div>
-               </div>
-           </div>
-
-           <!-- Payment Notice -->
-           <div class="bdg-glass rounded-bdg-lg p-4 text-center text-sm opacity-80 border border-gold-primary/10">
-               <i class="fas fa-shield-alt text-gold-primary mb-2"></i>
-               <p>Secure Payments • 24/7 Support • Instant Withdrawals</p>
-           </div>
-       </div>
-
-       <!-- Page 2: Games Page -->
-       <div id="games-page" class="page p-4">
-           <!-- Games page content remains the same as before -->
-           <!-- ... (all the games page content from your original code) ... -->
-       </div>
-
-       <!-- Page 3: Activity Page -->
-       <div id="activity-page" class="page p-4 space-y-6">
-           <!-- Activity page content -->
-       </div>
-
-       <!-- Page 4: Promotion Page -->
-       <div id="promotion-page" class="page p-4 space-y-6">
-           <!-- Promotion page content -->
-       </div>
-
-       <!-- Page 5: Account Page -->
-       <div id="account-page" class="page p-4 space-y-6">
-           <!-- Account page content -->
-       </div>
+   <!-- Main App (Will be shown after login) -->
+   <div id="main-app" style="display: none;">
+       <!-- Main app content will be loaded here after login -->
    </div>
 
-   <!-- Bottom Navigation -->
-   <div class="logged-in-only fixed bottom-0 left-0 right-0 z-40 bg-bdg-card border-t border-gold-primary/10 px-4 py-3 max-w-md mx-auto">
-       <div class="grid grid-cols-5 gap-1">
-           <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10 active:bg-gold-primary/20" data-page="home">
-               <i class="fas fa-home mb-1"></i>
-               <span class="text-xs">Home</span>
-           </button>
-           <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10 active:bg-gold-primary/20" data-page="games">
-               <i class="fas fa-gamepad mb-1"></i>
-               <span class="text-xs">Games</span>
-           </button>
-           <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10 active:bg-gold-primary/20" data-page="activity">
-               <i class="fas fa-calendar-alt mb-1"></i>
-               <span class="text-xs">Activity</span>
-           </button>
-           <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10 active:bg-gold-primary/20" data-page="promotion">
-               <i class="fas fa-gift mb-1"></i>
-               <span class="text-xs">Promotion</span>
-           </button>
-           <button class="nav-btn flex flex-col items-center p-2 rounded-bdg hover:bg-gold-primary/10 active:bg-gold-primary/20" data-page="account">
-               <i class="fas fa-user mb-1"></i>
-               <span class="text-xs">Account</span>
-           </button>
-       </div>
-   </div>
-
-   <!-- JavaScript -->
    <script>
-       // Firebase Configuration
-       const firebaseConfig = {
-           apiKey: "AIzaSyCdXXFRUZo0y_jEa4gYyHdMiYxxvNd18Cg",
-           authDomain: "bdg-game-4f0eb.firebaseapp.com",
-           projectId: "bdg-game-4f0eb",
-           storageBucket: "bdg-game-4f0eb.firebasestorage.app",
-           messagingSenderId: "56509330896",
-           appId: "1:56509330896:web:11441164c5755a27a4f5d5",
-           measurementId: "G-6PLHRFXKJH"
-       };
-
-       // Initialize Firebase
-       firebase.initializeApp(firebaseConfig);
-       const auth = firebase.auth();
-
-       // Backend API URL
+       // Configuration
        const BACKEND_URL = 'https://colorpro-vfgm.onrender.com';
-
-       // Game State
-       let gameState = {
-           balance: 0,
-           wingoBet: 0,
-           aviatorBet: 0,
-           slotsBet: 0,
-           wingoSelectedColor: null,
-           wingoSelectedNumber: null,
-           wingoSelectedSize: null,
-           currentGame: 'wingo',
-           wingoTimer: 30,
-           timerInterval: null,
-           aviatorMultiplier: 1.00,
-           aviatorInterval: null,
-           selectedPaymentMethod: 'upi',
-           selectedWithdrawMethod: 'bank',
-           wingoTimeFrame: 30,
-           wingoTimeFrameName: '30 Seconds',
-           isLoggedIn: false,
-           userData: null,
-           gameHistory: [],
-           transactionHistory: [],
-           wingoHistory: [],
-           aviatorHistory: [],
-           slotsHistory: [],
-           bonusClaimed: false,
-           dailyBonusClaimed: false,
-           firebaseVerificationId: null
-       };
-
-       // Application Token Management
-       let authToken = localStorage.getItem('bdg_auth_token');
-       let userData = JSON.parse(localStorage.getItem('bdg_user_data'));
-
-       // Check if user is already logged in
-       if (authToken && userData) {
-           gameState.isLoggedIn = true;
-           gameState.userData = userData;
-           initializeApp();
-       }
-
-       // Hide loading screen and show login page
+       
+       // State
+       let currentOTP = '';
+       let currentPhone = '';
+       
+       // Initialize when page loads
        window.addEventListener('load', function() {
            setTimeout(() => {
                document.getElementById('loading-screen').style.display = 'none';
-               if (!gameState.isLoggedIn) {
-                   document.getElementById('login-page').classList.remove('hidden');
+               document.getElementById('login-page').style.display = 'flex';
+               
+               // Check if already logged in
+               const token = localStorage.getItem('bdg_token');
+               if (token) {
+                   verifyToken(token);
                }
                
-               // Initialize login system
                initializeLoginSystem();
            }, 1500);
        });
-
-       // Initialize the app after login
-       function initializeApp() {
-           document.getElementById('login-page').classList.add('hidden');
-           document.getElementById('app').classList.add('active');
-           document.querySelectorAll('.logged-in-only').forEach(el => {
-               el.classList.add('active');
-           });
-           
-           // Load user data
-           loadUserData();
-           
-           // Initialize game
-           initializeGame();
-           
-           // Update home page data
-           updateHomePageData();
-           
-           // Start home timers
-           startHomeTimers();
-       }
-
-       // Login System with Firebase Integration
+       
+       // Initialize Login System
        function initializeLoginSystem() {
-           // Setup recaptcha verifier
-           window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-               'size': 'invisible',
-               'callback': (response) => {
-                   // reCAPTCHA solved, allow signInWithPhoneNumber.
-                   console.log('reCAPTCHA verified');
-               }
-           });
-
            // Login/Register tabs
-           document.getElementById('login-tab').addEventListener('click', function() {
-               showLoginForm();
-           });
+           document.getElementById('login-tab').addEventListener('click', showLoginForm);
+           document.getElementById('register-tab').addEventListener('click', showRegisterForm);
            
-           document.getElementById('register-tab').addEventListener('click', function() {
-               showRegisterForm();
-           });
+           // Login with Password
+           document.getElementById('login-password-btn').addEventListener('click', loginWithPassword);
            
            // Send OTP for login
-           document.getElementById('send-login-otp-btn').addEventListener('click', async function() {
-               const phone = document.getElementById('login-phone').value;
-               
-               if (!phone || phone.length !== 10) {
-                   showError('login-phone-error', 'Please enter a valid 10-digit phone number');
-                   return;
-               }
-               
-               const appVerifier = window.recaptchaVerifier;
-               const phoneNumber = '+91' + phone;
-               
-               try {
-                   const confirmationResult = await auth.signInWithPhoneNumber(phoneNumber, appVerifier);
-                   gameState.firebaseVerificationId = confirmationResult.verificationId;
-                   
-                   // Show OTP section
-                   document.getElementById('login-otp-section').classList.remove('hidden');
-                   showSuccess('login-otp-section', 'OTP sent successfully to your phone');
-               } catch (error) {
-                   console.error('Error sending OTP:', error);
-                   showError('login-phone-error', 'Failed to send OTP. Please try again.');
-               }
-           });
+           document.getElementById('send-login-otp-btn').addEventListener('click', sendLoginOTP);
            
            // Verify OTP for login
-           document.getElementById('verify-login-otp-btn').addEventListener('click', async function() {
-               const otp = document.getElementById('login-otp-input').value;
-               
-               if (!otp || otp.length !== 6) {
-                   showError('login-otp-error', 'Please enter a valid 6-digit OTP');
-                   return;
-               }
-               
-               try {
-                   const credential = firebase.auth.PhoneAuthProvider.credential(
-                       gameState.firebaseVerificationId,
-                       otp
-                   );
-                   
-                   const userCredential = await auth.signInWithCredential(credential);
-                   const user = userCredential.user;
-                   
-                   // Get Firebase ID token
-                   const idToken = await user.getIdToken();
-                   
-                   // Check if user exists in backend
-                   const response = await fetch(`${BACKEND_URL}/login`, {
-                       method: 'POST',
-                       headers: {
-                           'Content-Type': 'application/json',
-                           'Authorization': `Bearer ${idToken}`
-                       },
-                       body: JSON.stringify({
-                           phone: user.phoneNumber,
-                           firebaseUid: user.uid
-                       })
-                   });
-                   
-                   if (response.ok) {
-                       const data = await response.json();
-                       
-                       // Store auth token and user data
-                       localStorage.setItem('bdg_auth_token', data.token || idToken);
-                       localStorage.setItem('bdg_user_data', JSON.stringify(data.user));
-                       
-                       gameState.isLoggedIn = true;
-                       gameState.userData = data.user;
-                       gameState.balance = data.user.balance || 0;
-                       
-                       // Initialize app
-                       initializeApp();
-                   } else {
-                       // User doesn't exist, redirect to registration
-                       showError('login-otp-error', 'Account not found. Please register first.');
-                   }
-               } catch (error) {
-                   console.error('Error verifying OTP:', error);
-                   showError('login-otp-error', 'Invalid OTP. Please try again.');
-               }
-           });
+           document.getElementById('verify-login-otp-btn').addEventListener('click', verifyLoginOTP);
+           
+           // Forgot Password
+           document.getElementById('forgot-password-btn').addEventListener('click', showForgotForm);
            
            // Send OTP for registration
-           document.getElementById('send-register-otp-btn').addEventListener('click', async function() {
-               const name = document.getElementById('register-name').value;
-               const phone = document.getElementById('register-phone').value;
-               const termsAgreed = document.getElementById('terms-agree').checked;
-               
-               if (!name) {
-                   showError('register-name-error', 'Please enter your name');
-                   return;
-               }
-               
-               if (!phone || phone.length !== 10) {
-                   showError('register-phone-error', 'Please enter a valid 10-digit phone number');
-                   return;
-               }
-               
-               if (!termsAgreed) {
-                   showError('terms-error', 'Please agree to Terms & Conditions');
-                   return;
-               }
-               
-               const appVerifier = window.recaptchaVerifier;
-               const phoneNumber = '+91' + phone;
-               
-               try {
-                   const confirmationResult = await auth.signInWithPhoneNumber(phoneNumber, appVerifier);
-                   gameState.firebaseVerificationId = confirmationResult.verificationId;
-                   
-                   // Show OTP section
-                   document.getElementById('register-otp-section').classList.remove('hidden');
-                   showSuccess('register-otp-section', 'OTP sent successfully to your phone');
-               } catch (error) {
-                   console.error('Error sending OTP:', error);
-                   showError('register-phone-error', 'Failed to send OTP. Please try again.');
-               }
-           });
+           document.getElementById('send-register-otp-btn').addEventListener('click', sendRegisterOTP);
            
            // Verify OTP and register
-           document.getElementById('verify-register-otp-btn').addEventListener('click', async function() {
-               const name = document.getElementById('register-name').value;
-               const phone = document.getElementById('register-phone').value;
-               const otp = document.getElementById('register-otp-input').value;
-               
-               if (!otp || otp.length !== 6) {
-                   showError('register-otp-error', 'Please enter a valid 6-digit OTP');
-                   return;
-               }
-               
-               try {
-                   const credential = firebase.auth.PhoneAuthProvider.credential(
-                       gameState.firebaseVerificationId,
-                       otp
-                   );
-                   
-                   const userCredential = await auth.signInWithCredential(credential);
-                   const user = userCredential.user;
-                   
-                   // Get Firebase ID token
-                   const idToken = await user.getIdToken();
-                   
-                   // Register user with backend
-                   const response = await fetch(`${BACKEND_URL}/register`, {
-                       method: 'POST',
-                       headers: {
-                           'Content-Type': 'application/json'
-                       },
-                       body: JSON.stringify({
-                           name: name,
-                           phone: user.phoneNumber,
-                           firebaseUid: user.uid,
-                           idToken: idToken
-                       })
-                   });
-                   
-                   if (response.ok) {
-                       const data = await response.json();
-                       
-                       // Store auth token and user data
-                       localStorage.setItem('bdg_auth_token', data.token || idToken);
-                       localStorage.setItem('bdg_user_data', JSON.stringify(data.user));
-                       
-                       gameState.isLoggedIn = true;
-                       gameState.userData = data.user;
-                       gameState.balance = data.user.balance || 1000; // Default starting balance
-                       
-                       // Initialize app
-                       initializeApp();
-                   } else {
-                       const errorData = await response.json();
-                       showError('register-otp-error', errorData.message || 'Registration failed');
-                   }
-               } catch (error) {
-                   console.error('Error verifying OTP:', error);
-                   showError('register-otp-error', 'Invalid OTP or registration failed');
-               }
-           });
+           document.getElementById('verify-register-otp-btn').addEventListener('click', verifyRegisterOTP);
+           
+           // Forgot Password - Send OTP
+           document.getElementById('send-reset-otp-btn').addEventListener('click', sendResetOTP);
+           
+           // Reset Password
+           document.getElementById('reset-password-btn').addEventListener('click', resetPassword);
        }
        
-       // Load user data from backend
-       async function loadUserData() {
-           try {
-               const token = localStorage.getItem('bdg_auth_token');
-               if (!token) return;
-               
-               const response = await fetch(`${BACKEND_URL}/user/profile`, {
-                   method: 'GET',
-                   headers: {
-                       'Authorization': `Bearer ${token}`
-                   }
-               });
-               
-               if (response.ok) {
-                   const data = await response.json();
-                   gameState.userData = data.user;
-                   gameState.balance = data.user.balance || 0;
-                   updateBalance();
-               }
-           } catch (error) {
-               console.error('Error loading user data:', error);
-           }
+       // Show Login Form
+       function showLoginForm() {
+           document.getElementById('login-form').style.display = 'block';
+           document.getElementById('register-form').style.display = 'none';
+           document.getElementById('forgot-form').style.display = 'none';
+           
+           document.getElementById('login-tab').classList.add('text-gold-primary', 'border-b-2', 'border-gold-primary');
+           document.getElementById('login-tab').classList.remove('text-white/70');
+           document.getElementById('register-tab').classList.add('text-white/70');
+           document.getElementById('register-tab').classList.remove('text-gold-primary', 'border-b-2', 'border-gold-primary');
+           
+           // Reset forms
+           document.getElementById('login-otp-section').style.display = 'none';
+           document.getElementById('password-login-section').style.display = 'block';
+           clearErrors();
+       }
+       
+       // Show Register Form
+       function showRegisterForm() {
+           document.getElementById('login-form').style.display = 'none';
+           document.getElementById('register-form').style.display = 'block';
+           document.getElementById('forgot-form').style.display = 'none';
+           
+           document.getElementById('register-tab').classList.add('text-gold-primary', 'border-b-2', 'border-gold-primary');
+           document.getElementById('register-tab').classList.remove('text-white/70');
+           document.getElementById('login-tab').classList.add('text-white/70');
+           document.getElementById('login-tab').classList.remove('text-gold-primary', 'border-b-2', 'border-gold-primary');
+           
+           // Reset forms
+           document.getElementById('register-otp-section').style.display = 'none';
+           clearErrors();
+       }
+       
+       // Show Forgot Password Form
+       function showForgotForm() {
+           document.getElementById('login-form').style.display = 'none';
+           document.getElementById('register-form').style.display = 'none';
+           document.getElementById('forgot-form').style.display = 'block';
+           
+           document.getElementById('login-tab').classList.add('text-gold-primary', 'border-b-2', 'border-gold-primary');
+           document.getElementById('login-tab').classList.remove('text-white/70');
+           document.getElementById('register-tab').classList.add('text-white/70');
+           
+           // Reset forms
+           document.getElementById('reset-otp-section').style.display = 'none';
+           clearErrors();
+       }
+       
+       // Clear all error messages
+       function clearErrors() {
+           document.querySelectorAll('.error-message').forEach(el => {
+               el.style.display = 'none';
+           });
+           document.getElementById('message').style.display = 'none';
        }
        
        // Show error message
@@ -1175,727 +382,425 @@
            const element = document.getElementById(elementId);
            if (element) {
                element.textContent = message;
-               element.classList.add('show');
-               setTimeout(() => {
-                   element.classList.remove('show');
-               }, 5000);
+               element.style.display = 'block';
            }
        }
        
        // Show success message
-       function showSuccess(elementId, message) {
-           const element = document.getElementById(elementId);
-           if (element) {
-               element.textContent = message;
-               element.classList.add('show');
-               setTimeout(() => {
-                   element.classList.remove('show');
-               }, 5000);
-           }
+       function showMessage(message, type = 'success') {
+           const messageElement = document.getElementById('message');
+           messageElement.textContent = message;
+           messageElement.className = `message ${type}`;
+           messageElement.style.display = 'block';
        }
        
-       function showLoginForm() {
-           document.getElementById('login-form').classList.remove('hidden');
-           document.getElementById('register-form').classList.add('hidden');
-           document.getElementById('login-tab').classList.add('text-gold-primary', 'border-b-2', 'border-gold-primary');
-           document.getElementById('login-tab').classList.remove('text-white/70');
-           document.getElementById('register-tab').classList.add('text-white/70');
-           document.getElementById('register-tab').classList.remove('text-gold-primary', 'border-b-2', 'border-gold-primary');
-           
-           // Reset forms
-           document.getElementById('login-otp-section').classList.add('hidden');
-           document.getElementById('login-otp-input').value = '';
+       // Validate phone number
+       function validatePhone(phone) {
+           return /^[0-9]{10}$/.test(phone);
        }
        
-       function showRegisterForm() {
-           document.getElementById('login-form').classList.add('hidden');
-           document.getElementById('register-form').classList.remove('hidden');
-           document.getElementById('register-tab').classList.add('text-gold-primary', 'border-b-2', 'border-gold-primary');
-           document.getElementById('register-tab').classList.remove('text-white/70');
-           document.getElementById('login-tab').classList.add('text-white/70');
-           document.getElementById('login-tab').classList.remove('text-gold-primary', 'border-b-2', 'border-gold-primary');
-           
-           // Reset forms
-           document.getElementById('register-otp-section').classList.add('hidden');
-           document.getElementById('register-otp-input').value = '';
-       }
-
-       // Navigation System
-       document.querySelectorAll('.nav-btn').forEach(btn => {
-           btn.addEventListener('click', function() {
-               const page = this.dataset.page;
-               navigateToPage(page);
-               
-               // Update active nav button
-               document.querySelectorAll('.nav-btn').forEach(b => {
-                   b.classList.remove('gold-gradient', 'text-white');
-                   b.classList.add('hover:bg-gold-primary/10');
-               });
-               this.classList.add('gold-gradient', 'text-white');
-               this.classList.remove('hover:bg-gold-primary/10');
-           });
-       });
-
-       // Game category buttons on home page
-       document.querySelectorAll('.game-category').forEach(btn => {
-           btn.addEventListener('click', function() {
-               const game = this.dataset.game;
-               gameState.currentGame = game;
-               
-               // Navigate to games page
-               navigateToPage('games');
-               
-               // Activate the game tab
-               switchGameTab(game);
-               
-               // Update nav button
-               document.querySelectorAll('.nav-btn').forEach(b => {
-                   b.classList.remove('gold-gradient', 'text-white');
-                   b.classList.add('hover:bg-gold-primary/10');
-               });
-               document.querySelector('.nav-btn[data-page="games"]').classList.add('gold-gradient', 'text-white');
-               document.querySelector('.nav-btn[data-page="games"]').classList.remove('hover:bg-gold-primary/10');
-           });
-       });
-
-       // Back buttons
-       document.querySelectorAll('.back-btn').forEach(btn => {
-           btn.addEventListener('click', function() {
-               navigateToPage('home');
-               document.querySelector('.nav-btn[data-page="home"]').click();
-           });
-       });
-
-       // Game tabs in games page
-       document.querySelectorAll('.game-tab').forEach(tab => {
-           tab.addEventListener('click', function() {
-               const game = this.dataset.game;
-               switchGameTab(game);
-           });
-       });
-
-       // Page navigation function
-       function navigateToPage(page) {
-           // Hide all pages
-           document.querySelectorAll('.page').forEach(p => {
-               p.classList.remove('active');
-           });
-           
-           // Show selected page
-           document.getElementById(`${page}-page`).classList.add('active');
-           
-           // Update page title
-           const titles = {
-               home: 'Premium Gaming Platform',
-               games: 'BDG Games',
-               activity: 'Daily Activities',
-               promotion: 'Promotions & Referrals',
-               account: 'My Account'
-           };
-           document.getElementById('page-title').textContent = titles[page];
-           
-           // Hide header on account page
-           const header = document.getElementById('main-header');
-           const agentBanner = document.getElementById('agent-banner');
-           
-           if (page === 'account') {
-               header.classList.add('header-hidden');
-               agentBanner.classList.add('header-hidden');
-           } else {
-               header.classList.remove('header-hidden');
-               agentBanner.classList.remove('header-hidden');
-           }
-           
-           // Stop any running games
-           stopAllGames();
-           
-           // Initialize specific page if needed
-           if (page === 'games') {
-               initializeGamesPage();
-           } else if (page === 'home') {
-               updateHomePageData();
-           }
-       }
-
-       // Switch game tab in games page
-       function switchGameTab(game) {
-           // Update game state
-           gameState.currentGame = game;
-           
-           // Update UI
-           document.querySelectorAll('.game-tab').forEach(tab => {
-               tab.classList.remove('active');
-           });
-           document.querySelector(`.game-tab[data-game="${game}"]`).classList.add('active');
-           
-           document.querySelectorAll('.game-section').forEach(section => {
-               section.classList.remove('active');
-           });
-           document.getElementById(`${game}-section`).classList.add('active');
-           
-           // Initialize the selected game
-           if (game === 'wingo') {
-               initializeWingoGame();
-           } else if (game === 'aviator') {
-               initializeAviatorGame();
-           } else if (game === 'slots') {
-               initializeSlotsGame();
-           }
-       }
-
-       // Initialize Games Page
-       function initializeGamesPage() {
-           // Initialize all games
-           initializeWingoGame();
-           initializeAviatorGame();
-           initializeSlotsGame();
-           
-           // Update game period history
-           updateGamePeriodHistory();
-       }
-
-       // Update home page with real-time data
-       async function updateHomePageData() {
-           try {
-               const token = localStorage.getItem('bdg_auth_token');
-               if (!token) return;
-               
-               // Fetch recent game history from backend
-               const response = await fetch(`${BACKEND_URL}/games/history/recent`, {
-                   method: 'GET',
-                   headers: {
-                       'Authorization': `Bearer ${token}`
-                   }
-               });
-               
-               if (response.ok) {
-                   const data = await response.json();
-                   updateRecentGameHistory(data.history || []);
-               }
-               
-               // Fetch live game data
-               const liveResponse = await fetch(`${BACKEND_URL}/games/live`, {
-                   method: 'GET',
-                   headers: {
-                       'Authorization': `Bearer ${token}`
-                   }
-               });
-               
-               if (liveResponse.ok) {
-                   const liveData = await liveResponse.json();
-                   updateLiveGameData(liveData);
-               }
-           } catch (error) {
-               console.error('Error updating home page data:', error);
-           }
+       // Validate OTP
+       function validateOTP(otp) {
+           return /^[0-9]{6}$/.test(otp);
        }
        
-       function updateLiveGameData(data) {
-           // Update WinGo timer
-           if (data.wingo && data.wingo.timer) {
-               document.getElementById('wingo-30-timer').textContent = data.wingo.timer + 's';
-           }
-           
-           // Update Aviator current multiplier
-           if (data.aviator && data.aviator.current) {
-               document.getElementById('aviator-current').textContent = data.aviator.current + 'x';
-           }
-           
-           // Update slots players
-           if (data.slots && data.slots.players) {
-               document.getElementById('slots-players').textContent = data.slots.players;
-           }
+       // Validate password
+       function validatePassword(password) {
+           return password.length >= 6;
        }
        
-       function startHomeTimers() {
-           // Real-time updates for home page
-           setInterval(() => {
-               updateHomePageData();
-           }, 30000); // Update every 30 seconds
-       }
-       
-       function updateRecentGameHistory(history) {
-           const container = document.getElementById('recent-game-history');
-           container.innerHTML = '';
+       // Login with Password
+       async function loginWithPassword() {
+           const phone = document.getElementById('login-phone').value.trim();
+           const password = document.getElementById('login-password').value;
            
-           if (history.length === 0) {
-               container.innerHTML = `
-                   <div class="text-center py-8 text-gray-400">
-                       <i class="fas fa-gamepad text-3xl mb-3"></i>
-                       <p>No game history yet</p>
-                   </div>
-               `;
+           clearErrors();
+           
+           if (!validatePhone(phone)) {
+               showError('login-phone-error', 'Please enter valid 10-digit phone number');
                return;
            }
            
-           history.forEach(game => {
-               const item = document.createElement('div');
-               item.className = 'game-history-item';
-               
-               let icon = 'fa-gamepad';
-               let color = 'text-gold-primary';
-               if (game.game === 'wingo') icon = 'fa-clock';
-               if (game.game === 'aviator') icon = 'fa-plane';
-               if (game.game === 'slots') icon = 'fa-gamepad';
-               
-               let resultClass = game.result === 'win' ? 'text-green-500' : 'text-red-500';
-               let resultText = game.result === 'win' ? 'Win' : 'Loss';
-               
-               item.innerHTML = `
-                   <div class="w-8 h-8 gold-gradient rounded-full flex items-center justify-center">
-                       <i class="fas ${icon}"></i>
-                   </div>
-                   <div class="flex-1">
-                       <div class="flex justify-between">
-                           <span class="font-bold">${game.game}</span>
-                           <span class="${resultClass}">${resultText}</span>
-                       </div>
-                       <div class="flex justify-between text-xs opacity-70">
-                           <span>Amount: ₹${game.amount || 0}</span>
-                           <span>${formatTimeAgo(game.createdAt)}</span>
-                       </div>
-                   </div>
-               `;
-               
-               container.appendChild(item);
-           });
-       }
-       
-       function formatTimeAgo(dateString) {
-           const date = new Date(dateString);
-           const now = new Date();
-           const diffMs = now - date;
-           const diffMins = Math.floor(diffMs / 60000);
-           
-           if (diffMins < 1) return 'Just now';
-           if (diffMins === 1) return '1 min ago';
-           if (diffMins < 60) return `${diffMins} mins ago`;
-           
-           const diffHours = Math.floor(diffMins / 60);
-           if (diffHours === 1) return '1 hour ago';
-           if (diffHours < 24) return `${diffHours} hours ago`;
-           
-           const diffDays = Math.floor(diffHours / 24);
-           if (diffDays === 1) return '1 day ago';
-           return `${diffDays} days ago`;
-       }
-
-       // Initialize all games
-       function initializeGame() {
-           // Initialize deposit/withdraw buttons
-           initializeDepositWithdraw();
-           
-           // Initialize agent application
-           initializeAgentApplication();
-           
-           // Initialize promotion buttons
-           initializePromotionButtons();
-           
-           // Initialize account menu
-           initializeAccountMenu();
-           
-           // Set default game to wingo
-           gameState.currentGame = 'wingo';
-           
-           // Update balance display
-           updateBalance();
-       }
-
-       // Initialize WinGo Game (modified to use backend)
-       function initializeWingoGame() {
-           // Set default time frame to 30 seconds
-           selectWingoTimeFrame(30, '30 Seconds');
-           
-           // Add event listeners to time frame buttons
-           document.querySelectorAll('.timeframe-btn').forEach(btn => {
-               btn.addEventListener('click', function() {
-                   const timeframe = parseInt(this.dataset.timeframe);
-                   const timeframeName = this.textContent.trim();
-                   selectWingoTimeFrame(timeframe, timeframeName);
-               });
-           });
-           
-           // Add event listeners to game betting buttons
-           initializeWingoBetting();
-           
-           // Initialize custom bet button
-           document.querySelector('.wingo-custom-btn').addEventListener('click', function() {
-               showCustomBetInput('wingo');
-           });
-           
-           // Update results display
-           updateWingoResults();
-       }
-
-       async function placeWingoBet() {
-           if (gameState.wingoBet <= 0) {
-               alert('Please select a bet amount!');
-               return;
-           }
-           
-           if (!gameState.wingoSelectedColor && !gameState.wingoSelectedNumber && !gameState.wingoSelectedSize) {
-               alert('Please select a betting option!');
-               return;
-           }
-           
-           if (gameState.wingoBet > gameState.balance) {
-               showPopup('loss', 'Insufficient balance!');
+           if (!password) {
+               showError('login-password-error', 'Please enter password');
                return;
            }
            
            try {
-               const token = localStorage.getItem('bdg_auth_token');
-               const betData = {
-                   amount: gameState.wingoBet,
-                   color: gameState.wingoSelectedColor,
-                   number: gameState.wingoSelectedNumber,
-                   size: gameState.wingoSelectedSize,
-                   timeframe: gameState.wingoTimeFrameName,
-                   period: '#' + Math.floor(100000 + Math.random() * 900000)
-               };
-               
-               const response = await fetch(`${BACKEND_URL}/games/wingo/bet`, {
+               const response = await fetch(`${BACKEND_URL}/api/auth/login-password`, {
                    method: 'POST',
                    headers: {
-                       'Content-Type': 'application/json',
-                       'Authorization': `Bearer ${token}`
+                       'Content-Type': 'application/json'
                    },
-                   body: JSON.stringify(betData)
+                   body: JSON.stringify({
+                       phone: phone,
+                       password: password
+                   })
                });
                
-               if (response.ok) {
-                   const data = await response.json();
-                   
-                   // Deduct bet from balance
-                   gameState.balance -= gameState.wingoBet;
-                   updateBalance();
-                   
-                   // Add to game history
-                   const betRecord = {
-                       id: Date.now(),
-                       type: 'wingo',
-                       bet: gameState.wingoBet,
-                       color: gameState.wingoSelectedColor,
-                       number: gameState.wingoSelectedNumber,
-                       size: gameState.wingoSelectedSize,
-                       time: new Date().toLocaleTimeString(),
-                       timeframe: gameState.wingoTimeFrameName,
-                       period: betData.period
-                   };
-                   
-                   gameState.wingoHistory.push(betRecord);
-                   gameState.gameHistory.push(betRecord);
-                   
-                   // Update game period history
-                   updateGamePeriodHistory();
-                   
-                   // Update home history
-                   updateHomePageData();
-                   
-                   alert(`Bet placed: ₹${gameState.wingoBet} on ${gameState.wingoTimeFrameName} game`);
-                   
-                   // Reset bet
-                   resetWingoBet();
-               } else {
-                   const errorData = await response.json();
-                   alert(errorData.message || 'Failed to place bet');
-               }
-           } catch (error) {
-               console.error('Error placing bet:', error);
-               alert('Failed to place bet. Please try again.');
-           }
-       }
-
-       // Initialize Aviator Game (modified to use backend)
-       async function placeAviatorBet() {
-           if (gameState.aviatorBet <= 0) {
-               alert('Please select a bet amount!');
-               return;
-           }
-           
-           if (gameState.aviatorBet > gameState.balance) {
-               showPopup('loss', 'Insufficient balance!');
-               return;
-           }
-           
-           try {
-               const token = localStorage.getItem('bdg_auth_token');
-               const betData = {
-                   amount: gameState.aviatorBet,
-                   autoCashout: document.getElementById('auto-cashout').value || null
-               };
+               const data = await response.json();
                
-               const response = await fetch(`${BACKEND_URL}/games/aviator/bet`, {
-                   method: 'POST',
-                   headers: {
-                       'Content-Type': 'application/json',
-                       'Authorization': `Bearer ${token}`
-                   },
-                   body: JSON.stringify(betData)
-               });
-               
-               if (response.ok) {
-                   const data = await response.json();
+               if (data.success) {
+                   // Store token and user data
+                   localStorage.setItem('bdg_token', data.token);
+                   localStorage.setItem('bdg_user', JSON.stringify(data.user));
                    
-                   // Deduct bet from balance
-                   gameState.balance -= gameState.aviatorBet;
-                   updateBalance();
+                   showMessage('Login successful!', 'success');
                    
-                   // Add to game history
-                   const betRecord = {
-                       id: Date.now(),
-                       type: 'aviator',
-                       bet: gameState.aviatorBet,
-                       time: new Date().toLocaleTimeString(),
-                       status: 'Placed',
-                       period: '#' + Math.floor(100000 + Math.random() * 900000)
-                   };
-                   
-                   gameState.aviatorHistory.push(betRecord);
-                   gameState.gameHistory.push(betRecord);
-                   
-                   // Start aviator game simulation
-                   startAviatorGame();
-                   
-                   // Update game period history
-                   updateGamePeriodHistory();
-                   
-                   // Update home history
-                   updateHomePageData();
-                   
-                   alert(`Bet placed: ₹${gameState.aviatorBet} on Aviator`);
-               } else {
-                   const errorData = await response.json();
-                   alert(errorData.message || 'Failed to place bet');
-               }
-           } catch (error) {
-               console.error('Error placing aviator bet:', error);
-               alert('Failed to place bet. Please try again.');
-           }
-       }
-
-       // Initialize Slots Game (modified to use backend)
-       async function spinSlots() {
-           if (gameState.slotsBet <= 0) {
-               alert('Please select a bet amount!');
-               return;
-           }
-           
-           if (gameState.slotsBet > gameState.balance) {
-               showPopup('loss', 'Insufficient balance!');
-               return;
-           }
-           
-           try {
-               const token = localStorage.getItem('bdg_auth_token');
-               const betData = {
-                   amount: gameState.slotsBet
-               };
-               
-               const response = await fetch(`${BACKEND_URL}/games/slots/spin`, {
-                   method: 'POST',
-                   headers: {
-                       'Content-Type': 'application/json',
-                       'Authorization': `Bearer ${token}`
-                   },
-                   body: JSON.stringify(betData)
-               });
-               
-               if (response.ok) {
-                   const data = await response.json();
-                   
-                   // Deduct bet from balance
-                   gameState.balance -= gameState.slotsBet;
-                   updateBalance();
-                   
-                   // Add to game history
-                   const betRecord = {
-                       id: Date.now(),
-                       type: 'slots',
-                       bet: gameState.slotsBet,
-                       time: new Date().toLocaleTimeString(),
-                       status: 'Spinning',
-                       period: '#' + Math.floor(100000 + Math.random() * 900000)
-                   };
-                   
-                   gameState.slotsHistory.push(betRecord);
-                   gameState.gameHistory.push(betRecord);
-                   
-                   // Show spinning animation
-                   const reelElements = [
-                       document.getElementById('reel1'), 
-                       document.getElementById('reel2'), 
-                       document.getElementById('reel3')
-                   ];
-                   
-                   reelElements.forEach(reel => {
-                       reel.classList.add('spinning');
-                       reel.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                   });
-                   
-                   // Simulate spin delay
+                   // Redirect to main app after 1 second
                    setTimeout(() => {
-                       reelElements.forEach(reel => {
-                           reel.classList.remove('spinning');
-                       });
-                       
-                       // Show result
-                       if (data.result === 'win') {
-                           const winAmount = gameState.slotsBet * data.multiplier;
-                           gameState.balance += winAmount;
-                           
-                           // Update win record
-                           const winRecord = {
-                               id: Date.now(),
-                               type: 'slots',
-                               result: 'Win',
-                               amount: winAmount,
-                               bet: gameState.slotsBet,
-                               combination: data.combination,
-                               multiplier: data.multiplier + 'x',
-                               time: new Date().toLocaleTimeString(),
-                               period: betRecord.period
-                           };
-                           
-                           gameState.slotsHistory.push(winRecord);
-                           gameState.gameHistory.push(winRecord);
-                           
-                           showPopup('win', winAmount, `${data.combination} - ${data.multiplier}x`);
-                       } else {
-                           // Add loss record
-                           const lossRecord = {
-                               id: Date.now(),
-                               type: 'slots',
-                               result: 'Loss',
-                               amount: gameState.slotsBet,
-                               bet: gameState.slotsBet,
-                               combination: data.combination,
-                               time: new Date().toLocaleTimeString(),
-                               period: betRecord.period
-                           };
-                           
-                           gameState.slotsHistory.push(lossRecord);
-                           gameState.gameHistory.push(lossRecord);
-                           
-                           showPopup('loss', gameState.slotsBet, 'Better luck next time!');
-                       }
-                       
-                       gameState.slotsBet = 0;
-                       updateSlotsDisplay();
-                       updateBalance();
-                       
-                       // Update history
-                       updateSlotsHistory();
-                       updateGamePeriodHistory();
-                       updateHomePageData();
-                   }, 2000);
-                   
+                       window.location.href = '/home.html'; // Change to your main app page
+                   }, 1000);
                } else {
-                   const errorData = await response.json();
-                   alert(errorData.message || 'Failed to spin slots');
+                   showError('login-password-error', data.error || 'Login failed');
                }
            } catch (error) {
-               console.error('Error spinning slots:', error);
-               alert('Failed to spin slots. Please try again.');
+               console.error('Login error:', error);
+               showError('login-password-error', 'Network error. Please try again.');
            }
-       }
-
-       // Update balance display
-       function updateBalance() {
-           const balanceElements = document.querySelectorAll('#balance, #main-balance');
-           balanceElements.forEach(el => {
-               el.textContent = gameState.balance.toLocaleString('en-IN', {
-                   minimumFractionDigits: 2,
-                   maximumFractionDigits: 2
-               });
-           });
-           
-           // Update backend if needed
-           updateUserBalanceOnBackend();
        }
        
-       async function updateUserBalanceOnBackend() {
+       // Send OTP for Login
+       async function sendLoginOTP() {
+           const phone = document.getElementById('login-phone').value.trim();
+           
+           clearErrors();
+           
+           if (!validatePhone(phone)) {
+               showError('login-phone-error', 'Please enter valid 10-digit phone number');
+               return;
+           }
+           
            try {
-               const token = localStorage.getItem('bdg_auth_token');
-               if (!token) return;
-               
-               await fetch(`${BACKEND_URL}/user/balance`, {
-                   method: 'PUT',
+               const response = await fetch(`${BACKEND_URL}/api/auth/send-otp-login`, {
+                   method: 'POST',
                    headers: {
-                       'Content-Type': 'application/json',
-                       'Authorization': `Bearer ${token}`
+                       'Content-Type': 'application/json'
                    },
-                   body: JSON.stringify({ balance: gameState.balance })
+                   body: JSON.stringify({
+                       phone: phone
+                   })
                });
+               
+               const data = await response.json();
+               
+               if (data.success) {
+                   currentPhone = phone;
+                   currentOTP = data.otp; // In production, don't store OTP in frontend
+                   
+                   // Show OTP section
+                   document.getElementById('login-otp-section').style.display = 'block';
+                   document.getElementById('password-login-section').style.display = 'none';
+                   
+                   showMessage('OTP sent to your phone', 'success');
+               } else {
+                   showError('login-phone-error', data.error || 'Failed to send OTP');
+               }
            } catch (error) {
-               console.error('Error updating balance on backend:', error);
+               console.error('Send OTP error:', error);
+               showError('login-phone-error', 'Network error. Please try again.');
            }
        }
-
-       // Logout functionality
-       document.getElementById('logout-btn').addEventListener('click', async function() {
-           if (confirm('Are you sure you want to logout?')) {
-               try {
-                   // Sign out from Firebase
-                   await auth.signOut();
-                   
-                   // Clear local storage
-                   localStorage.removeItem('bdg_auth_token');
-                   localStorage.removeItem('bdg_user_data');
-                   
-                   // Reset game state
-                   gameState.isLoggedIn = false;
-                   gameState.userData = null;
-                   gameState.balance = 0;
-                   
-                   // Hide app and show login page
-                   document.getElementById('app').classList.remove('active');
-                   document.querySelectorAll('.logged-in-only').forEach(el => {
-                       el.classList.remove('active');
-                   });
-                   document.getElementById('login-page').classList.remove('hidden');
-                   
-                   // Reset login form
-                   showLoginForm();
-                   
-                   // Stop all games
-                   stopAllGames();
-               } catch (error) {
-                   console.error('Error logging out:', error);
-               }
+       
+       // Verify OTP for Login
+       async function verifyLoginOTP() {
+           const otp = document.getElementById('login-otp-input').value.trim();
+           
+           clearErrors();
+           
+           if (!validateOTP(otp)) {
+               showError('login-otp-error', 'Please enter valid 6-digit OTP');
+               return;
            }
-       });
-
-       // Firebase auth state observer
-       auth.onAuthStateChanged((user) => {
-           if (user) {
-               // User is signed in
-               console.log('User signed in:', user.uid);
-           } else {
-               // User is signed out
-               console.log('User signed out');
+           
+           try {
+               const response = await fetch(`${BACKEND_URL}/api/auth/login-otp`, {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify({
+                       phone: currentPhone,
+                       otp: otp
+                   })
+               });
                
-               // Clear local storage if user logs out from Firebase
-               if (gameState.isLoggedIn) {
-                   localStorage.removeItem('bdg_auth_token');
-                   localStorage.removeItem('bdg_user_data');
+               const data = await response.json();
+               
+               if (data.success) {
+                   // Store token and user data
+                   localStorage.setItem('bdg_token', data.token);
+                   localStorage.setItem('bdg_user', JSON.stringify(data.user));
                    
-                   // Reset and show login page
-                   gameState.isLoggedIn = false;
-                   document.getElementById('app').classList.remove('active');
-                   document.querySelectorAll('.logged-in-only').forEach(el => {
-                       el.classList.remove('active');
-                   });
-                   document.getElementById('login-page').classList.remove('hidden');
-                   showLoginForm();
+                   showMessage('Login successful!', 'success');
+                   
+                   // Redirect to main app after 1 second
+                   setTimeout(() => {
+                       window.location.href = '/home.html'; // Change to your main app page
+                   }, 1000);
+               } else {
+                   showError('login-otp-error', data.error || 'Invalid OTP');
                }
+           } catch (error) {
+               console.error('Verify OTP error:', error);
+               showError('login-otp-error', 'Network error. Please try again.');
            }
-       });
-
-       // Note: I've kept the core game logic functions (initializeWingoBetting, initializeAviatorButtons, etc.)
-       // but modified the actual bet placement to use backend API calls.
-       // You'll need to update these functions to call the new async functions (placeWingoBet, placeAviatorBet, spinSlots)
-       // instead of the old mock implementations.
+       }
+       
+       // Send OTP for Registration
+       async function sendRegisterOTP() {
+           const name = document.getElementById('register-name').value.trim();
+           const phone = document.getElementById('register-phone').value.trim();
+           const password = document.getElementById('register-password').value;
+           const confirmPassword = document.getElementById('register-confirm-password').value;
+           const termsAgreed = document.getElementById('terms-agree').checked;
+           
+           clearErrors();
+           
+           // Validation
+           if (!name) {
+               showError('register-name-error', 'Please enter your name');
+               return;
+           }
+           
+           if (!validatePhone(phone)) {
+               showError('register-phone-error', 'Please enter valid 10-digit phone number');
+               return;
+           }
+           
+           if (!validatePassword(password)) {
+               showError('register-password-error', 'Password must be at least 6 characters');
+               return;
+           }
+           
+           if (password !== confirmPassword) {
+               showError('register-confirm-error', 'Passwords do not match');
+               return;
+           }
+           
+           if (!termsAgreed) {
+               showError('terms-error', 'Please agree to Terms & Conditions');
+               return;
+           }
+           
+           try {
+               const response = await fetch(`${BACKEND_URL}/api/auth/send-otp-register`, {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify({
+                       phone: phone,
+                       name: name
+                   })
+               });
+               
+               const data = await response.json();
+               
+               if (data.success) {
+                   currentPhone = phone;
+                   currentOTP = data.otp; // In production, don't store OTP in frontend
+                   
+                   // Store form data in localStorage temporarily
+                   localStorage.setItem('register_data', JSON.stringify({
+                       name: name,
+                       phone: phone,
+                       password: password
+                   }));
+                   
+                   // Show OTP section
+                   document.getElementById('register-otp-section').style.display = 'block';
+                   
+                   showMessage('OTP sent to your phone', 'success');
+               } else {
+                   showError('register-phone-error', data.error || 'Failed to send OTP');
+               }
+           } catch (error) {
+               console.error('Send OTP error:', error);
+               showError('register-phone-error', 'Network error. Please try again.');
+           }
+       }
+       
+       // Verify OTP and Register
+       async function verifyRegisterOTP() {
+           const otp = document.getElementById('register-otp-input').value.trim();
+           
+           clearErrors();
+           
+           if (!validateOTP(otp)) {
+               showError('register-otp-error', 'Please enter valid 6-digit OTP');
+               return;
+           }
+           
+           // Get stored registration data
+           const registerData = JSON.parse(localStorage.getItem('register_data') || '{}');
+           
+           if (!registerData.name || !registerData.phone || !registerData.password) {
+               showError('register-otp-error', 'Registration data not found. Please try again.');
+               return;
+           }
+           
+           try {
+               const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify({
+                       name: registerData.name,
+                       phone: registerData.phone,
+                       password: registerData.password,
+                       otp: otp
+                   })
+               });
+               
+               const data = await response.json();
+               
+               if (data.success) {
+                   // Clear temporary data
+                   localStorage.removeItem('register_data');
+                   
+                   // Store token and user data
+                   localStorage.setItem('bdg_token', data.token);
+                   localStorage.setItem('bdg_user', JSON.stringify(data.user));
+                   
+                   showMessage('Registration successful!', 'success');
+                   
+                   // Redirect to main app after 1 second
+                   setTimeout(() => {
+                       window.location.href = '/home.html'; // Change to your main app page
+                   }, 1000);
+               } else {
+                   showError('register-otp-error', data.error || 'Registration failed');
+               }
+           } catch (error) {
+               console.error('Registration error:', error);
+               showError('register-otp-error', 'Network error. Please try again.');
+           }
+       }
+       
+       // Send Reset OTP
+       async function sendResetOTP() {
+           const phone = document.getElementById('forgot-phone').value.trim();
+           
+           clearErrors();
+           
+           if (!validatePhone(phone)) {
+               showError('forgot-phone-error', 'Please enter valid 10-digit phone number');
+               return;
+           }
+           
+           try {
+               const response = await fetch(`${BACKEND_URL}/api/auth/forgot-password`, {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify({
+                       phone: phone
+                   })
+               });
+               
+               const data = await response.json();
+               
+               if (data.success) {
+                   currentPhone = phone;
+                   currentOTP = data.otp; // In production, don't store OTP in frontend
+                   
+                   // Show reset OTP section
+                   document.getElementById('reset-otp-section').style.display = 'block';
+                   
+                   showMessage('Reset OTP sent to your phone', 'success');
+               } else {
+                   showError('forgot-phone-error', data.error || 'Failed to send OTP');
+               }
+           } catch (error) {
+               console.error('Send reset OTP error:', error);
+               showError('forgot-phone-error', 'Network error. Please try again.');
+           }
+       }
+       
+       // Reset Password
+       async function resetPassword() {
+           const otp = document.getElementById('reset-otp-input').value.trim();
+           const newPassword = document.getElementById('new-password').value;
+           const confirmPassword = document.getElementById('confirm-new-password').value;
+           
+           clearErrors();
+           
+           if (!validateOTP(otp)) {
+               showError('reset-otp-error', 'Please enter valid 6-digit OTP');
+               return;
+           }
+           
+           if (!validatePassword(newPassword)) {
+               showError('new-password-error', 'Password must be at least 6 characters');
+               return;
+           }
+           
+           if (newPassword !== confirmPassword) {
+               showError('confirm-password-error', 'Passwords do not match');
+               return;
+           }
+           
+           try {
+               const response = await fetch(`${BACKEND_URL}/api/auth/reset-password`, {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/json'
+                   },
+                   body: JSON.stringify({
+                       phone: currentPhone,
+                       otp: otp,
+                       newPassword: newPassword,
+                       confirmPassword: confirmPassword
+                   })
+               });
+               
+               const data = await response.json();
+               
+               if (data.success) {
+                   showMessage('Password reset successful! Please login with new password.', 'success');
+                   
+                   // Redirect to login after 2 seconds
+                   setTimeout(() => {
+                       showLoginForm();
+                   }, 2000);
+               } else {
+                   showError('reset-otp-error', data.error || 'Password reset failed');
+               }
+           } catch (error) {
+               console.error('Reset password error:', error);
+               showError('reset-otp-error', 'Network error. Please try again.');
+           }
+       }
+       
+       // Verify Token
+       async function verifyToken(token) {
+           try {
+               const response = await fetch(`${BACKEND_URL}/api/auth/verify`, {
+                   method: 'GET',
+                   headers: {
+                       'Authorization': `Bearer ${token}`
+                   }
+               });
+               
+               const data = await response.json();
+               
+               if (data.success) {
+                   // User is already logged in, redirect to main app
+                   window.location.href = '/home.html';
+               }
+           } catch (error) {
+               // Token is invalid, clear localStorage
+               localStorage.removeItem('bdg_token');
+               localStorage.removeItem('bdg_user');
+           }
+       }
+       
+       // Expose functions for HTML onclick
+       window.showLoginForm = showLoginForm;
+       window.showRegisterForm = showRegisterForm;
    </script>
 </body>
 </html>
