@@ -1,6 +1,6 @@
 // ✅ Game Configuration
-const BACKEND_URL = 'http://localhost:5000';
-const WS_URL = 'ws://localhost:5000';
+const BACKEND_URL = ' https://colorpro-vfgm.onrender.com';
+const WS_URL = ' https://colorpro-vfgm.onrender.com';
 
 // ✅ Game State Management
 let gameState = {
