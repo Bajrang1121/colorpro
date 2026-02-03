@@ -3,13 +3,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  root: 'public', // index.html yahan hai
+  root: 'public', 
   build: {
-    // Ye 'frontend/dist' folder banayega
-    outDir: '../dist', 
+    outDir: '../dist',
     emptyOutDir: true,
-    rollupOptions: {
-      input: 'public/index.html' // Explicitly path batana
-    }
   }
 })
