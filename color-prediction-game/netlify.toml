@@ -1,10 +1,9 @@
 ﻿[build]
-  base = "frontend"
+  base = "color-prediction-game/frontend"
   command = "npm install && npm run build"
   publish = "dist"
 
 [[redirects]]
-  # Ye 404 error ko rokne ke liye sabse zaroori hai
   from = "/*"
   to = "/index.html"
   status = 200

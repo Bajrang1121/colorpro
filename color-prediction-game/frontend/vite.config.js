@@ -1,26 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 3000,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true
-      }
-    }
-  },
+  // Vite ko bata rahe hain ki index.html 'public' folder mein hai
+  root: 'public',
   build: {
-    outDir: 'dist',
-    sourcemap: true,
+    // Build folder ko wapas 'frontend/dist' mein bhejne ke liye
+    outDir: '../dist',
+    emptyOutDir: true,
     rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom']
-        }
-      }
-    }
-  }
+      // Manual entry point definition
+      input: resolve(__dirname, 'public/index.html'),
+    },
+  },
 })
