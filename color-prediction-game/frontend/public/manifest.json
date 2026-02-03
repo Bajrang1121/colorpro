@@ -1,55 +1,70 @@
 {
-  "name": "BDG Game - Color Prediction",
-  "short_name": "BDG Game",
-  "description": "Experience the thrill of color prediction with BDG Game",
+  "name": "BDG GAME",
+  "short_name": "BDG",
+  "description": "Color Prediction Game - WinGo, Lottery, Casino",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a2e",
-  "theme_color": "#0f3460",
+  "theme_color": "#2d2b52",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "assets/icons/icon-72x72.png",
+      "src": "assets/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "assets/icons/icon-96x96.png",
+      "src": "assets/icon-96x96.png",
       "sizes": "96x96",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-128x128.png",
+      "src": "assets/icon-128x128.png",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-144x144.png",
+      "src": "assets/icon-144x144.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-152x152.png",
+      "src": "assets/icon-152x152.png",
       "sizes": "152x152",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-192x192.png",
+      "src": "assets/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-384x384.png",
+      "src": "assets/icon-384x384.png",
       "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-512x512.png",
+      "src": "assets/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "categories": ["games", "entertainment"],
-  "lang": "en",
-  "dir": "ltr"
+  "categories": ["entertainment", "games", "casino"],
+  "shortcuts": [
+    {
+      "name": "Play WinGo 30sec",
+      "short_name": "WinGo",
+      "description": "Start playing WinGo 30 seconds game",
+      "url": "/?game=wingo30",
+      "icons": [{ "src": "assets/wingo-icon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Deposit Funds",
+      "short_name": "Deposit",
+      "description": "Add funds to your wallet",
+      "url": "/?tab=account&action=deposit"
+    }
+  ],
+  "prefer_related_applications": false
 }
