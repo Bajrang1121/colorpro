@@ -1,0 +1,14 @@
+[build]
+  # Ab hum Netlify ko sahi rasta dikha rahe hain
+  base = "color-prediction-game/frontend"
+  
+  # Command wahi rahegi
+  command = "npm install && npm run build"
+  
+  # Publish directory hamesha base ke relative hoti hai
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
