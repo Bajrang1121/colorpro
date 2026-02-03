@@ -1,10 +1,10 @@
 ﻿[build]
   base = "frontend"
   command = "npm install && npm run build"
-  # Kyunki vite.config mein humne outDir '../dist' kiya hai, ye base folder (frontend) ke andar hi rahega
   publish = "dist"
 
 [[redirects]]
+  # Ye 404 error ko rokne ke liye sabse zaroori hai
   from = "/*"
   to = "/index.html"
   status = 200

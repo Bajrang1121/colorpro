@@ -1,12 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [react()],
-  root: 'public', // Ye Vite ko bolega ki index.html 'public' folder mein hai
+  root: 'public', // index.html yahan hai
   build: {
-    outDir: '../dist', // Build ko wapas frontend/dist mein bhejne ke liye
+    // Ye 'frontend/dist' folder banayega
+    outDir: '../dist', 
     emptyOutDir: true,
+    rollupOptions: {
+      input: 'public/index.html' // Explicitly path batana
+    }
   }
 })
