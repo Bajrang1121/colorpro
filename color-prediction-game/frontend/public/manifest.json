@@ -1,49 +1,55 @@
 {
   "name": "BDG Game - Color Prediction",
   "short_name": "BDG Game",
-  "description": "Real-time color prediction game with betting and entertainment",
+  "description": "Experience the thrill of color prediction with BDG Game",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#667eea",
-  "theme_color": "#764ba2",
+  "background_color": "#1a1a2e",
+  "theme_color": "#0f3460",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/icon-192x192.png",
+      "src": "assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "/icon-512x512.png",
+      "src": "assets/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ],
-  "categories": ["entertainment", "games", "casino"],
-  "screenshots": [
-    {
-      "src": "/screenshot1.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "label": "BDG Game Home Screen"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Play WinGo 30s",
-      "short_name": "WinGo 30s",
-      "description": "Quick play WinGo 30 seconds game",
-      "url": "/game/wingo-30s",
-      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
-    },
-    {
-      "name": "Check Balance",
-      "short_name": "Balance",
-      "description": "View your account balance",
-      "url": "/account",
-      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
-    }
-  ]
+  "categories": ["games", "entertainment"],
+  "lang": "en",
+  "dir": "ltr"
 }

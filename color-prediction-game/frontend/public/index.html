@@ -1,188 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BDG Game - Color Prediction</title>
-    <meta name="description" content="BDG Game - Color Prediction Game with real-time betting and entertainment">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    
-    <!-- iOS Meta Tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="BDG Game">
-    
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#667eea">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Additional Styles -->
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      
-      body {
-        font-family: 'Poppins', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
-          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
-      
-      /* Loading Animation */
-      #root {
-        min-height: 100vh;
-      }
-      
-      .loading-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        flex-direction: column;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-      }
-      
-      .loading-spinner {
-        width: 50px;
-        height: 50px;
-        border: 5px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: white;
-        animation: spin 1s ease-in-out infinite;
-        margin-bottom: 20px;
-      }
-      
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-      
-      /* Scrollbar Styling */
-      ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-      }
-      
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-      }
-      
-      ::-webkit-scrollbar-thumb {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 10px;
-      }
-      
-      ::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-      }
-      
-      /* Selection Color */
-      ::selection {
-        background-color: #667eea;
-        color: white;
-      }
-      
-      /* Focus Outline */
-      :focus {
-        outline: 2px solid #667eea;
-        outline-offset: 2px;
-      }
-      
-      /* Mobile Optimization */
-      @media (max-width: 768px) {
-        body {
-          font-size: 14px;
-        }
-      }
-      
-      /* Prevent text selection on buttons */
-      button {
-        user-select: none;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Loading Screen -->
-    <div id="loading" class="loading-container">
-      <div class="loading-spinner"></div>
-      <h2>Loading BDG Game...</h2>
-      <p style="margin-top: 10px; opacity: 0.8;">Color Prediction Game</p>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="BDG Game - Color Prediction Game with real-time betting">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="logo">
+                    <h1>BDG GAME</h1>
+                </div>
+                <div class="user-info">
+                    <div class="wallet-balance">
+                        <i class="fas fa-wallet"></i>
+                        <span id="walletAmount">₹9,520.97</span>
+                    </div>
+                    <div class="user-id">
+                        Member: <span id="userId">NNGJ20PN</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <button class="nav-btn active" data-tab="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </button>
+                <button class="nav-btn" data-tab="games">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Games</span>
+                </button>
+                <button class="nav-btn" data-tab="activity">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Activity</span>
+                </button>
+                <button class="nav-btn" data-tab="account">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Tab -->
+            <div class="tab-content active" id="homeTab">
+                <div class="welcome-banner">
+                    <h2>Welcome to BDG Game</h2>
+                    <p>Experience the thrill of color prediction!</p>
+                </div>
+
+                <div class="promotion-banner">
+                    <div class="promo-content">
+                        <h3>Get ₹500 Promotion</h3>
+                        <p>Add BDG to desktop for exclusive bonus</p>
+                        <button class="promo-btn">
+                            <i class="fas fa-plus-circle"></i>
+                            Add to Desktop
+                        </button>
+                    </div>
+                </div>
+
+                <div class="agent-banner">
+                    <h3>BDG GAME IS LOOKING FOR AGENTS</h3>
+                    <p>EASY DAILY INCOME ₹9999+</p>
+                </div>
+
+                <div class="games-grid">
+                    <div class="game-category">
+                        <h3><i class="fas fa-ticket-alt"></i> Lottery</h3>
+                        <div class="games-list">
+                            <button class="game-btn">All</button>
+                            <button class="game-btn">Win Go</button>
+                            <button class="game-btn">MotoRace</button>
+                            <button class="game-btn">Trx Win</button>
+                        </div>
+                    </div>
+
+                    <div class="game-category">
+                        <h3><i class="fas fa-star"></i> Original</h3>
+                        <div class="games-list">
+                            <button class="game-btn">WinGo 30sec</button>
+                            <button class="game-btn">WinGo 1Min</button>
+                            <button class="game-btn">WinGo 3Min</button>
+                            <button class="game-btn">WinGo 5Min</button>
+                        </div>
+                    </div>
+
+                    <div class="game-category">
+                        <h3><i class="fas fa-dice"></i> Slots</h3>
+                        <div class="games-list">
+                            <button class="game-btn">5D 1Min</button>
+                            <button class="game-btn">5D 3Min</button>
+                            <button class="game-btn">5D 5Min</button>
+                            <button class="game-btn">5D 10Min</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Games Tab -->
+            <div class="tab-content" id="gamesTab">
+                <div class="game-header">
+                    <h2>WinGo 30sec</h2>
+                    <div class="game-period">
+                        Period: <span id="gamePeriod">20260201100051304</span>
+                    </div>
+                </div>
+
+                <div class="countdown-container">
+                    <div class="countdown-timer">
+                        <span class="timer-label">Time Remaining</span>
+                        <div class="timer" id="countdownTimer">00:30</div>
+                    </div>
+                </div>
+
+                <div class="game-board">
+                    <div class="game-instructions">
+                        <h3>How to play</h3>
+                        <p>Bet on a color or number before timer ends!</p>
+                    </div>
+
+                    <div class="betting-options">
+                        <div class="color-bets">
+                            <h4>Color Prediction</h4>
+                            <div class="color-options">
+                                <button class="color-btn green" data-bet="green" data-multiplier="2">
+                                    <span>Green</span>
+                                    <span class="multiplier">x2</span>
+                                </button>
+                                <button class="color-btn violet" data-bet="violet" data-multiplier="2">
+                                    <span>Violet</span>
+                                    <span class="multiplier">x2</span>
+                                </button>
+                                <button class="color-btn red" data-bet="red" data-multiplier="2">
+                                    <span>Red</span>
+                                    <span class="multiplier">x2</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="number-bets">
+                            <h4>Number Prediction</h4>
+                            <div class="number-grid">
+                                <button class="number-btn" data-number="0">0</button>
+                                <button class="number-btn" data-number="1">1</button>
+                                <button class="number-btn" data-number="2">2</button>
+                                <button class="number-btn" data-number="3">3</button>
+                                <button class="number-btn" data-number="4">4</button>
+                                <button class="number-btn" data-number="5">5</button>
+                                <button class="number-btn" data-number="6">6</button>
+                                <button class="number-btn" data-number="7">7</button>
+                                <button class="number-btn" data-number="8">8</button>
+                                <button class="number-btn" data-number="9">9</button>
+                            </div>
+                            <div class="multiplier-info">
+                                Number Multiplier: <span class="highlight">x100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bet-amount-selector">
+                        <h4>Select Bet Amount</h4>
+                        <div class="amount-buttons">
+                            <button class="amount-btn" data-amount="10">₹10</button>
+                            <button class="amount-btn" data-amount="50">₹50</button>
+                            <button class="amount-btn active" data-amount="100">₹100</button>
+                            <button class="amount-btn" data-amount="500">₹500</button>
+                            <button class="amount-btn" data-amount="1000">₹1000</button>
+                        </div>
+                        <div class="custom-amount">
+                            <input type="number" id="customAmount" placeholder="Custom Amount" min="10" max="10000">
+                            <button id="setCustomAmount">Set</button>
+                        </div>
+                    </div>
+
+                    <div class="bet-controls">
+                        <div class="multiplier-controls">
+                            <button class="multiplier-btn" data-multiplier="1">x1</button>
+                            <button class="multiplier-btn" data-multiplier="5">x5</button>
+                            <button class="multiplier-btn" data-multiplier="10">x10</button>
+                            <button class="multiplier-btn" data-multiplier="20">x20</button>
+                            <button class="multiplier-btn" data-multiplier="50">x50</button>
+                            <button class="multiplier-btn" data-multiplier="100">x100</button>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="action-btn big" id="placeBet">
+                                <i class="fas fa-coins"></i>
+                                Place Bet
+                            </button>
+                            <button class="action-btn small" id="clearBet">
+                                <i class="fas fa-times"></i>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-history">
+                    <h3>Game History</h3>
+                    <div class="history-controls">
+                        <button class="history-btn active">Chart</button>
+                        <button class="history-btn">My History</button>
+                    </div>
+                    <div class="history-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th>Number</th>
+                                    <th>Big/Small</th>
+                                    <th>Color</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyBody">
+                                <!-- History will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Tab -->
+            <div class="tab-content" id="activityTab">
+                <div class="activity-header">
+                    <h2>My Activity</h2>
+                    <div class="activity-stats">
+                        <div class="stat-card">
+                            <h4>Total Bets</h4>
+                            <p class="stat-value">156</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Wins</h4>
+                            <p class="stat-value">89</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Win Rate</h4>
+                            <p class="stat-value">57%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-bets">
+                    <h3>Recent Bets</h3>
+                    <div class="bets-list" id="recentBetsList">
+                        <!-- Bets will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Tab -->
+            <div class="tab-content" id="accountTab">
+                <div class="account-header">
+                    <div class="account-balance">
+                        <h2>Wallet Balance</h2>
+                        <p class="balance-amount" id="accountBalance">₹9,520.97</p>
+                    </div>
+                    <div class="account-actions">
+                        <button class="action-btn deposit" id="depositBtn">
+                            <i class="fas fa-plus-circle"></i>
+                            Deposit
+                        </button>
+                        <button class="action-btn withdraw" id="withdrawBtn">
+                            <i class="fas fa-minus-circle"></i>
+                            Withdraw
+                        </button>
+                    </div>
+                </div>
+
+                <div class="account-info">
+                    <div class="info-card">
+                        <h3><i class="fas fa-user"></i> Account Details</h3>
+                        <div class="info-row">
+                            <span>User ID:</span>
+                            <span>NNGJ20PN</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Joined:</span>
+                            <span>2024-01-15</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Total Profit:</span>
+                            <span class="profit">+₹2,450.50</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3><i class="fas fa-shield-alt"></i> Payment Security</h3>
+                        <p class="security-note">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Please remember the UPI ID of your payment and fill in the correct UTR number and details.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3><i class="fas fa-cog"></i> Settings</h3>
+                        <div class="settings-list">
+                            <button class="settings-btn">
+                                <i class="fas fa-bell"></i>
+                                Notification Settings
+                            </button>
+                            <button class="settings-btn">
+                                <i class="fas fa-lock"></i>
+                                Change Password
+                            </button>
+                            <button class="settings-btn">
+                                <i class="fas fa-question-circle"></i>
+                                Help & Support
+                            </button>
+                            <button class="settings-btn logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bet Slip -->
+        <div class="bet-slip" id="betSlip">
+            <div class="bet-slip-header">
+                <h3>Bet Slip</h3>
+                <button class="close-slip" id="closeSlip">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="bet-slip-content" id="betSlipContent">
+                <p class="empty-slip">No bets placed yet</p>
+            </div>
+            <div class="bet-slip-footer">
+                <div class="total-bet">
+                    <span>Total Bet:</span>
+                    <span id="totalBetAmount">₹0</span>
+                </div>
+                <button class="confirm-bet" id="confirmBet" disabled>
+                    Confirm Bet
+                </button>
+            </div>
+        </div>
+
+        <!-- Deposit Modal -->
+        <div class="modal" id="depositModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Deposit Funds</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="deposit-options">
+                        <div class="deposit-option">
+                            <input type="radio" name="depositMethod" id="upi" checked>
+                            <label for="upi">
+                                <i class="fas fa-mobile-alt"></i>
+                                UPI Payment
+                            </label>
+                        </div>
+                        <div class="deposit-option">
+                            <input type="radio" name="depositMethod" id="card">
+                            <label for="card">
+                                <i class="fas fa-credit-card"></i>
+                                Credit/Debit Card
+                            </label>
+                        </div>
+                    </div>
+                    <div class="amount-selection">
+                        <h4>Select Amount</h4>
+                        <div class="quick-amounts">
+                            <button class="quick-amount">₹100</button>
+                            <button class="quick-amount">₹500</button>
+                            <button class="quick-amount">₹1000</button>
+                            <button class="quick-amount">₹5000</button>
+                        </div>
+                        <input type="number" class="custom-deposit" placeholder="Enter custom amount" min="100" max="50000">
+                    </div>
+                    <button class="submit-deposit">Proceed to Payment</button>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <!-- Root Element for React -->
-    <div id="root"></div>
-    
-    <!-- Script to hide loading screen when app loads -->
-    <script>
-      // Hide loading screen when React app mounts
-      window.addEventListener('DOMContentLoaded', () => {
-        const loading = document.getElementById('loading');
-        const root = document.getElementById('root');
-        
-        // Simulate minimum loading time for better UX
-        setTimeout(() => {
-          if (loading) {
-            loading.style.display = 'none';
-            root.style.display = 'block';
-          }
-        }, 1000);
-      });
-      
-      // Service Worker Registration for PWA
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
-            .then(registration => {
-              console.log('ServiceWorker registration successful');
-            })
-            .catch(err => {
-              console.log('ServiceWorker registration failed: ', err);
-            });
-        });
-      }
-      
-      // Prevent context menu on long press
-      document.addEventListener('contextmenu', (e) => {
-        if (e.target.nodeName === 'BUTTON' || e.target.nodeName === 'A') {
-          e.preventDefault();
-        }
-      });
-      
-      // Add to Home Screen functionality
-      let deferredPrompt;
-      window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent Chrome 67 and earlier from automatically showing the prompt
-        e.preventDefault();
-        // Stash the event so it can be triggered later
-        deferredPrompt = e;
-        
-        // Show install button (you can implement this in your React app)
-        setTimeout(() => {
-          if (window.showInstallPrompt) {
-            window.showInstallPrompt();
-          }
-        }, 3000);
-      });
-    </script>
-    
-    <!-- Vite will inject scripts here -->
-  </body>
+
+    <script src="script.js"></script>
+</body>
 </html>
