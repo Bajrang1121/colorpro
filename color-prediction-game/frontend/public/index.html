@@ -3,10 +3,1635 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Color Prediction Game</title>
+    <title>DDG PRO Color Prediction</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      :root {
+        --primary: #6a11cb;
+        --secondary: #2575fc;
+        --accent: #ff4b2b;
+        --success: #00c851;
+        --warning: #ffbb33;
+        --dark: #1a1a2e;
+        --light: #f8f9fa;
+        --gray: #6c757d;
+        --card-bg: rgba(255, 255, 255, 0.1);
+        --shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      body {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        color: white;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Header Styles */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 5%;
+        background: rgba(26, 26, 46, 0.9);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-icon {
+        font-size: 2.2rem;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .logo-text {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .logo-text span {
+        color: #ff4b2b;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+      }
+
+      nav a:hover, nav a.active {
+        background: rgba(106, 17, 203, 0.2);
+        color: #b19cd9;
+      }
+
+      .auth-buttons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.8rem;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s;
+        font-size: 1rem;
+      }
+
+      .btn-login {
+        background: transparent;
+        color: white;
+        border: 2px solid var(--primary);
+      }
+
+      .btn-login:hover {
+        background: rgba(106, 17, 203, 0.2);
+      }
+
+      .btn-register {
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        color: white;
+      }
+
+      .btn-register:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 5%;
+      }
+
+      /* Page Containers */
+      .page-container {
+        display: none;
+        width: 100%;
+        max-width: 1200px;
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      .page-container.active {
+        display: block;
+      }
+
+      /* Home Page */
+      .hero-section {
+        text-align: center;
+        padding: 3rem 0;
+      }
+
+      .hero-section h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero-section p {
+        font-size: 1.2rem;
+        color: #ccc;
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        line-height: 1.6;
+      }
+
+      .game-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
+      }
+
+      .stat-box {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        min-width: 200px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .stat-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--success);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #ccc;
+        font-size: 1rem;
+      }
+
+      .game-preview {
+        background: var(--card-bg);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-top: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .game-preview h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #fff;
+      }
+
+      .prediction-area {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .color-option {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .color-option:hover {
+        transform: scale(1.05);
+      }
+
+      .color-red {
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      }
+
+      .color-green {
+        background: linear-gradient(135deg, #00b09b, #96c93d);
+      }
+
+      .color-blue {
+        background: linear-gradient(135deg, #2193b0, #6dd5ed);
+      }
+
+      .color-violet {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+      }
+
+      /* Auth Pages */
+      .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+      }
+
+      .auth-box {
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem;
+        width: 100%;
+        max-width: 450px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: var(--shadow);
+      }
+
+      .auth-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .auth-header h2 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .auth-header p {
+        color: #ccc;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #ccc;
+        font-weight: 500;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+      }
+
+      .btn-auth {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 1rem;
+      }
+
+      .btn-auth:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+      }
+
+      .auth-footer {
+        text-align: center;
+        margin-top: 2rem;
+        color: #ccc;
+      }
+
+      .auth-footer a {
+        color: var(--secondary);
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .auth-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .otp-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+      }
+
+      .otp-input {
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+      }
+
+      /* Game Page */
+      .game-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        width: 100%;
+      }
+
+      .game-main {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .game-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .game-info, .user-stats, .history {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .timer {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      .timer-display {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--warning);
+        margin-bottom: 1rem;
+      }
+
+      .betting-options {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .bet-option {
+        padding: 1.5rem 2rem;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.2rem;
+        min-width: 150px;
+      }
+
+      .bet-option.selected {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .bet-amount {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .bet-input {
+        width: 200px;
+        padding: 1rem;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        font-size: 1.2rem;
+        text-align: center;
+      }
+
+      .btn-bet {
+        padding: 1rem 2rem;
+        background: linear-gradient(to right, var(--success), #00b09b);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .btn-bet:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 200, 81, 0.4);
+      }
+
+      .history-list {
+        margin-top: 1rem;
+      }
+
+      .history-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.8rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .history-item.win {
+        color: var(--success);
+      }
+
+      .history-item.loss {
+        color: var(--accent);
+      }
+
+      /* Footer */
+      footer {
+        background: rgba(26, 26, 46, 0.9);
+        padding: 2rem 5%;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 3rem;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-links a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-links a:hover {
+        color: var(--secondary);
+      }
+
+      .copyright {
+        color: #999;
+        font-size: 0.9rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .game-container {
+          grid-template-columns: 1fr;
+        }
+        
+        nav ul {
+          gap: 1rem;
+        }
+        
+        .hero-section h1 {
+          font-size: 2.5rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          gap: 1rem;
+        }
+        
+        .auth-buttons {
+          width: 100%;
+          justify-content: center;
+        }
+        
+        .game-stats {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .betting-options {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+      }
+
+      .user-name {
+        font-weight: 600;
+      }
+
+      .btn-logout {
+        background: transparent;
+        color: var(--accent);
+        border: 2px solid var(--accent);
+        padding: 0.5rem 1.5rem;
+      }
+
+      .btn-logout:hover {
+        background: rgba(255, 75, 43, 0.1);
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="../src/main.jsx"></script>
+    <div class="container">
+      <!-- Header -->
+      <header>
+        <div class="logo">
+          <div class="logo-icon"><i class="fas fa-dice"></i></div>
+          <div class="logo-text">DDG <span>PRO</span></div>
+        </div>
+        
+        <nav>
+          <ul>
+            <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+            <li><a href="#" class="nav-link" data-page="game">Game</a></li>
+            <li><a href="#" class="nav-link" data-page="how-to-play">How to Play</a></li>
+            <li><a href="#" class="nav-link" data-page="leaderboard">Leaderboard</a></li>
+          </ul>
+        </nav>
+        
+        <div class="auth-buttons" id="auth-buttons">
+          <button class="btn btn-login" id="login-btn">Login</button>
+          <button class="btn btn-register" id="register-btn">Register</button>
+        </div>
+        
+        <div class="user-profile hidden" id="user-profile">
+          <div class="user-avatar" id="user-avatar">U</div>
+          <div class="user-name" id="user-name">User</div>
+          <button class="btn btn-logout" id="logout-btn">Logout</button>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <!-- Home Page -->
+        <div class="page-container active" id="home-page">
+          <div class="hero-section">
+            <h1>DDG PRO Color Prediction</h1>
+            <p>Predict the winning color and multiply your earnings! A thrilling prediction game with real-time results and instant payouts. Join thousands of players winning daily.</p>
+            
+            <div class="game-stats">
+              <div class="stat-box">
+                <div class="stat-value" id="total-players">25,847</div>
+                <div class="stat-label">Active Players</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-value" id="total-won">₹12.5M</div>
+                <div class="stat-label">Total Won Today</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-value" id="win-rate">78.5%</div>
+                <div class="stat-label">Win Rate</div>
+              </div>
+            </div>
+            
+            <button class="btn btn-register" id="play-now-btn">Play Now</button>
+            
+            <div class="game-preview">
+              <h2>Try Your Prediction Skills</h2>
+              <div class="prediction-area">
+                <div class="color-option color-red" data-color="red">Red</div>
+                <div class="color-option color-green" data-color="green">Green</div>
+                <div class="color-option color-blue" data-color="blue">Blue</div>
+                <div class="color-option color-violet" data-color="violet">Violet</div>
+              </div>
+              <p style="text-align: center; margin-top: 1.5rem; color: #ccc;">Select a color to see potential multiplier</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game Page -->
+        <div class="page-container" id="game-page">
+          <div class="game-container">
+            <div class="game-main">
+              <h2>Color Prediction Game</h2>
+              <div class="timer">
+                <div class="timer-display" id="timer">10</div>
+                <p>Seconds until next round</p>
+              </div>
+              
+              <div class="betting-options">
+                <div class="bet-option color-red" data-bet-color="red">
+                  <div>RED</div>
+                  <div>2.5x</div>
+                </div>
+                <div class="bet-option color-green" data-bet-color="green">
+                  <div>GREEN</div>
+                  <div>3x</div>
+                </div>
+                <div class="bet-option color-blue" data-bet-color="blue">
+                  <div>BLUE</div>
+                  <div>4x</div>
+                </div>
+                <div class="bet-option color-violet" data-bet-color="violet">
+                  <div>VIOLET</div>
+                  <div>5x</div>
+                </div>
+              </div>
+              
+              <div class="bet-amount">
+                <input type="number" class="bet-input" id="bet-amount" placeholder="Enter amount" min="100" max="10000" value="500">
+                <button class="btn-bet" id="place-bet">Place Bet</button>
+              </div>
+              
+              <div id="game-result"></div>
+            </div>
+            
+            <div class="game-sidebar">
+              <div class="user-stats">
+                <h3>Your Stats</h3>
+                <div style="margin-top: 1rem;">
+                  <p>Balance: <span id="user-balance">₹5,000</span></p>
+                  <p>Today's Wins: <span id="today-wins">₹1,250</span></p>
+                  <p>Win Rate: <span id="user-win-rate">65%</span></p>
+                </div>
+              </div>
+              
+              <div class="history">
+                <h3>Recent Results</h3>
+                <div class="history-list" id="history-list">
+                  <!-- History items will be added here by JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Login Page -->
+        <div class="page-container" id="login-page">
+          <div class="auth-container">
+            <div class="auth-box">
+              <div class="auth-header">
+                <h2>Login to DDG PRO</h2>
+                <p>Enter your credentials to access your account</p>
+              </div>
+              
+              <form id="login-form">
+                <div class="form-group">
+                  <label for="login-email">Email or Username</label>
+                  <input type="text" id="login-email" class="form-control" placeholder="Enter your email or username" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="login-password">Password</label>
+                  <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="form-group" style="text-align: right;">
+                  <a href="#" id="forgot-password-link">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="btn-auth">Login</button>
+              </form>
+              
+              <div class="auth-footer">
+                <p>Don't have an account? <a href="#" id="register-link">Register here</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Register Page -->
+        <div class="page-container" id="register-page">
+          <div class="auth-container">
+            <div class="auth-box">
+              <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Join DDG PRO Color Prediction today</p>
+              </div>
+              
+              <form id="register-form">
+                <div class="form-group">
+                  <label for="register-username">Username</label>
+                  <input type="text" id="register-username" class="form-control" placeholder="Choose a username" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="register-email">Email</label>
+                  <input type="email" id="register-email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="register-password">Password</label>
+                  <input type="password" id="register-password" class="form-control" placeholder="Create a password" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="register-confirm-password">Confirm Password</label>
+                  <input type="password" id="register-confirm-password" class="form-control" placeholder="Confirm your password" required>
+                </div>
+                
+                <button type="submit" class="btn-auth">Create Account</button>
+              </form>
+              
+              <div class="auth-footer">
+                <p>Already have an account? <a href="#" id="login-link">Login here</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Forgot Password Page -->
+        <div class="page-container" id="forgot-page">
+          <div class="auth-container">
+            <div class="auth-box">
+              <div class="auth-header">
+                <h2>Reset Password</h2>
+                <p>Enter your email to receive a reset OTP</p>
+              </div>
+              
+              <form id="forgot-form">
+                <div class="form-group">
+                  <label for="forgot-email">Email Address</label>
+                  <input type="email" id="forgot-email" class="form-control" placeholder="Enter your registered email" required>
+                </div>
+                
+                <button type="submit" class="btn-auth">Send OTP</button>
+              </form>
+              
+              <div class="auth-footer">
+                <p>Remember your password? <a href="#" id="back-to-login">Back to login</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OTP Verification Page -->
+        <div class="page-container" id="otp-page">
+          <div class="auth-container">
+            <div class="auth-box">
+              <div class="auth-header">
+                <h2>Verify OTP</h2>
+                <p>Enter the 6-digit code sent to your email</p>
+              </div>
+              
+              <form id="otp-form">
+                <div class="form-group">
+                  <div class="otp-container">
+                    <input type="text" class="otp-input" maxlength="1" required>
+                    <input type="text" class="otp-input" maxlength="1" required>
+                    <input type="text" class="otp-input" maxlength="1" required>
+                    <input type="text" class="otp-input" maxlength="1" required>
+                    <input type="text" class="otp-input" maxlength="1" required>
+                    <input type="text" class="otp-input" maxlength="1" required>
+                  </div>
+                </div>
+                
+                <div class="form-group" style="text-align: center;">
+                  <p id="otp-timer">Resend OTP in <span id="countdown">60</span>s</p>
+                  <a href="#" id="resend-otp" class="hidden">Resend OTP</a>
+                </div>
+                
+                <button type="submit" class="btn-auth">Verify OTP</button>
+              </form>
+              
+              <div class="auth-footer">
+                <p><a href="#" id="back-to-forgot">Back to reset password</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- How to Play Page -->
+        <div class="page-container" id="how-to-play-page">
+          <div style="max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <h2 style="text-align: center; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent;">How to Play</h2>
+            
+            <div style="margin-bottom: 2rem;">
+              <h3 style="color: var(--secondary); margin-bottom: 1rem;">1. Place Your Bet</h3>
+              <p style="color: #ccc; line-height: 1.6;">Choose a color (Red, Green, Blue, or Violet) and enter the amount you want to bet. Minimum bet is ₹100 and maximum is ₹10,000.</p>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+              <h3 style="color: var(--secondary); margin-bottom: 1rem;">2. Wait for Result</h3>
+              <p style="color: #ccc; line-height: 1.6;">Each round lasts 60 seconds. Once the timer reaches zero, the winning color is randomly selected.</p>
+            </div>
+            
+            <div style="margin-bottom: 2rem;">
+              <h3 style="color: var(--secondary); margin-bottom: 1rem;">3. Collect Winnings</h3>
+              <p style="color: #ccc; line-height: 1.6;">If your predicted color matches the winning color, you win! Red pays 2.5x, Green pays 3x, Blue pays 4x, and Violet pays 5x your bet amount.</p>
+            </div>
+            
+            <div>
+              <h3 style="color: var(--secondary); margin-bottom: 1rem;">Tips for Success</h3>
+              <ul style="color: #ccc; line-height: 1.6; padding-left: 1.5rem;">
+                <li>Start with smaller bets to understand the game</li>
+                <li>Keep track of recent results to identify patterns</li>
+                <li>Set a budget and stick to it</li>
+                <li>Take advantage of our welcome bonus for new players</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Leaderboard Page -->
+        <div class="page-container" id="leaderboard-page">
+          <div style="max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+            <h2 style="text-align: center; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent;">Top Players</h2>
+            
+            <div id="leaderboard-list">
+              <!-- Leaderboard items will be added by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer>
+        <div class="footer-links">
+          <a href="#" data-page="home">Home</a>
+          <a href="#" data-page="game">Game</a>
+          <a href="#" data-page="how-to-play">How to Play</a>
+          <a href="#" data-page="leaderboard">Leaderboard</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Contact Us</a>
+        </div>
+        
+        <div class="copyright">
+          <p>&copy; 2023 DDG PRO Color Prediction. All rights reserved. This is a demonstration website for entertainment purposes only.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // DOM Elements
+      const pageContainers = document.querySelectorAll('.page-container');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const authButtons = document.getElementById('auth-buttons');
+      const userProfile = document.getElementById('user-profile');
+      const loginBtn = document.getElementById('login-btn');
+      const registerBtn = document.getElementById('register-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      const playNowBtn = document.getElementById('play-now-btn');
+      const colorOptions = document.querySelectorAll('.color-option');
+      const betOptions = document.querySelectorAll('.bet-option');
+      const placeBetBtn = document.getElementById('place-bet');
+      const timerDisplay = document.getElementById('timer');
+      const gameResult = document.getElementById('game-result');
+      const historyList = document.getElementById('history-list');
+      const leaderboardList = document.getElementById('leaderboard-list');
+      
+      // Auth form elements
+      const loginForm = document.getElementById('login-form');
+      const registerForm = document.getElementById('register-form');
+      const forgotForm = document.getElementById('forgot-form');
+      const otpForm = document.getElementById('otp-form');
+      const forgotPasswordLink = document.getElementById('forgot-password-link');
+      const registerLink = document.getElementById('register-link');
+      const loginLink = document.getElementById('login-link');
+      const backToLogin = document.getElementById('back-to-login');
+      const backToForgot = document.getElementById('back-to-forgot');
+      const resendOtp = document.getElementById('resend-otp');
+      const otpInputs = document.querySelectorAll('.otp-input');
+      const otpTimer = document.getElementById('countdown');
+      
+      // Game state
+      let currentUser = null;
+      let userBalance = 5000;
+      let gameTimer = 10;
+      let timerInterval = null;
+      let selectedColor = null;
+      let selectedBetAmount = 500;
+      let gameHistory = [];
+      let leaderboard = [];
+      
+      // Initialize the app
+      function init() {
+        // Check if user is logged in (from localStorage)
+        const storedUser = localStorage.getItem('ddgProUser');
+        if (storedUser) {
+          currentUser = JSON.parse(storedUser);
+          updateUserUI();
+        }
+        
+        // Set up navigation
+        setupNavigation();
+        
+        // Set up auth forms
+        setupAuthForms();
+        
+        // Set up game functionality
+        setupGame();
+        
+        // Generate initial game history
+        generateHistory();
+        
+        // Generate leaderboard
+        generateLeaderboard();
+        
+        // Start game timer
+        startGameTimer();
+        
+        // Set up OTP input handling
+        setupOTPInputs();
+      }
+      
+      // Navigation setup
+      function setupNavigation() {
+        // Navigation links
+        navLinks.forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const page = link.getAttribute('data-page');
+            showPage(page);
+            
+            // Update active nav link
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+          });
+        });
+        
+        // Footer links
+        document.querySelectorAll('.footer-links a').forEach(link => {
+          if (link.hasAttribute('data-page')) {
+            link.addEventListener('click', (e) => {
+              e.preventDefault();
+              const page = link.getAttribute('data-page');
+              showPage(page);
+              
+              // Update active nav link
+              navLinks.forEach(l => {
+                l.classList.remove('active');
+                if (l.getAttribute('data-page') === page) {
+                  l.classList.add('active');
+                }
+              });
+            });
+          }
+        });
+        
+        // Auth buttons
+        loginBtn.addEventListener('click', () => showPage('login'));
+        registerBtn.addEventListener('click', () => showPage('register'));
+        logoutBtn.addEventListener('click', handleLogout);
+        playNowBtn.addEventListener('click', () => {
+          if (currentUser) {
+            showPage('game');
+            // Update active nav link
+            navLinks.forEach(l => {
+              l.classList.remove('active');
+              if (l.getAttribute('data-page') === 'game') {
+                l.classList.add('active');
+              }
+            });
+          } else {
+            showPage('login');
+          }
+        });
+        
+        // Auth links
+        forgotPasswordLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          showPage('forgot');
+        });
+        
+        registerLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          showPage('register');
+        });
+        
+        loginLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          showPage('login');
+        });
+        
+        backToLogin.addEventListener('click', (e) => {
+          e.preventDefault();
+          showPage('login');
+        });
+        
+        backToForgot.addEventListener('click', (e) => {
+          e.preventDefault();
+          showPage('forgot');
+        });
+        
+        // Color options on home page
+        colorOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            const color = option.getAttribute('data-color');
+            alert(`You selected ${color.toUpperCase()}. In the actual game, you would bet on this color!`);
+          });
+        });
+      }
+      
+      // Show specific page
+      function showPage(page) {
+        // Hide all pages
+        pageContainers.forEach(container => {
+          container.classList.remove('active');
+        });
+        
+        // Show requested page
+        const pageId = `${page}-page`;
+        const pageElement = document.getElementById(pageId);
+        if (pageElement) {
+          pageElement.classList.add('active');
+        }
+      }
+      
+      // Auth forms setup
+      function setupAuthForms() {
+        // Login form
+        loginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('login-email').value;
+          const password = document.getElementById('login-password').value;
+          
+          // Simple validation
+          if (!email || !password) {
+            showMessage('Please fill in all fields', 'error');
+            return;
+          }
+          
+          // Simulate login
+          simulateLogin(email, password);
+        });
+        
+        // Register form
+        registerForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const username = document.getElementById('register-username').value;
+          const email = document.getElementById('register-email').value;
+          const password = document.getElementById('register-password').value;
+          const confirmPassword = document.getElementById('register-confirm-password').value;
+          
+          // Validation
+          if (!username || !email || !password || !confirmPassword) {
+            showMessage('Please fill in all fields', 'error');
+            return;
+          }
+          
+          if (password !== confirmPassword) {
+            showMessage('Passwords do not match', 'error');
+            return;
+          }
+          
+          if (password.length < 6) {
+            showMessage('Password must be at least 6 characters', 'error');
+            return;
+          }
+          
+          // Simulate registration
+          simulateRegistration(username, email, password);
+        });
+        
+        // Forgot password form
+        forgotForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('forgot-email').value;
+          
+          if (!email) {
+            showMessage('Please enter your email', 'error');
+            return;
+          }
+          
+          // Simulate sending OTP
+          simulateSendOTP(email);
+        });
+        
+        // OTP form
+        otpForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          // Get OTP value
+          let otp = '';
+          otpInputs.forEach(input => {
+            otp += input.value;
+          });
+          
+          if (otp.length !== 6) {
+            showMessage('Please enter the complete 6-digit OTP', 'error');
+            return;
+          }
+          
+          // Simulate OTP verification
+          simulateVerifyOTP(otp);
+        });
+        
+        // Resend OTP
+        resendOtp.addEventListener('click', (e) => {
+          e.preventDefault();
+          simulateSendOTP('user@example.com');
+        });
+      }
+      
+      // Simulate login
+      function simulateLogin(email, password) {
+        // In a real app, this would be an API call
+        showMessage('Logging in...', 'info');
+        
+        setTimeout(() => {
+          // Create user object
+          currentUser = {
+            id: 1,
+            username: email.split('@')[0] || 'User',
+            email: email,
+            avatar: email.charAt(0).toUpperCase()
+          };
+          
+          // Save to localStorage
+          localStorage.setItem('ddgProUser', JSON.stringify(currentUser));
+          
+          // Update UI
+          updateUserUI();
+          
+          // Show success message and redirect to home
+          showMessage('Login successful! Welcome to DDG PRO.', 'success');
+          showPage('home');
+          
+          // Update nav
+          navLinks.forEach(l => {
+            l.classList.remove('active');
+            if (l.getAttribute('data-page') === 'home') {
+              l.classList.add('active');
+            }
+          });
+        }, 1000);
+      }
+      
+      // Simulate registration
+      function simulateRegistration(username, email, password) {
+        showMessage('Creating account...', 'info');
+        
+        setTimeout(() => {
+          // Create user object
+          currentUser = {
+            id: Date.now(),
+            username: username,
+            email: email,
+            avatar: username.charAt(0).toUpperCase()
+          };
+          
+          // Save to localStorage
+          localStorage.setItem('ddgProUser', JSON.stringify(currentUser));
+          
+          // Update UI
+          updateUserUI();
+          
+          // Show success message and redirect to home
+          showMessage('Registration successful! Welcome to DDG PRO.', 'success');
+          showPage('home');
+          
+          // Update nav
+          navLinks.forEach(l => {
+            l.classList.remove('active');
+            if (l.getAttribute('data-page') === 'home') {
+              l.classList.add('active');
+            }
+          });
+        }, 1500);
+      }
+      
+      // Simulate sending OTP
+      function simulateSendOTP(email) {
+        showMessage(`Sending OTP to ${email}...`, 'info');
+        
+        setTimeout(() => {
+          showMessage('OTP sent successfully! Check your email.', 'success');
+          showPage('otp');
+          
+          // Start OTP countdown timer
+          startOTPTimer();
+        }, 1000);
+      }
+      
+      // Simulate OTP verification
+      function simulateVerifyOTP(otp) {
+        showMessage('Verifying OTP...', 'info');
+        
+        setTimeout(() => {
+          if (otp === '123456') {
+            showMessage('OTP verified! You can now reset your password.', 'success');
+            
+            // In a real app, you would show a password reset form
+            setTimeout(() => {
+              showPage('login');
+              showMessage('Password reset successful! Please login with your new password.', 'success');
+            }, 1500);
+          } else {
+            showMessage('Invalid OTP. Please try again.', 'error');
+          }
+        }, 1000);
+      }
+      
+      // Update UI when user logs in/out
+      function updateUserUI() {
+        if (currentUser) {
+          // Show user profile, hide auth buttons
+          authButtons.classList.add('hidden');
+          userProfile.classList.remove('hidden');
+          
+          // Update user info
+          document.getElementById('user-name').textContent = currentUser.username;
+          document.getElementById('user-avatar').textContent = currentUser.avatar;
+        } else {
+          // Show auth buttons, hide user profile
+          authButtons.classList.remove('hidden');
+          userProfile.classList.add('hidden');
+        }
+      }
+      
+      // Handle logout
+      function handleLogout() {
+        currentUser = null;
+        localStorage.removeItem('ddgProUser');
+        updateUserUI();
+        showPage('home');
+        
+        // Update nav
+        navLinks.forEach(l => {
+          l.classList.remove('active');
+          if (l.getAttribute('data-page') === 'home') {
+            l.classList.add('active');
+          }
+        });
+        
+        showMessage('You have been logged out.', 'info');
+      }
+      
+      // Game setup
+      function setupGame() {
+        // Bet options
+        betOptions.forEach(option => {
+          option.addEventListener('click', () => {
+            // Remove selected class from all options
+            betOptions.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            option.classList.add('selected');
+            
+            // Set selected color
+            selectedColor = option.getAttribute('data-bet-color');
+          });
+        });
+        
+        // Default selection
+        if (betOptions.length > 0) {
+          betOptions[0].classList.add('selected');
+          selectedColor = betOptions[0].getAttribute('data-bet-color');
+        }
+        
+        // Bet amount input
+        const betAmountInput = document.getElementById('bet-amount');
+        betAmountInput.addEventListener('input', () => {
+          selectedBetAmount = parseInt(betAmountInput.value) || 100;
+          
+          // Validate min/max
+          if (selectedBetAmount < 100) {
+            betAmountInput.value = 100;
+            selectedBetAmount = 100;
+          } else if (selectedBetAmount > 10000) {
+            betAmountInput.value = 10000;
+            selectedBetAmount = 10000;
+          }
+        });
+        
+        // Place bet button
+        placeBetBtn.addEventListener('click', placeBet);
+      }
+      
+      // Start game timer
+      function startGameTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        
+        gameTimer = 10;
+        timerDisplay.textContent = gameTimer;
+        
+        timerInterval = setInterval(() => {
+          gameTimer--;
+          timerDisplay.textContent = gameTimer;
+          
+          if (gameTimer <= 0) {
+            clearInterval(timerInterval);
+            
+            // Run game round
+            runGameRound();
+            
+            // Restart timer after 3 seconds
+            setTimeout(() => {
+              startGameTimer();
+            }, 3000);
+          }
+        }, 1000);
+      }
+      
+      // Run a game round
+      function runGameRound() {
+        // Generate winning color
+        const colors = ['red', 'green', 'blue', 'violet'];
+        const winningColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Display result
+        gameResult.innerHTML = `
+          <div style="text-align: center; padding: 2rem; background: rgba(0,0,0,0.2); border-radius: 15px; margin-top: 2rem;">
+            <h3 style="color: ${winningColor};">Winning Color: ${winningColor.toUpperCase()}</h3>
+            <p>Next round starting soon...</p>
+          </div>
+        `;
+        
+        // Add to history
+        addToHistory(winningColor);
+      }
+      
+      // Place a bet
+      function placeBet() {
+        if (!currentUser) {
+          showMessage('Please login to place a bet', 'error');
+          showPage('login');
+          return;
+        }
+        
+        if (!selectedColor) {
+          showMessage('Please select a color', 'error');
+          return;
+        }
+        
+        if (selectedBetAmount > userBalance) {
+          showMessage('Insufficient balance', 'error');
+          return;
+        }
+        
+        // Deduct bet amount from balance
+        userBalance -= selectedBetAmount;
+        updateUserBalance();
+        
+        showMessage(`Bet placed: ₹${selectedBetAmount} on ${selectedColor.toUpperCase()}`, 'info');
+      }
+      
+      // Update user balance display
+      function updateUserBalance() {
+        document.getElementById('user-balance').textContent = `₹${userBalance.toLocaleString()}`;
+      }
+      
+      // Add result to history
+      function addToHistory(color) {
+        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        const result = Math.random() > 0.5 ? 'win' : 'loss';
+        const amount = result === 'win' ? Math.floor(Math.random() * 5000) + 1000 : -Math.floor(Math.random() * 1000) - 100;
+        
+        const historyItem = {
+          time,
+          color,
+          result,
+          amount
+        };
+        
+        gameHistory.unshift(historyItem);
+        
+        // Keep only last 10 items
+        if (gameHistory.length > 10) {
+          gameHistory.pop();
+        }
+        
+        updateHistoryDisplay();
+      }
+      
+      // Update history display
+      function updateHistoryDisplay() {
+        historyList.innerHTML = '';
+        
+        gameHistory.forEach(item => {
+          const historyItem = document.createElement('div');
+          historyItem.className = `history-item ${item.result}`;
+          historyItem.innerHTML = `
+            <span>${item.time}</span>
+            <span>${item.color.toUpperCase()}</span>
+            <span>${item.result === 'win' ? '+' : ''}₹${Math.abs(item.amount)}</span>
+          `;
+          
+          historyList.appendChild(historyItem);
+        });
+      }
+      
+      // Generate initial history
+      function generateHistory() {
+        const colors = ['red', 'green', 'blue', 'violet'];
+        const results = ['win', 'loss'];
+        
+        for (let i = 0; i < 5; i++) {
+          const time = new Date(Date.now() - (i * 60000)).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          const result = results[Math.floor(Math.random() * results.length)];
+          const amount = result === 'win' ? Math.floor(Math.random() * 5000) + 1000 : -Math.floor(Math.random() * 1000) - 100;
+          
+          gameHistory.push({ time, color, result, amount });
+        }
+        
+        updateHistoryDisplay();
+      }
+      
+      // Generate leaderboard
+      function generateLeaderboard() {
+        const names = ['ProPredictor', 'ColorMaster', 'LuckyCharm', 'RainbowKing', 'BetWizard', 'FortuneSeeker', 'WinHunter', 'JackpotJoy'];
+        
+        for (let i = 0; i < 8; i++) {
+          const name = names[i];
+          const winnings = Math.floor(Math.random() * 50000) + 10000;
+          const wins = Math.floor(Math.random() * 100) + 50;
+          
+          leaderboard.push({
+            rank: i + 1,
+            name,
+            winnings,
+            wins
+          });
+        }
+        
+        updateLeaderboardDisplay();
+      }
+      
+      // Update leaderboard display
+      function updateLeaderboardDisplay() {
+        leaderboardList.innerHTML = '';
+        
+        leaderboard.forEach(player => {
+          const playerElement = document.createElement('div');
+          playerElement.className = 'history-item';
+          playerElement.innerHTML = `
+            <span>#${player.rank}</span>
+            <span>${player.name}</span>
+            <span>₹${player.winnings.toLocaleString()}</span>
+            <span>${player.wins} wins</span>
+          `;
+          
+          leaderboardList.appendChild(playerElement);
+        });
+      }
+      
+      // OTP input handling
+      function setupOTPInputs() {
+        otpInputs.forEach((input, index) => {
+          input.addEventListener('input', (e) => {
+            // Move to next input if current is filled
+            if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+              otpInputs[index + 1].focus();
+            }
+          });
+          
+          input.addEventListener('keydown', (e) => {
+            // Move to previous input on backspace if current is empty
+            if (e.key === 'Backspace' && !e.target.value && index > 0) {
+              otpInputs[index - 1].focus();
+            }
+          });
+        });
+      }
+      
+      // Start OTP countdown timer
+      function startOTPTimer() {
+        let timeLeft = 60;
+        otpTimer.textContent = timeLeft;
+        resendOtp.classList.add('hidden');
+        
+        const otpCountdown = setInterval(() => {
+          timeLeft--;
+          otpTimer.textContent = timeLeft;
+          
+          if (timeLeft <= 0) {
+            clearInterval(otpCountdown);
+            resendOtp.classList.remove('hidden');
+          }
+        }, 1000);
+      }
+      
+      // Show message
+      function showMessage(message, type) {
+        // Create message element
+        const messageEl = document.createElement('div');
+        messageEl.textContent = message;
+        messageEl.style.position = 'fixed';
+        messageEl.style.top = '20px';
+        messageEl.style.right = '20px';
+        messageEl.style.padding = '1rem 1.5rem';
+        messageEl.style.borderRadius = '10px';
+        messageEl.style.fontWeight = '600';
+        messageEl.style.zIndex = '1000';
+        messageEl.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+        messageEl.style.animation = 'fadeIn 0.3s ease-out';
+        
+        // Set color based on type
+        if (type === 'success') {
+          messageEl.style.background = 'linear-gradient(to right, #00b09b, #96c93d)';
+          messageEl.style.color = 'white';
+        } else if (type === 'error') {
+          messageEl.style.background = 'linear-gradient(to right, #ff416c, #ff4b2b)';
+          messageEl.style.color = 'white';
+        } else {
+          messageEl.style.background = 'linear-gradient(to right, #6a11cb, #2575fc)';
+          messageEl.style.color = 'white';
+        }
+        
+        // Add to page
+        document.body.appendChild(messageEl);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+          messageEl.style.animation = 'fadeOut 0.3s ease-out';
+          setTimeout(() => {
+            if (messageEl.parentNode) {
+              document.body.removeChild(messageEl);
+            }
+          }, 300);
+        }, 3000);
+      }
+      
+      // Add fadeOut animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes fadeOut {
+          from { opacity: 1; transform: translateX(0); }
+          to { opacity: 0; transform: translateX(20px); }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // Initialize the app
+      window.addEventListener('DOMContentLoaded', init);
+    </script>
   </body>
 </html>
