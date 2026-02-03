@@ -1,6 +1,7 @@
 ﻿[build]
   base = "frontend"
-  command = "npm run build"
+  command = "npm install && npm run build"
+  # Kyunki vite.config mein humne outDir '../dist' kiya hai, ye base folder (frontend) ke andar hi rahega
   publish = "dist"
 
 [[redirects]]
